@@ -23,6 +23,10 @@ jobs:
           distribution: 'corretto'
           java-version: '17'
 
+      - name: Copy yml files
+        run: ./gradlew copyYml
+        shell: bash
+
       - name: build
         run: |
           chmod +x gradlew
