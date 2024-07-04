@@ -1,0 +1,3 @@
+[submodule "SERVER_YML"]
+	path = SERVER_YML
+	url = https://github.com/OMZigak/SERVER_YML.git
