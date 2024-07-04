@@ -1,6 +1,7 @@
 package org.kkumulkkum.server.advice;
 
 import org.kkumulkkum.server.dto.common.ResponseDto;
+import org.kkumulkkum.server.exception.code.DefaultErrorCode;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.HttpMessageConverter;
@@ -27,7 +28,8 @@ public class ResponseDtoAdvice implements ResponseBodyAdvice<Object> {
             ServerHttpRequest request,
             ServerHttpResponse response
     ) {
-        // TODO: error 관련 처리 추가
+        if (body instanceof DefaultErrorCode)
+            return ResponseDto.fail((DefaultErrorCode) body);
         return ResponseDto.success(body);
     }
 }
