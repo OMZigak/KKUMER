@@ -1,5 +1,7 @@
 package org.kkumulkkum.server.dto.common;
 
+import org.kkumulkkum.server.exception.code.DefaultErrorCode;
+
 public record ResponseDto<T> (
         T data,
         ErrorDto error
@@ -8,7 +10,7 @@ public record ResponseDto<T> (
         return new ResponseDto<>(data, null);
     }
 
-    public static <T> ResponseDto<T> fail(ErrorDto error) {
-        return new ResponseDto<>(null, ErrorDto.of(error.code(), error.message()));
+    public static <T> ResponseDto<T> fail(DefaultErrorCode error) {
+        return new ResponseDto<>(null, ErrorDto.of(error.getCode(), error.getMessage()));
     }
 }
