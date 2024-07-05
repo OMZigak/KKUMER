@@ -61,8 +61,10 @@ tasks.named('test') {
 	useJUnitPlatform()
 }
 
-tasks.register('copyYml', Copy) {
-	from './SERVER_YML'
-	include '*'
-	into 'src/main/resources'
+task copyYml(type: Copy) {
+	copy {
+		from './SERVER_YML'
+		include "*.yml"
+		into './src/main/resources'
+	}
 }
