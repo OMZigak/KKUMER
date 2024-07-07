@@ -19,6 +19,7 @@ import java.io.PrintWriter;
 @Component
 @RequiredArgsConstructor
 public class CustomJwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
+
     private final ObjectMapper objectMapper = new ObjectMapper();
 
     @Override
