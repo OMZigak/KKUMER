@@ -25,9 +25,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtTokenValidator jwtTokenValidator;
 
     @Override
-    protected void doFilterInternal(@NonNull HttpServletRequest request,
-                                    @NonNull HttpServletResponse response,
-                                    @NonNull FilterChain filterChain) throws ServletException, IOException {
+    protected void doFilterInternal(
+            @NonNull HttpServletRequest request,
+            @NonNull HttpServletResponse response,
+            @NonNull FilterChain filterChain
+    ) throws ServletException, IOException {
         final String token = getJwtFromRequest(request);
         jwtTokenValidator.validateAccessToken(token);
         Long userId = jwtTokenProvider.getUserFromJwt(token);
