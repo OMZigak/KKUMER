@@ -11,8 +11,8 @@ public class TokenSaver {
 
     private final TokenRepository tokenRepository;
 
-    public Token save(final Token token){
-        return tokenRepository.save(token);
+    public void save(final Token token){
+        tokenRepository.save(token);
     }
 
 }
