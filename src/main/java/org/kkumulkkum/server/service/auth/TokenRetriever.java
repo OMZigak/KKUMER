@@ -13,7 +13,7 @@ public class TokenRetriever {
 
     private final TokenRepository tokenRepository;
 
-    public Token findByRefreshToken(String refreshToken) {
+    public Token findByRefreshToken(final String refreshToken) {
         return tokenRepository.findByRefreshToken(refreshToken)
                 .orElseThrow(() -> new AuthException(AuthErrorCode.NOT_FOUND_REFRESH_TOKEN));
     }
