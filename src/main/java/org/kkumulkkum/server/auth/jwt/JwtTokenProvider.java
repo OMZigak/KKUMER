@@ -21,10 +21,10 @@ public class JwtTokenProvider {
 
     static final String USER_ID = "userId";
 
-    private static final Long ACCESS_TOKEN_EXPIRATION_TIME = 24 * 60 * 60 * 1000L;
-
-    private static final Long REFRESH_TOKEN_EXPIRATION_TIME = 24 * 60 * 60 * 1000L * 14;
-
+    @Value("${jwt.access_token_expiration_time}")
+    private Long accessTokenExpirationTime;
+    @Value("${jwt.refresh_token_expiration_time}")
+    private Long refreshTokenExpirationTime;
     @Value("${jwt.secret}")
     private String secretKey;
 
@@ -52,9 +52,9 @@ public class JwtTokenProvider {
 
      private Date generateExpirationDate(Date now, boolean isAccessToken) {
          if (isAccessToken) {
-             return new Date(now.getTime() + ACCESS_TOKEN_EXPIRATION_TIME);
+             return new Date(now.getTime() + accessTokenExpirationTime);
          }
-         return new Date(now.getTime() + REFRESH_TOKEN_EXPIRATION_TIME);
+         return new Date(now.getTime() + refreshTokenExpirationTime);
      }
 
      private Key getSigningKey() {
