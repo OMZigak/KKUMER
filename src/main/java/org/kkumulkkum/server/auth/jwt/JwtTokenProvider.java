@@ -8,6 +8,7 @@ import org.kkumulkkum.server.constant.Constant;
 import org.kkumulkkum.server.dto.auth.response.JwtTokenDto;
 import org.kkumulkkum.server.exception.AuthException;
 import org.kkumulkkum.server.exception.code.AuthErrorCode;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -16,10 +17,7 @@ import java.util.Base64;
 import java.util.Date;
 
 @Component
-@RequiredArgsConstructor
-public class JwtTokenProvider {
-
-    static final String USER_ID = "userId";
+public class JwtTokenProvider implements InitializingBean {
 
     @Value("${jwt.access_token_expiration_time}")
     private Long accessTokenExpirationTime;
@@ -28,7 +26,15 @@ public class JwtTokenProvider {
     @Value("${jwt.secret}")
     private String secretKey;
 
-    public JwtTokenDto issueToken(Long userId) {
+    private Key singingKey;
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        String encodedKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
+        this.singingKey = Keys.hmacShaKeyFor(encodedKey.getBytes());
+    }
+
+    public JwtTokenDto issueTokens(Long userId) {
         return JwtTokenDto.of(
                 generateToken(userId, true),
                 generateToken(userId, false));
@@ -46,7 +52,7 @@ public class JwtTokenProvider {
          return Jwts.builder()
                  .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
                  .setClaims(claims)
-                 .signWith(getSigningKey())
+                 .signWith(singingKey)
                  .compact();
      }
 
@@ -57,14 +63,9 @@ public class JwtTokenProvider {
          return new Date(now.getTime() + refreshTokenExpirationTime);
      }
 
-     private Key getSigningKey() {
-         String encodedKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
-         return Keys.hmacShaKeyFor(encodedKey.getBytes());
-     }
-
     public Claims getBody(final String token) {
         return Jwts.parserBuilder()
-                .setSigningKey(getSigningKey())
+                .setSigningKey(singingKey)
                 .build()
                 .parseClaimsJws(token)
                 .getBody();
