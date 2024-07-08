@@ -56,6 +56,9 @@ dependencies {
 	// Security
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 
+	// Social Login
+	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:4.1.2'
+
 	// Validation
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 }
