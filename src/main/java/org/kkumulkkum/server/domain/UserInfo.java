@@ -19,6 +19,8 @@ public class UserInfo extends BaseTimeEntity {
 
     private String profileImg;
 
+    private String email;
+
     private int level;
 
     private int promiseCount;
@@ -34,15 +36,14 @@ public class UserInfo extends BaseTimeEntity {
     @Builder
     public UserInfo(String name,
                     String profileImg,
-                    int level,
-                    int promiseCount,
-                    int tardyCount,
+                    String email,
                     User user) {
         this.name = name;
         this.profileImg = profileImg;
-        this.level = level;
-        this.promiseCount = promiseCount;
-        this.tardyCount = tardyCount;
+        this.email = email;
+        this.level = 1;
+        this.promiseCount = 0;
+        this.tardyCount = 0;
         this.user = user;
         this.tardySum = 0L;
     }

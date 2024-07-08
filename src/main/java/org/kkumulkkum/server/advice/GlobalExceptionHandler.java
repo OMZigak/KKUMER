@@ -1,8 +1,10 @@
 package org.kkumulkkum.server.advice;
 
 import lombok.extern.slf4j.Slf4j;
+import org.kkumulkkum.server.exception.AuthException;
 import org.kkumulkkum.server.exception.BusinessException;
 import org.kkumulkkum.server.exception.MeetingException;
+import org.kkumulkkum.server.exception.code.AuthErrorCode;
 import org.kkumulkkum.server.exception.code.BusinessErrorCode;
 import org.kkumulkkum.server.exception.code.MeetingErrorCode;
 import org.springframework.http.ResponseEntity;
@@ -18,6 +20,14 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = {MeetingException.class})
     public ResponseEntity<MeetingErrorCode> handleMeetingException(MeetingException e) {
         log.error("GlobalExceptionHandler catch MeetingException : {}", e.getErrorCode().getMessage());
+        return ResponseEntity
+                .status(e.getErrorCode().getHttpStatus())
+                .body(e.getErrorCode());
+    }
+
+    @ExceptionHandler(value = {AuthException.class})
+    public ResponseEntity<AuthErrorCode> handleAuthException(AuthException e) {
+        log.error("GlobalExceptionHandler catch AuthException : {}", e.getErrorCode().getMessage());
         return ResponseEntity
                 .status(e.getErrorCode().getHttpStatus())
                 .body(e.getErrorCode());
