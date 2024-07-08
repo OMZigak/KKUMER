@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.kkumulkkum.server.constant.Constants;
+import org.kkumulkkum.server.constant.Constant;
 import org.kkumulkkum.server.dto.common.ResponseDto;
 import org.kkumulkkum.server.exception.code.AuthErrorCode;
 import org.springframework.http.HttpStatus;
@@ -41,7 +41,7 @@ public class CustomJwtAuthenticationEntryPoint implements AuthenticationEntryPoi
             AuthErrorCode authErrorCode
     ) throws IOException {
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        response.setCharacterEncoding(Constants.CHARACTER_TYPE);
+        response.setCharacterEncoding(Constant.CHARACTER_ENCODING_UTF8);
         response.setStatus(httpStatus.value());
         PrintWriter writer = response.getWriter();
         writer.write(objectMapper.writeValueAsString(ResponseDto.fail(authErrorCode)));

@@ -4,7 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Header;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import lombok.RequiredArgsConstructor;
+import org.kkumulkkum.server.constant.Constant;
 import org.kkumulkkum.server.dto.auth.response.JwtTokenDto;
 import org.kkumulkkum.server.exception.AuthException;
 import org.kkumulkkum.server.exception.code.AuthErrorCode;
@@ -41,7 +41,7 @@ public class JwtTokenProvider {
                  .setIssuedAt(now)
                  .setExpiration(expirationDate);
 
-         claims.put(USER_ID, userId);
+         claims.put(Constant.USER_ID, userId);
 
          return Jwts.builder()
                  .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
@@ -72,7 +72,7 @@ public class JwtTokenProvider {
 
     public Long getUserIdFromJwt(String token) {
         Claims claims = getBody(token);
-        return Long.valueOf(claims.get(USER_ID).toString());
+        return Long.valueOf(claims.get(Constant.USER_ID).toString());
     }
 
     public static Object checkPrincipal(final Object principal) {
