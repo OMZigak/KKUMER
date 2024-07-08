@@ -7,6 +7,9 @@ import org.kkumulkkum.server.dto.meeting.request.MeetingCreateDto;
 import org.kkumulkkum.server.dto.meeting.request.MeetingRegisterDto;
 import org.kkumulkkum.server.dto.meeting.response.CreatedMeetingDto;
 import org.kkumulkkum.server.dto.meeting.response.MeetingsDto;
+import org.kkumulkkum.server.exception.MeetingException;
+import org.kkumulkkum.server.exception.code.MeetingErrorCode;
+import org.kkumulkkum.server.service.member.MemberRetreiver;
 import org.kkumulkkum.server.service.member.MemberSaver;
 import org.kkumulkkum.server.service.user.UserRetriever;
 import org.springframework.stereotype.Service;
@@ -22,6 +25,7 @@ public class MeetingService {
     private final MeetingRetriever meetingRetriever;
     private final UserRetriever userRetriever;
     private final MemberSaver memberSaver;
+    private final MemberRetreiver memberRetreiver;
 
     public CreatedMeetingDto createMeeting(
             Long userId, MeetingCreateDto meetingCreateDto
@@ -48,6 +52,9 @@ public class MeetingService {
                 .meeting(meeting)
                 .user(userRetriever.findById(userId))
                 .build();
+        if (memberRetreiver.existsByMeetingIdAndUserId(meeting.getId(), userId)) {
+            throw new MeetingException(MeetingErrorCode.ALREADY_JOINED);
+        }
         memberSaver.save(member);
     }
 
