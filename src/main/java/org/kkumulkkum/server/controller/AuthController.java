@@ -27,11 +27,11 @@ public class AuthController {
     }
 
 
-    @PostMapping("/auth/logout")
-    public ResponseEntity<Void> logout(
+    @PostMapping("/auth/signout")
+    public ResponseEntity<Void> signout(
             @UserId final Long userId
     ) {
-        authService.logout(userId);
+        authService.signout(userId);
         return ResponseEntity.ok().build();
     }
 

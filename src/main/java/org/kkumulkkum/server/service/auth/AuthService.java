@@ -44,7 +44,7 @@ public class AuthService {
     }
 
     @Transactional
-    public void logout(final Long userId) {
+    public void signout(final Long userId) {
         tokenRemover.removeById(userId);
     }
 
