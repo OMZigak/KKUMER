@@ -1,4 +1,4 @@
-package org.kkumulkkum.server.auth;
+package org.kkumulkkum.server.annotation;
 
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
