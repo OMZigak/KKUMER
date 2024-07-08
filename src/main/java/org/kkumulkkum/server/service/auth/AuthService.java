@@ -56,7 +56,7 @@ public class AuthService {
         }
     }
 
-    private User loadOrCreateUser(Provider provider, SocialUserDto socialUserDto){
+    private User loadOrCreateUser(final Provider provider, final SocialUserDto socialUserDto){
         boolean isRegistered = userRetriever.existsByProviderIdAndProvider(socialUserDto.platformId(), provider);
 
         if (!isRegistered){

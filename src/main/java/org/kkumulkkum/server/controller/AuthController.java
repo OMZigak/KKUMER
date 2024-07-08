@@ -20,7 +20,7 @@ public class AuthController {
     @PostMapping("/auth/signin")
     public ResponseEntity<JwtTokenDto> signin(
             @NotNull @RequestHeader(Constant.AUTHORIZATION_HEADER) final String providerToken,
-            @Valid @RequestBody UserLoginDto userLoginDto
+            @Valid @RequestBody final UserLoginDto userLoginDto
     ) {
         return ResponseEntity.ok(authService.signin(providerToken, userLoginDto));
     }
