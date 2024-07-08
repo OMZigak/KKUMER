@@ -9,6 +9,7 @@ import org.kkumulkkum.server.exception.code.BusinessErrorCode;
 import org.kkumulkkum.server.exception.code.MeetingErrorCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.NoHandlerFoundException;
@@ -49,6 +50,14 @@ public class GlobalExceptionHandler {
         return ResponseEntity
                 .status(BusinessErrorCode.NOT_FOUND_END_POINT.getHttpStatus())
                 .body(BusinessErrorCode.NOT_FOUND_END_POINT);
+    }
+
+    @ExceptionHandler(value = {MethodArgumentNotValidException.class})
+    public ResponseEntity<BusinessErrorCode> handleException(MethodArgumentNotValidException e) {
+        log.error("handleException() in GlobalExceptionHandler throw MethodArgumentNotValidException : {}", e.getMessage());
+        return ResponseEntity
+                .status(BusinessErrorCode.INVALID_ARGUMENTS.getHttpStatus())
+                .body(BusinessErrorCode.INVALID_ARGUMENTS);
     }
 
     // 기본 예외

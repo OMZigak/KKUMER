@@ -1,7 +1,128 @@
 package org.kkumulkkum.server.service.meeting;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.kkumulkkum.server.domain.Meeting;
+import org.kkumulkkum.server.domain.Member;
+import org.kkumulkkum.server.dto.meeting.request.MeetingCreateDto;
+import org.kkumulkkum.server.dto.meeting.request.MeetingRegisterDto;
+import org.kkumulkkum.server.dto.meeting.response.CreatedMeetingDto;
+import org.kkumulkkum.server.dto.meeting.response.MeetingDto;
+import org.kkumulkkum.server.dto.meeting.response.MeetingsDto;
+import org.kkumulkkum.server.dto.member.MemberUserInfoDto;
+import org.kkumulkkum.server.dto.member.response.MemberDto;
+import org.kkumulkkum.server.dto.member.response.MembersDto;
+import org.kkumulkkum.server.exception.MeetingException;
+import org.kkumulkkum.server.exception.code.MeetingErrorCode;
+import org.kkumulkkum.server.service.member.MemberRetreiver;
+import org.kkumulkkum.server.service.member.MemberSaver;
+import org.kkumulkkum.server.service.user.UserRetriever;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.security.SecureRandom;
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Slf4j
 @Service
+@RequiredArgsConstructor
 public class MeetingService {
+
+    @Value("${s3.default.profile-img}")
+    private String DEFAULT_PROFILE_IMG;
+
+    private final MeetingSaver meetingSaver;
+    private final MeetingRetriever meetingRetriever;
+    private final UserRetriever userRetriever;
+    private final MemberSaver memberSaver;
+    private final MemberRetreiver memberRetreiver;
+
+    public CreatedMeetingDto createMeeting(
+            Long userId, MeetingCreateDto meetingCreateDto
+    ) {
+        String invitationCode = generateInvitationCode();
+
+        Meeting meeting = Meeting.builder()
+                .name(meetingCreateDto.name())
+                .invitationCode(invitationCode)
+                .build();
+        meetingSaver.save(meeting);
+
+        memberSaver.save(Member.builder()
+                .meeting(meeting)
+                .user(userRetriever.findById(userId))
+                .build());
+
+        return new CreatedMeetingDto(meeting.getId(), meeting.getInvitationCode());
+    }
+
+    public void registerMeeting(Long userId, MeetingRegisterDto meetingRegisterDto) {
+        Meeting meeting = meetingRetriever.findByInvitationCode(meetingRegisterDto.invitationCode());
+        Member member = Member.builder()
+                .meeting(meeting)
+                .user(userRetriever.findById(userId))
+                .build();
+        if (memberRetreiver.existsByMeetingIdAndUserId(meeting.getId(), userId)) {
+            throw new MeetingException(MeetingErrorCode.ALREADY_JOINED);
+        }
+        memberSaver.save(member);
+    }
+
+    public MeetingsDto getMeetings(Long userId) {
+        List<Meeting> meetings = meetingRetriever.findAllByUserId(userId);
+        return MeetingsDto.of(meetings);
+    }
+
+    public MeetingDto getMeeting(Long userId, Long meetingId) {
+        validateMember(userId, meetingId);
+        return MeetingDto.of(meetingRetriever.findById(meetingId));
+    }
+
+    public MembersDto getMembers(Long userId, Long meetingId) {
+        validateMember(userId, meetingId);
+        List<MemberUserInfoDto> members = memberRetreiver.findAllByMeetingId(meetingId);
+        return MembersDto.of(
+                members.stream()
+                .map(this::setDefaultImageUrl)
+                .collect(Collectors.toList())
+        );
+    }
+
+    private String generateInvitationCode() {
+        String invitationCode;
+
+        do {
+            invitationCode = generateRandomCode();
+        } while (meetingRetriever.existsByInvitationCode(invitationCode));
+
+        return invitationCode;
+    }
+
+    private String generateRandomCode() {
+        String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        SecureRandom random = new SecureRandom();
+        StringBuilder codeBuilder = new StringBuilder();
+
+        for (int i = 0; i < 6; i++) {
+            int index = random.nextInt(characters.length());
+            codeBuilder.append(characters.charAt(index));
+        }
+
+        return codeBuilder.toString();
+    }
+
+    private void validateMember(Long userId, Long meetingId) {
+        if (!memberRetreiver.existsByMeetingIdAndUserId(meetingId, userId)) {
+            throw new MeetingException(MeetingErrorCode.NOT_JOINED_MEETING);
+        }
+    }
+
+    private MemberDto setDefaultImageUrl(MemberUserInfoDto dto) {
+        if (dto.profileImg() == null) {
+            return MemberDto.of(dto.id(), dto.name(), DEFAULT_PROFILE_IMG);
+        }
+        return MemberDto.of(dto.id(), dto.name(), dto.profileImg());
+    }
+
 }
