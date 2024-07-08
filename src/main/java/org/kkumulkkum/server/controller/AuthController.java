@@ -25,4 +25,11 @@ public class AuthController {
         return ResponseEntity.ok(authService.signin(providerToken, userLoginDto));
     }
 
+    @PostMapping("/auth/reissue")
+    public ResponseEntity<JwtTokenDto> reissue(
+            @NotNull @RequestHeader(Constant.AUTHORIZATION_HEADER) final String refreshToken
+    ) {
+        return ResponseEntity.ok(authService.reissue(refreshToken));
+    }
+
 }

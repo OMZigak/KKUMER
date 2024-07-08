@@ -22,6 +22,9 @@ public enum AuthErrorCode implements DefaultErrorCode {
     EMPTY_TOKEN(HttpStatus.UNAUTHORIZED, 40194, "토큰이 제공되지 않았습니다."),
     MISMATCH_REFRESH_TOKEN(HttpStatus.UNAUTHORIZED, 40195, "리프레시 토큰이 일치하지 않습니다."),
     UNKNOWN_TOKEN(HttpStatus.UNAUTHORIZED, 40196, "알 수 없는 토큰입니다."),
+
+    // 404 Not Found
+    NOT_FOUND_REFRESH_TOKEN(HttpStatus.NOT_FOUND, 40490, "존재하지 않는 리프레시 토큰입니다."),
     ;
 
     private HttpStatus httpStatus;
