@@ -8,7 +8,7 @@ import org.springframework.http.HttpStatus;
 @AllArgsConstructor
 public enum UserErrorCode implements DefaultErrorCode {
     // 404 Not Found
-    NOT_FOUND_USER(HttpStatus.NOT_FOUND, 40410, "모임을 찾을 수 없습니다."),
+    NOT_FOUND_USER(HttpStatus.NOT_FOUND, 40410, "유저를 찾을 수 없습니다."),
     ;
 
     private HttpStatus httpStatus;
