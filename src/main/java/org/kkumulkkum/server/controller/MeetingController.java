@@ -8,6 +8,7 @@ import org.kkumulkkum.server.dto.meeting.request.MeetingRegisterDto;
 import org.kkumulkkum.server.dto.meeting.response.CreatedMeetingDto;
 import org.kkumulkkum.server.dto.meeting.response.MeetingDto;
 import org.kkumulkkum.server.dto.meeting.response.MeetingsDto;
+import org.kkumulkkum.server.dto.member.response.MembersDto;
 import org.kkumulkkum.server.service.meeting.MeetingService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -54,6 +55,14 @@ public class MeetingController {
             @PathVariable Long meetingId
     ) {
         return ResponseEntity.ok(meetingService.getMeeting(userId, meetingId));
+    }
+
+    @GetMapping("/meetings/{meetingId}/members")
+    public ResponseEntity<MembersDto> getMembers(
+            @UserId Long userId,
+            @PathVariable Long meetingId
+    ) {
+        return ResponseEntity.ok(meetingService.getMembers(userId, meetingId));
     }
 
 }
