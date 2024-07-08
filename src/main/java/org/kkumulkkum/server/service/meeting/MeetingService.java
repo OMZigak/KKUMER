@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.kkumulkkum.server.domain.Meeting;
 import org.kkumulkkum.server.domain.Member;
 import org.kkumulkkum.server.dto.meeting.request.MeetingCreateDto;
+import org.kkumulkkum.server.dto.meeting.request.MeetingRegisterDto;
 import org.kkumulkkum.server.dto.meeting.response.CreatedMeetingDto;
 import org.kkumulkkum.server.service.member.MemberSaver;
 import org.kkumulkkum.server.service.user.UserRetriever;
@@ -39,6 +40,15 @@ public class MeetingService {
         return new CreatedMeetingDto(meeting.getId(), meeting.getInvitationCode());
     }
 
+    public void registerMeeting(Long userId, MeetingRegisterDto meetingRegisterDto) {
+        Meeting meeting = meetingRetriever.findByInvitationCode(meetingRegisterDto.invitationCode());
+        Member member = Member.builder()
+                .meeting(meeting)
+                .user(userRetriever.findById(userId))
+                .build();
+        memberSaver.save(member);
+    }
+
     private String generateInvitationCode() {
         String invitationCode;
 
@@ -61,4 +71,5 @@ public class MeetingService {
 
         return codeBuilder.toString();
     }
+
 }

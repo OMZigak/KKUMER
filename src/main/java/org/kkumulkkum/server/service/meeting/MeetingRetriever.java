@@ -1,6 +1,9 @@
 package org.kkumulkkum.server.service.meeting;
 
 import lombok.RequiredArgsConstructor;
+import org.kkumulkkum.server.domain.Meeting;
+import org.kkumulkkum.server.exception.MeetingException;
+import org.kkumulkkum.server.exception.code.MeetingErrorCode;
 import org.kkumulkkum.server.repository.MeetingRepository;
 import org.springframework.stereotype.Component;
 
@@ -14,4 +17,8 @@ public class MeetingRetriever {
         return meetingRepository.existsByInvitationCode(invitationCode);
     }
 
+    public Meeting findByInvitationCode(String invitationCode) {
+        return meetingRepository.findByInvitationCode(invitationCode)
+                .orElseThrow(() -> new MeetingException(MeetingErrorCode.NOT_FOUND_MEETING));
+    }
 }

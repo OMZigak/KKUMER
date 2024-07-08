@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.kkumulkkum.server.annotation.UserId;
 import org.kkumulkkum.server.dto.meeting.request.MeetingCreateDto;
+import org.kkumulkkum.server.dto.meeting.request.MeetingRegisterDto;
 import org.kkumulkkum.server.dto.meeting.response.CreatedMeetingDto;
 import org.kkumulkkum.server.service.meeting.MeetingService;
 import org.springframework.http.ResponseEntity;
@@ -30,6 +31,15 @@ public class MeetingController {
         return ResponseEntity
                 .created(URI.create(createdMeetingDto.id().toString()))
                 .body(createdMeetingDto);
+    }
+
+    @PostMapping("/meetings/register")
+    public ResponseEntity<Void> registerMeeting(
+            @UserId Long userId,
+            @Valid @RequestBody MeetingRegisterDto meetingRegisterDto
+    ) {
+        meetingService.registerMeeting(userId, meetingRegisterDto);
+        return ResponseEntity.ok().build();
     }
 
 }
