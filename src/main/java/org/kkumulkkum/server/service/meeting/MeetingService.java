@@ -6,11 +6,13 @@ import org.kkumulkkum.server.domain.Member;
 import org.kkumulkkum.server.dto.meeting.request.MeetingCreateDto;
 import org.kkumulkkum.server.dto.meeting.request.MeetingRegisterDto;
 import org.kkumulkkum.server.dto.meeting.response.CreatedMeetingDto;
+import org.kkumulkkum.server.dto.meeting.response.MeetingsDto;
 import org.kkumulkkum.server.service.member.MemberSaver;
 import org.kkumulkkum.server.service.user.UserRetriever;
 import org.springframework.stereotype.Service;
 
 import java.security.SecureRandom;
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -47,6 +49,11 @@ public class MeetingService {
                 .user(userRetriever.findById(userId))
                 .build();
         memberSaver.save(member);
+    }
+
+    public MeetingsDto getMeetings(Long userId) {
+        List<Meeting> meetings = meetingRetriever.findAllByUserId(userId);
+        return MeetingsDto.of(meetings);
     }
 
     private String generateInvitationCode() {

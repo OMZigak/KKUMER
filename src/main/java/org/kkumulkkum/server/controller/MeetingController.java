@@ -6,12 +6,10 @@ import org.kkumulkkum.server.annotation.UserId;
 import org.kkumulkkum.server.dto.meeting.request.MeetingCreateDto;
 import org.kkumulkkum.server.dto.meeting.request.MeetingRegisterDto;
 import org.kkumulkkum.server.dto.meeting.response.CreatedMeetingDto;
+import org.kkumulkkum.server.dto.meeting.response.MeetingsDto;
 import org.kkumulkkum.server.service.meeting.MeetingService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 
@@ -40,6 +38,13 @@ public class MeetingController {
     ) {
         meetingService.registerMeeting(userId, meetingRegisterDto);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/meetings")
+    public ResponseEntity<MeetingsDto> getMeetings(
+            @UserId Long userId
+    ) {
+        return ResponseEntity.ok(meetingService.getMeetings(userId));
     }
 
 }
