@@ -32,7 +32,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     ) throws ServletException, IOException {
         final String token = getJwtFromRequest(request);
         jwtTokenValidator.validateAccessToken(token);
-        Long userId = jwtTokenProvider.getUserFromJwt(token);
+        Long userId = jwtTokenProvider.getUserIdFromJwt(token);
         UserAuthentication authentication = UserAuthentication.createUserAuthentication(userId);
         authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
         SecurityContextHolder.getContext().setAuthentication(authentication);
