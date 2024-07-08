@@ -32,6 +32,7 @@ public class AuthService {
     private final TokenSaver tokenSaver;
     private final JwtTokenProvider jwtTokenProvider;
     private final TokenRetriever tokenRetriever;
+    private final TokenRemover tokenRemover;
 
     @Transactional
     public JwtTokenDto signin(final String providerToken, final UserLoginDto userLoginDto) {
@@ -40,6 +41,11 @@ public class AuthService {
         JwtTokenDto tokens = jwtTokenProvider.issueTokens(user.getId());
         saveToken(user.getId(), tokens);
         return tokens;
+    }
+
+    @Transactional
+    public void logout(final Long userId) {
+        tokenRemover.removeById(userId);
     }
 
     @Transactional
