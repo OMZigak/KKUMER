@@ -6,6 +6,7 @@ import org.kkumulkkum.server.domain.Member;
 import org.kkumulkkum.server.dto.meeting.request.MeetingCreateDto;
 import org.kkumulkkum.server.dto.meeting.request.MeetingRegisterDto;
 import org.kkumulkkum.server.dto.meeting.response.CreatedMeetingDto;
+import org.kkumulkkum.server.dto.meeting.response.MeetingDto;
 import org.kkumulkkum.server.dto.meeting.response.MeetingsDto;
 import org.kkumulkkum.server.exception.MeetingException;
 import org.kkumulkkum.server.exception.code.MeetingErrorCode;
@@ -61,6 +62,13 @@ public class MeetingService {
     public MeetingsDto getMeetings(Long userId) {
         List<Meeting> meetings = meetingRetriever.findAllByUserId(userId);
         return MeetingsDto.of(meetings);
+    }
+
+    public MeetingDto getMeeting(Long userId, Long meetingId) {
+        if (!memberRetreiver.existsByMeetingIdAndUserId(meetingId, userId)) {
+            throw new MeetingException(MeetingErrorCode.NOT_JOINED_MEETING);
+        }
+        return MeetingDto.of(meetingRetriever.findById(meetingId));
     }
 
     private String generateInvitationCode() {

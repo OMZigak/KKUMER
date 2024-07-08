@@ -27,4 +27,9 @@ public class MeetingRetriever {
     public List<Meeting> findAllByUserId(Long userId) {
         return meetingRepository.findAllByUserId(userId);
     }
+
+    public Meeting findById(Long meetingId) {
+        return meetingRepository.findById(meetingId)
+                .orElseThrow(() -> new MeetingException(MeetingErrorCode.NOT_FOUND_MEETING));
+    }
 }
