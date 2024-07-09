@@ -3,6 +3,7 @@ package org.kkumulkkum.server.controller;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
+import org.kkumulkkum.server.annotation.UserId;
 import org.kkumulkkum.server.constant.Constant;
 import org.kkumulkkum.server.dto.auth.request.UserLoginDto;
 import org.kkumulkkum.server.dto.auth.response.JwtTokenDto;
@@ -23,6 +24,22 @@ public class AuthController {
             @Valid @RequestBody final UserLoginDto userLoginDto
     ) {
         return ResponseEntity.ok(authService.signin(providerToken, userLoginDto));
+    }
+
+
+    @PostMapping("/auth/signout")
+    public ResponseEntity<Void> signout(
+            @UserId final Long userId
+    ) {
+        authService.signout(userId);
+        return ResponseEntity.ok().build();
+    }
+
+    @PostMapping("/auth/reissue")
+    public ResponseEntity<JwtTokenDto> reissue(
+            @NotNull @RequestHeader(Constant.AUTHORIZATION_HEADER) final String refreshToken
+    ) {
+        return ResponseEntity.ok(authService.reissue(refreshToken));
     }
 
 }

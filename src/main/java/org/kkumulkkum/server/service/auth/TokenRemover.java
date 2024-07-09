@@ -1,18 +1,16 @@
 package org.kkumulkkum.server.service.auth;
 
 import lombok.RequiredArgsConstructor;
-import org.kkumulkkum.server.domain.Token;
 import org.kkumulkkum.server.repository.TokenRepository;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class TokenSaver {
+public class TokenRemover {
 
     private final TokenRepository tokenRepository;
 
-    public void save(final Token token){
-        tokenRepository.save(token);
+    public void removeById(final Long id) {
+        tokenRepository.deleteById(id);
     }
-
 }

@@ -31,18 +31,34 @@ public class AuthService {
     private final UserInfoSaver userInfoSaver;
     private final TokenSaver tokenSaver;
     private final JwtTokenProvider jwtTokenProvider;
+    private final TokenRetriever tokenRetriever;
+    private final TokenRemover tokenRemover;
 
     @Transactional
     public JwtTokenDto signin(final String providerToken, final UserLoginDto userLoginDto) {
         SocialUserDto socialUserDto = getSocialInfo(providerToken, userLoginDto);
         User user = loadOrCreateUser(userLoginDto.provider(), socialUserDto);
         JwtTokenDto tokens = jwtTokenProvider.issueTokens(user.getId());
-        tokenSaver.save(
-                Token.builder()
-                        .id(user.getId())
-                        .refreshToken(tokens.refreshToken())
-                        .build()
-        );
+        saveToken(user.getId(), tokens);
+        return tokens;
+    }
+
+    @Transactional
+    public void signout(final Long userId) {
+        tokenRemover.removeById(userId);
+    }
+
+    @Transactional
+    public JwtTokenDto reissue(final String refreshToken) {
+        Long userId = jwtTokenProvider.getUserIdFromJwt(refreshToken);
+        Token token = tokenRetriever.findByRefreshToken(refreshToken);
+
+        if(!userId.equals(token.getId())) {
+            throw new AuthException(AuthErrorCode.INVALID_TOKEN);
+        }
+
+        JwtTokenDto tokens = jwtTokenProvider.issueTokens(userId);
+        saveToken(userId, tokens);
         return tokens;
     }
 
@@ -68,6 +84,7 @@ public class AuthService {
 
             UserInfo newUserInfo = UserInfo.builder()
                     .email(socialUserDto.email())
+                    .user(newUser)
                     .build();
 
             userSaver.save(newUser);
@@ -75,5 +92,14 @@ public class AuthService {
         }
 
         return userRetriever.findByProviderIdAndProvider(socialUserDto.platformId(), provider);
+    }
+
+    private void saveToken(final Long userId, final JwtTokenDto tokens) {
+        tokenSaver.save(
+                Token.builder()
+                        .id(userId)
+                        .refreshToken(tokens.refreshToken())
+                        .build()
+        );
     }
 }
