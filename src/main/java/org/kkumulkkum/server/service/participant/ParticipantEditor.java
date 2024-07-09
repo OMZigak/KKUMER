@@ -11,4 +11,8 @@ public class ParticipantEditor {
     public void preparePromise(final Participant participant) {
         participant.preparePromise();
     }
+
+    public void departurePromise(final Participant participant) {
+        participant.departurePromise();
+    }
 }

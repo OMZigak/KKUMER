@@ -25,4 +25,13 @@ public class PromiseController {
         return ResponseEntity.ok().build();
     }
 
+    @PatchMapping("/promises/{promiseId}/departure")
+    public ResponseEntity<Void> departurePromise(
+            @UserId Long userId,
+            @PathVariable Long promiseId
+    ) {
+        participantService.departurePromise(userId, promiseId);
+        return ResponseEntity.ok().build();
+    }
+
 }

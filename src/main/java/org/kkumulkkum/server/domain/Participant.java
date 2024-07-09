@@ -56,4 +56,8 @@ public class Participant extends BaseTimeEntity {
     public void preparePromise() {
         this.preparationStartAt = LocalDateTime.now();
     }
+
+    public void departurePromise() {
+        this.departureAt = LocalDateTime.now();
+    }
 }
