@@ -47,4 +47,16 @@ public class UserInfo extends BaseTimeEntity {
         this.user = user;
         this.tardySum = 0L;
     }
+
+    public void updateImage(String imageUrl) {
+        this.profileImg = imageUrl;
+    }
+
+    public void deleteImage() {
+        this.profileImg = null;
+    }
+
+    public void updateName(String name) {
+        this.name = name;
+    }
 }
