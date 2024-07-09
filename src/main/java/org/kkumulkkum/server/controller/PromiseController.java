@@ -34,4 +34,13 @@ public class PromiseController {
         return ResponseEntity.ok().build();
     }
 
+    @PatchMapping("/promises/{promiseId}/arrival")
+    public ResponseEntity<Void> arrivalPromise(
+            @UserId Long userId,
+            @PathVariable Long promiseId
+    ) {
+        participantService.arrivalPromise(userId, promiseId);
+        return ResponseEntity.ok().build();
+    }
+
 }

@@ -36,6 +36,15 @@ public class ParticipantService {
         participantEditor.departurePromise(participant);
     }
 
+    @Transactional
+    public void arrivalPromise(final Long userId, final Long promiseId) {
+        Participant participant = participantRetriever.findByPromiseIdAndUserId(promiseId, userId);
+        if (!validateState(participant, "arrival")) {
+            throw new ParticipantException(ParticipantErrorCode.INVALID_STATE);
+        }
+        participantEditor.arrivalPromise(participant);
+    }
+
     private boolean validateState(final Participant participant, final String status) {
         switch (status) {
             case "preperation":

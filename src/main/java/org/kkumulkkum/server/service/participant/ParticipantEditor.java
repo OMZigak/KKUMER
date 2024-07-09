@@ -15,4 +15,8 @@ public class ParticipantEditor {
     public void departurePromise(final Participant participant) {
         participant.departurePromise();
     }
+
+    public void arrivalPromise(final Participant participant) {
+        participant.arrivalPromise();
+    }
 }
