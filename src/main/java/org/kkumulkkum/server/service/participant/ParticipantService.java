@@ -3,6 +3,7 @@ package org.kkumulkkum.server.service.participant;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.kkumulkkum.server.domain.Participant;
+import org.kkumulkkum.server.dto.participant.response.PreparationStatusDto;
 import org.kkumulkkum.server.exception.ParticipantException;
 import org.kkumulkkum.server.exception.code.ParticipantErrorCode;
 import org.springframework.stereotype.Service;
@@ -45,6 +46,12 @@ public class ParticipantService {
         participantEditor.arrivalPromise(participant);
     }
 
+    @Transactional(readOnly = true)
+    public PreparationStatusDto getPreparation(final Long userId, final Long promiseId) {
+        Participant participant = participantRetriever.findByPromiseIdAndUserId(promiseId, userId);
+        return PreparationStatusDto.from(participant);
+    }
+
     private boolean validateState(final Participant participant, final String status) {
         switch (status) {
             case "preperation":
@@ -71,5 +78,4 @@ public class ParticipantService {
     private boolean isNotNull(LocalDateTime time) {
         return time != null;
     }
-
 }

@@ -2,12 +2,10 @@ package org.kkumulkkum.server.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.kkumulkkum.server.annotation.UserId;
+import org.kkumulkkum.server.dto.participant.response.PreparationStatusDto;
 import org.kkumulkkum.server.service.participant.ParticipantService;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/v1")
@@ -41,6 +39,14 @@ public class ParticipantController {
     ) {
         participantService.arrivalPromise(userId, promiseId);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("/promises/{promiseId}/status")
+    public ResponseEntity<PreparationStatusDto> getPreparationStatus(
+            @UserId final Long userId,
+            @PathVariable("promiseId") final Long promiseId
+    ) {
+        return ResponseEntity.ok().body(participantService.getPreparation(userId, promiseId));
     }
 
 }
