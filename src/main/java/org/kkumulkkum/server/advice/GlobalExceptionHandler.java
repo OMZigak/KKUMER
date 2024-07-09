@@ -2,9 +2,11 @@ package org.kkumulkkum.server.advice;
 
 import lombok.extern.slf4j.Slf4j;
 import org.kkumulkkum.server.exception.AuthException;
+import org.kkumulkkum.server.exception.AwsException;
 import org.kkumulkkum.server.exception.BusinessException;
 import org.kkumulkkum.server.exception.MeetingException;
 import org.kkumulkkum.server.exception.code.AuthErrorCode;
+import org.kkumulkkum.server.exception.code.AwsErrorCode;
 import org.kkumulkkum.server.exception.code.BusinessErrorCode;
 import org.kkumulkkum.server.exception.code.MeetingErrorCode;
 import org.springframework.http.ResponseEntity;
@@ -12,6 +14,7 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 @Slf4j
@@ -29,6 +32,14 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = {AuthException.class})
     public ResponseEntity<AuthErrorCode> handleAuthException(AuthException e) {
         log.error("GlobalExceptionHandler catch AuthException : {}", e.getErrorCode().getMessage());
+        return ResponseEntity
+                .status(e.getErrorCode().getHttpStatus())
+                .body(e.getErrorCode());
+    }
+
+    @ExceptionHandler(value = {AwsException.class})
+    public ResponseEntity<AwsErrorCode> handleAwsException(AwsException e) {
+        log.error("GlobalExceptionHandler catch AwsException : {}", e.getErrorCode().getMessage());
         return ResponseEntity
                 .status(e.getErrorCode().getHttpStatus())
                 .body(e.getErrorCode());
@@ -58,6 +69,13 @@ public class GlobalExceptionHandler {
         return ResponseEntity
                 .status(BusinessErrorCode.INVALID_ARGUMENTS.getHttpStatus())
                 .body(BusinessErrorCode.INVALID_ARGUMENTS);
+    }
+
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public ResponseEntity<BusinessErrorCode> handleMaxSizeException(MaxUploadSizeExceededException e) {
+        return ResponseEntity
+                .status(BusinessErrorCode.PAYLOAD_TOO_LARGE.getHttpStatus())
+                .body(BusinessErrorCode.PAYLOAD_TOO_LARGE);
     }
 
     // 기본 예외
