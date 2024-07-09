@@ -52,4 +52,8 @@ public class Participant extends BaseTimeEntity {
         this.promise = promise;
         this.member = member;
     }
+
+    public void preparePromise() {
+        this.preparationStartAt = LocalDateTime.now();
+    }
 }
