@@ -27,4 +27,13 @@ public class PromiseController {
         return ResponseEntity.created(URI.create(promiseId.toString())).build();
     }
 
+    @PatchMapping("/promises/{promiseId}/completion")
+    public ResponseEntity<Void> completePromise(
+            @UserId Long userId,
+            @PathVariable Long promiseId
+    ) {
+        promiseService.completePromise(userId, promiseId);
+        return ResponseEntity.ok().build();
+    }
+
 }

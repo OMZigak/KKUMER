@@ -18,9 +18,10 @@ import org.springframework.transaction.annotation.Transactional;
 public class PromiseService {
 
     private final PromiseSaver promiseSaver;
+    private final PromiseRetriever promiseRetriever;
+    private final PromiseEditor promiseEditor;
     private final ParticipantSaver participantSaver;
     private final EntityManager entityManager;
-
 
     @Transactional
     public Long createPromise(Long userId, Long meetingId, PromiseCreateDto createPromiseDto) {
@@ -50,5 +51,12 @@ public class PromiseService {
                         .build()).toList()
         );
         return promise.getId();
+    }
+
+    @Transactional
+    public void completePromise(Long userId, Long promiseId) {
+        // TODO: PARTICIPANT 검증
+        Promise promise = promiseRetriever.findById(promiseId);
+        promiseEditor.completePromise(promise);
     }
 }

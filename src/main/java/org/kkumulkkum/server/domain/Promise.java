@@ -67,4 +67,9 @@ public class Promise extends BaseTimeEntity {
         this.meeting = meeting;
         this.isCompleted = false;
     }
+
+    public void complete() {
+        this.isCompleted = true;
+    }
+
 }
