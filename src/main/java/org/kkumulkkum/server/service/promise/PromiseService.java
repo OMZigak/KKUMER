@@ -36,7 +36,6 @@ public class PromiseService {
 
         //TODO: Member 검증
 //        memberRetreiver.existsByMeetingIdAndUserId(meetingId, userId);
-
         Promise promise = promiseRetriever.findById(promiseId);
 
         return PromiseDto.from(promise);
