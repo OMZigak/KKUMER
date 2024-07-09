@@ -5,10 +5,12 @@ import org.kkumulkkum.server.exception.AuthException;
 import org.kkumulkkum.server.exception.AwsException;
 import org.kkumulkkum.server.exception.BusinessException;
 import org.kkumulkkum.server.exception.MeetingException;
+import org.kkumulkkum.server.exception.ParticipantException;
 import org.kkumulkkum.server.exception.code.AuthErrorCode;
 import org.kkumulkkum.server.exception.code.AwsErrorCode;
 import org.kkumulkkum.server.exception.code.BusinessErrorCode;
 import org.kkumulkkum.server.exception.code.MeetingErrorCode;
+import org.kkumulkkum.server.exception.code.ParticipantErrorCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -32,6 +34,14 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = {AuthException.class})
     public ResponseEntity<AuthErrorCode> handleAuthException(AuthException e) {
         log.error("GlobalExceptionHandler catch AuthException : {}", e.getErrorCode().getMessage());
+        return ResponseEntity
+                .status(e.getErrorCode().getHttpStatus())
+                .body(e.getErrorCode());
+    }
+
+    @ExceptionHandler(value = {ParticipantException.class})
+    public ResponseEntity<ParticipantErrorCode> handleParticipantException(ParticipantException e) {
+        log.error("GlobalExceptionHandler catch ParticipantException : {}", e.getErrorCode().getMessage());
         return ResponseEntity
                 .status(e.getErrorCode().getHttpStatus())
                 .body(e.getErrorCode());
