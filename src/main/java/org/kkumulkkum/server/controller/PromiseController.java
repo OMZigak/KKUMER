@@ -23,4 +23,12 @@ public class PromiseController {
     ) {
         return ResponseEntity.ok().body(promiseService.getPromises(userId, meetingId, done));
     }
+
+    @GetMapping("/promises/{promiseId}")
+    public ResponseEntity<PromiseDto> getPromise(
+            @UserId final Long userId,
+            @PathVariable("promiseId") final Long promiseId
+    ) {
+        return ResponseEntity.ok().body(promiseService.getPromise(userId, promiseId));
+    }
 }
