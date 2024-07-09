@@ -84,6 +84,7 @@ public class AuthService {
 
             UserInfo newUserInfo = UserInfo.builder()
                     .email(socialUserDto.email())
+                    .user(newUser)
                     .build();
 
             userSaver.save(newUser);
