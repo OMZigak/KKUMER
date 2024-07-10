@@ -28,4 +28,13 @@ public interface ParticipantRepository extends JpaRepository<Participant, Long> 
             "WHERE p.promise.id = :promiseId")
     List<ParticipantUserInfoDto> findAllByPromiseId(Long promiseId);
 
+    @Query("SELECT new org.kkumulkkum.server.dto.participant.ParticipantUserInfoDto" +
+            "(p.id, ui.name, ui.profileImg) " +
+            "FROM Participant p " +
+            "JOIN Member m ON p.member.id = m.id " +
+            "JOIN UserInfo ui ON m.user.id = ui.user.id " +
+            "JOIN Promise pr ON p.promise.id = pr.id " +
+            "WHERE p.promise.id = :promiseId AND p.arrivalAt > pr.time")
+    List<ParticipantUserInfoDto> findAllLateComersByPromiseId(Long promiseId);
+
 }

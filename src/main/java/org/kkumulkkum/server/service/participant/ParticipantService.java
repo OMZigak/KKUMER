@@ -3,17 +3,17 @@ package org.kkumulkkum.server.service.participant;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.kkumulkkum.server.domain.Participant;
+import org.kkumulkkum.server.domain.Promise;
 import org.kkumulkkum.server.dto.member.MemberUserInfoDto;
 import org.kkumulkkum.server.dto.member.response.MemberDto;
 import org.kkumulkkum.server.dto.participant.ParticipantUserInfoDto;
 import org.kkumulkkum.server.dto.participant.request.PreparationInfoDto;
-import org.kkumulkkum.server.dto.participant.response.ParticipantDto;
-import org.kkumulkkum.server.dto.participant.response.ParticipantsDto;
-import org.kkumulkkum.server.dto.participant.response.PreparationStatusDto;
+import org.kkumulkkum.server.dto.participant.response.*;
 import org.kkumulkkum.server.exception.MeetingException;
 import org.kkumulkkum.server.exception.ParticipantException;
 import org.kkumulkkum.server.exception.code.MeetingErrorCode;
 import org.kkumulkkum.server.exception.code.ParticipantErrorCode;
+import org.kkumulkkum.server.service.promise.PromiseRetriever;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -32,6 +32,7 @@ public class ParticipantService {
 
     private final ParticipantRetriever participantRetriever;
     private final ParticipantEditor participantEditor;
+    private final PromiseRetriever promiseRetriever;
 
     @Transactional
     public void preparePromise(final Long userId, final Long promiseId) {
@@ -71,7 +72,7 @@ public class ParticipantService {
 //        validateParticipant(userId, promiseId); participant 아니여도 모임에만 속해있으면 다른 약속들 볼 수 있잖아
         // TODO: Member 검증
         List<ParticipantUserInfoDto> participants = participantRetriever.findAllByPromiseId(promiseId);
-        return ParticipantsDto.of(
+        return ParticipantsDto.from(
                 participants.stream()
                         .map(participant -> createParticipantDto(participant, userId, promiseId))
                         .collect(Collectors.toList())
@@ -83,6 +84,19 @@ public class ParticipantService {
         Participant participant = participantRetriever.findByPromiseIdAndUserId(promiseId, userId);
         participantEditor.updatePreparationTime(participant, preparationInfoDto);
         participantEditor.updateTravelTime(participant, preparationInfoDto);
+    }
+
+    @Transactional(readOnly = true)
+    public LateComersDto getLateComers(final Long userId, final Long promiseId) {
+        // TODO: MEMBER 검증
+        Promise promise = promiseRetriever.findById(promiseId);
+        List<ParticipantUserInfoDto> lateComers = participantRetriever.findAllLateComersByPromiseId(promiseId);
+        return LateComersDto.of(
+                promise,
+                lateComers.stream()
+                        .map(lateComer -> createLateComerDto(lateComer, userId, promiseId))
+                        .collect(Collectors.toList())
+        );
     }
 
     private boolean validateState(final Participant participant, final String status) {
@@ -124,6 +138,12 @@ public class ParticipantService {
         String state = determineState(participant);  // 상태 결정 로직 호출
 
         return ParticipantDto.of(dto.id(), dto.name(), profileImage, state);
+    }
+
+    private LateComerDto createLateComerDto(ParticipantUserInfoDto dto, Long userId, Long promiseId) {
+        String profileImage = (dto.profileImg() != null) ? dto.profileImg() : DEFAULT_PROFILE_IMG;
+
+        return LateComerDto.of(dto.id(), dto.name(), profileImage);
     }
 
     private String determineState(Participant participant) {

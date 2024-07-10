@@ -28,4 +28,9 @@ public class ParticipantRetriever {
     public List<ParticipantUserInfoDto> findAllByPromiseId(Long promiseId) {
         return participantRepository.findAllByPromiseId(promiseId);
     }
+
+    public List<ParticipantUserInfoDto> findAllLateComersByPromiseId(Long promiseId) {
+        return participantRepository.findAllLateComersByPromiseId(promiseId);
+    }
+
 }

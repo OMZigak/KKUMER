@@ -3,6 +3,7 @@ package org.kkumulkkum.server.controller;
 import lombok.RequiredArgsConstructor;
 import org.kkumulkkum.server.annotation.UserId;
 import org.kkumulkkum.server.dto.participant.request.PreparationInfoDto;
+import org.kkumulkkum.server.dto.participant.response.LateComersDto;
 import org.kkumulkkum.server.dto.participant.response.ParticipantsDto;
 import org.kkumulkkum.server.dto.participant.response.PreparationStatusDto;
 import org.kkumulkkum.server.service.participant.ParticipantService;
@@ -69,4 +70,11 @@ public class ParticipantController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/promises/{promiseId}/tardy")
+    public ResponseEntity<LateComersDto> getLateComers(
+            @UserId final Long userId,
+            @PathVariable("promiseId") final Long promiseId
+    ) {
+        return ResponseEntity.ok().body(participantService.getLateComers(userId, promiseId));
+    }
 }
