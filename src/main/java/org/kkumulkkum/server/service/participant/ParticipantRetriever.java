@@ -21,6 +21,7 @@ public class ParticipantRetriever {
                 .orElseThrow(() -> new ParticipantException(ParticipantErrorCode.NOT_JOINED_PROMISE));
     }
 
+    // Participant 검증
     public boolean existsByPromiseIdAndUserId(Long promiseId, Long userId) {
         return participantRepository.existsByPromiseIdAndUserId(promiseId, userId);
     }
