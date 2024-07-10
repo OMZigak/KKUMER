@@ -9,8 +9,9 @@ import java.util.List;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
 
-    @Query("SELECT CASE WHEN COUNT(m) > 0 THEN TRUE ELSE FALSE END " +
-            "FROM Member m WHERE m.user.id = :userId AND m.meeting.id = :meetingId")
+    @Query("SELECT CASE WHEN EXISTS " +
+            "(SELECT m FROM Member m WHERE m.user.id = :userId AND m.meeting.id = :meetingId) " +
+            "THEN TRUE ELSE FALSE END FROM Member m")
     boolean existsByMeetingIdAndUserId(Long meetingId, Long userId);
 
     @Query("SELECT new org.kkumulkkum.server.dto.member.MemberUserInfoDto" +
