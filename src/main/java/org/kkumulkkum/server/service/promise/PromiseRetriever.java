@@ -7,6 +7,8 @@ import org.kkumulkkum.server.exception.code.PromiseErrorCode;
 import org.kkumulkkum.server.repository.PromiseRepository;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 @RequiredArgsConstructor
 public class PromiseRetriever {
