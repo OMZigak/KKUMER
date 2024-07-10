@@ -1,7 +1,5 @@
 package org.kkumulkkum.server.dto.participant.response;
 
-import org.kkumulkkum.server.domain.Participant;
-
 public record ParticipantDto(
         Long id,
         String name,
