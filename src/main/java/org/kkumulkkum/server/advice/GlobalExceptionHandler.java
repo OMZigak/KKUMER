@@ -1,16 +1,8 @@
 package org.kkumulkkum.server.advice;
 
 import lombok.extern.slf4j.Slf4j;
-import org.kkumulkkum.server.exception.AuthException;
-import org.kkumulkkum.server.exception.AwsException;
-import org.kkumulkkum.server.exception.BusinessException;
-import org.kkumulkkum.server.exception.MeetingException;
-import org.kkumulkkum.server.exception.ParticipantException;
-import org.kkumulkkum.server.exception.code.AuthErrorCode;
-import org.kkumulkkum.server.exception.code.AwsErrorCode;
-import org.kkumulkkum.server.exception.code.BusinessErrorCode;
-import org.kkumulkkum.server.exception.code.MeetingErrorCode;
-import org.kkumulkkum.server.exception.code.ParticipantErrorCode;
+import org.kkumulkkum.server.exception.*;
+import org.kkumulkkum.server.exception.code.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -42,6 +34,14 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(value = {ParticipantException.class})
     public ResponseEntity<ParticipantErrorCode> handleParticipantException(ParticipantException e) {
         log.error("GlobalExceptionHandler catch ParticipantException : {}", e.getErrorCode().getMessage());
+        return ResponseEntity
+                .status(e.getErrorCode().getHttpStatus())
+                .body(e.getErrorCode());
+    }
+
+    @ExceptionHandler(value = {PromiseException.class})
+    public ResponseEntity<PromiseErrorCode> handlePromiseException(PromiseException e) {
+        log.error("GlobalExceptionHandler catch PromiseException : {}", e.getErrorCode().getMessage());
         return ResponseEntity
                 .status(e.getErrorCode().getHttpStatus())
                 .body(e.getErrorCode());

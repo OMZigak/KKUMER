@@ -31,9 +31,9 @@ public class Promise extends BaseTimeEntity {
 
     private String placeName;
 
-    private String x;
+    private Double x;
 
-    private String y;
+    private Double y;
 
     private String address;
 
@@ -49,8 +49,8 @@ public class Promise extends BaseTimeEntity {
                    DressUpLevel dressUpLevel,
                    String penalty,
                    String placeName,
-                   String x,
-                   String y,
+                   Double x,
+                   Double y,
                    String address,
                    String roadAddress,
                    Meeting meeting
@@ -67,4 +67,9 @@ public class Promise extends BaseTimeEntity {
         this.meeting = meeting;
         this.isCompleted = false;
     }
+
+    public void complete() {
+        this.isCompleted = true;
+    }
+
 }
