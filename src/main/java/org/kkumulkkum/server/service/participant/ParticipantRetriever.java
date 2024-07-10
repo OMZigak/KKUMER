@@ -3,7 +3,7 @@ package org.kkumulkkum.server.service.participant;
 import lombok.RequiredArgsConstructor;
 import org.kkumulkkum.server.domain.Participant;
 import org.kkumulkkum.server.dto.participant.ParticipantStatusUserInfoDto;
-import org.kkumulkkum.server.dto.participant.ParticipantUserInfoDto;
+import org.kkumulkkum.server.dto.participant.response.LateComerDto;
 import org.kkumulkkum.server.exception.ParticipantException;
 import org.kkumulkkum.server.exception.code.ParticipantErrorCode;
 import org.kkumulkkum.server.repository.ParticipantRepository;
@@ -26,7 +26,7 @@ public class ParticipantRetriever {
         return participantRepository.findAllByPromiseId(promiseId);
     }
 
-    public List<ParticipantUserInfoDto> findAllLateComersByPromiseId(Long promiseId) {
+    public List<LateComerDto> findAllLateComersByPromiseId(Long promiseId) {
         return participantRepository.findAllLateComersByPromiseId(promiseId);
     }
 
