@@ -19,7 +19,7 @@ public class PromiseController {
     public ResponseEntity<PromisesDto> getPromises(
             @UserId final Long userId,
             @PathVariable("meetingId") final Long meetingId,
-            @RequestParam(required = false) Boolean done
+            @RequestParam(required = false) final Boolean done
     ) {
         return ResponseEntity.ok().body(promiseService.getPromises(userId, meetingId, done));
     }
