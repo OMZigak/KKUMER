@@ -2,6 +2,7 @@ package org.kkumulkkum.server.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.kkumulkkum.server.annotation.UserId;
+import org.kkumulkkum.server.dto.participant.response.ParticipantsDto;
 import org.kkumulkkum.server.dto.participant.response.PreparationStatusDto;
 import org.kkumulkkum.server.service.participant.ParticipantService;
 import org.springframework.http.ResponseEntity;
@@ -48,5 +49,14 @@ public class ParticipantController {
     ) {
         return ResponseEntity.ok().body(participantService.getPreparation(userId, promiseId));
     }
+
+    @GetMapping("/promises/{promiseId}/participants")
+    public ResponseEntity<ParticipantsDto> getParticipants(
+            @UserId final Long userId,
+            @PathVariable("promiseId") final Long promiseId
+    ) {
+        return ResponseEntity.ok().body(participantService.getParticipants(userId, promiseId));
+    }
+
 
 }
