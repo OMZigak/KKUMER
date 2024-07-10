@@ -66,7 +66,7 @@ public class ParticipantController {
             @PathVariable("promiseId") final Long promiseId,
             @RequestBody final PreparationInfoDto preparationInfoDto
     ) {
-        participantService.inputPreparationInfo(userId, promiseId, preparationInfoDto);
+        participantService.insertPreparationInfo(userId, promiseId, preparationInfoDto);
         return ResponseEntity.ok().build();
     }
 
