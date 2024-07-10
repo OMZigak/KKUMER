@@ -6,6 +6,7 @@ import org.kkumulkkum.server.domain.Participant;
 import org.kkumulkkum.server.dto.member.MemberUserInfoDto;
 import org.kkumulkkum.server.dto.member.response.MemberDto;
 import org.kkumulkkum.server.dto.participant.ParticipantUserInfoDto;
+import org.kkumulkkum.server.dto.participant.request.PreparationInfoDto;
 import org.kkumulkkum.server.dto.participant.response.ParticipantDto;
 import org.kkumulkkum.server.dto.participant.response.ParticipantsDto;
 import org.kkumulkkum.server.dto.participant.response.PreparationStatusDto;
@@ -75,6 +76,13 @@ public class ParticipantService {
                         .map(participant -> createParticipantDto(participant, userId, promiseId))
                         .collect(Collectors.toList())
         );
+    }
+
+    @Transactional
+    public void inputPreparationInfo(Long userId, Long promiseId, PreparationInfoDto preparationInfoDto) {
+        Participant participant = participantRetriever.findByPromiseIdAndUserId(promiseId, userId);
+        participantEditor.updatePreparationTime(participant, preparationInfoDto);
+        participantEditor.updateTravelTime(participant, preparationInfoDto);
     }
 
     private boolean validateState(final Participant participant, final String status) {
