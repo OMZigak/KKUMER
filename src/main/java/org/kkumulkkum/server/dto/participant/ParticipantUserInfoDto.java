@@ -5,7 +5,11 @@ public record ParticipantUserInfoDto(
         String name,
         String profileImg
 ) {
-    public static ParticipantUserInfoDto from(Long id, String name, String profileImg) {
+    public static ParticipantUserInfoDto from(
+            Long id,
+            String name,
+            String profileImg
+    ) {
         return new ParticipantUserInfoDto(
                 id,
                 name,

@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.kkumulkkum.server.domain.Participant;
 import org.kkumulkkum.server.domain.Promise;
+import org.kkumulkkum.server.dto.participant.ParticipantStatusUserInfoDto;
 import org.kkumulkkum.server.dto.participant.ParticipantUserInfoDto;
 import org.kkumulkkum.server.dto.participant.request.PreparationInfoDto;
 import org.kkumulkkum.server.dto.participant.response.*;
@@ -65,18 +66,17 @@ public class ParticipantService {
 
     @Transactional(readOnly = true)
     public ParticipantsDto getParticipants(final Long userId, final Long promiseId) {
-//        validateParticipant(userId, promiseId); participant 아니여도 모임에만 속해있으면 다른 약속들 볼 수 있잖아
         // TODO: Member 검증
-        List<ParticipantUserInfoDto> participants = participantRetriever.findAllByPromiseId(promiseId);
+        List<ParticipantStatusUserInfoDto> participants = participantRetriever.findAllByPromiseId(promiseId);
         return ParticipantsDto.from(
                 participants.stream()
-                        .map(participant -> createParticipantDto(participant, userId, promiseId))
+                        .map(this::createParticipantDto)
                         .collect(Collectors.toList())
         );
     }
 
     @Transactional
-    public void inputPreparationInfo(final Long userId, final Long promiseId, final PreparationInfoDto preparationInfoDto) {
+    public void insertPreparationInfo(final Long userId, final Long promiseId, final PreparationInfoDto preparationInfoDto) {
         Participant participant = participantRetriever.findByPromiseIdAndUserId(promiseId, userId);
         participantEditor.updatePreparationTime(participant, preparationInfoDto);
         participantEditor.updateTravelTime(participant, preparationInfoDto);
@@ -90,7 +90,7 @@ public class ParticipantService {
         return LateComersDto.of(
                 promise,
                 lateComers.stream()
-                        .map(lateComer -> createLateComerDto(lateComer, userId, promiseId))
+                        .map(this::createLateComerDto)
                         .collect(Collectors.toList())
         );
     }
@@ -122,33 +122,29 @@ public class ParticipantService {
         return time != null;
     }
 
-    // 이거 Participant 검증
-//    private void validateParticipant(Long userId, Long promiseId) {
-//        if (!participantRetriever.existsByPromiseIdAndUserId(promiseId, userId)) {
-//            throw new ParticipantException(ParticipantErrorCode.FORBIDDEN_PARTICIPANT);
-//        }
-//    }
-
-    private ParticipantDto createParticipantDto(ParticipantUserInfoDto dto, Long userId, Long promiseId) {
+    private ParticipantDto createParticipantDto(ParticipantStatusUserInfoDto dto) {
         String profileImage = (dto.profileImg() != null) ? dto.profileImg() : DEFAULT_PROFILE_IMG;
-        Participant participant = participantRetriever.findByPromiseIdAndUserId(promiseId, userId);
-        String state = determineState(participant);  // 상태 결정 로직 호출
+        String state = determineState(dto.preparationAt(), dto.departureAt(), dto.arrivalAt());  // 상태 결정 로직 호출
 
         return ParticipantDto.of(dto.id(), dto.name(), profileImage, state);
     }
 
-    private LateComerDto createLateComerDto(ParticipantUserInfoDto dto, Long userId, Long promiseId) {
+    private LateComerDto createLateComerDto(ParticipantUserInfoDto dto) {
         String profileImage = (dto.profileImg() != null) ? dto.profileImg() : DEFAULT_PROFILE_IMG;
 
         return LateComerDto.of(dto.id(), dto.name(), profileImage);
     }
 
-    private String determineState(Participant participant) {
-        if (participant.getArrivalAt() != null) {
-            return "도착함";
-        } else if (participant.getDepartureAt() != null) {
+    private String determineState(
+            LocalDateTime preparationAt,
+            LocalDateTime departureAt,
+            LocalDateTime arrivalAt
+    ) {
+        if (arrivalAt != null) {
+            return "도착";
+        } else if (departureAt != null) {
             return "이동중";
-        } else if (participant.getPreparationStartAt() != null) {
+        } else if (preparationAt != null) {
             return "준비중";
         }
         return "꾸물중";
