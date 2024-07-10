@@ -8,5 +8,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.METHOD)
 public @interface IsMember {
-    long meetingIdParamIndex();
+    long meetingIdParamIndex() default -1;
+    long promiseIdParamIndex() default -1;
 }

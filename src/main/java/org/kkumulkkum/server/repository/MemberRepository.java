@@ -20,4 +20,14 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
             "JOIN UserInfo ui ON m.user.id = ui.user.id " +
             "WHERE m.meeting.id = :meetingId")
     List<MemberUserInfoDto> findAllByMeetingId(Long meetingId);
+
+    @Query("SELECT CASE WHEN EXISTS (" +
+            "SELECT m FROM Member m " +
+            "JOIN m.meeting mt " +
+            "JOIN m.user u " +
+            "JOIN Promise p ON p.meeting.id = mt.id " +
+            "WHERE p.id = :promiseId AND u.id = :userId" +
+            ") THEN TRUE ELSE FALSE END " +
+            "FROM Member m")
+    boolean existsByPromiseIdAndUserId(Long promiseId, Long userId);
 }
