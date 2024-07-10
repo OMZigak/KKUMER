@@ -9,6 +9,7 @@ import org.kkumulkkum.server.dto.user.response.UserNameDto;
 import org.kkumulkkum.server.exception.AwsException;
 import org.kkumulkkum.server.exception.code.AwsErrorCode;
 import org.kkumulkkum.server.external.S3Service;
+import org.kkumulkkum.server.service.userInfo.UserInfoEditor;
 import org.kkumulkkum.server.service.userInfo.UserInfoRetriever;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,6 +24,7 @@ public class UserService {
     private final UserInfoRetriever userInfoRetriever;
     private final S3Service s3Service;
     static final String PROFILE_S3_UPLOAD_FOLDER = "profile/";
+    private final UserInfoEditor userInfoEditor;
 
     @Transactional
     public void updateImage(
@@ -41,7 +43,7 @@ public class UserService {
         }
 
         try {
-            userInfo.updateImage(s3Service.uploadImage(PROFILE_S3_UPLOAD_FOLDER, imageUpdateDto.image()));
+            userInfoEditor.updateImage(userInfo, s3Service.uploadImage(PROFILE_S3_UPLOAD_FOLDER, imageUpdateDto.image()));
         } catch (AwsException e) {
             throw new AwsException(e.getErrorCode());
         } catch (RuntimeException | IOException e) {
@@ -64,13 +66,13 @@ public class UserService {
         } catch (RuntimeException | IOException e) {
             throw new RuntimeException(e.getMessage());
         }
-        userInfo.deleteImage();
+        userInfoEditor.deleteImage(userInfo);
     }
 
     @Transactional
     public UserNameDto updateName(final Long userId, final UserNameDto userNameDto) {
         UserInfo userInfo = userInfoRetriever.findByUserId(userId);
-        userInfo.updateName(userNameDto.name());
+        userInfoEditor.updateName(userInfo, userNameDto.name());
 
         return UserNameDto.from(userInfo);
     }
