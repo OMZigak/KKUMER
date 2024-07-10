@@ -80,7 +80,7 @@ public class ParticipantService {
     }
 
     @Transactional
-    public void inputPreparationInfo(Long userId, Long promiseId, PreparationInfoDto preparationInfoDto) {
+    public void inputPreparationInfo(final Long userId, final Long promiseId, final PreparationInfoDto preparationInfoDto) {
         Participant participant = participantRetriever.findByPromiseIdAndUserId(promiseId, userId);
         participantEditor.updatePreparationTime(participant, preparationInfoDto);
         participantEditor.updateTravelTime(participant, preparationInfoDto);
