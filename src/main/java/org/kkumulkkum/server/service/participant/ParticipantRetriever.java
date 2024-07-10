@@ -2,6 +2,7 @@ package org.kkumulkkum.server.service.participant;
 
 import lombok.RequiredArgsConstructor;
 import org.kkumulkkum.server.domain.Participant;
+import org.kkumulkkum.server.dto.participant.ParticipantStatusUserInfoDto;
 import org.kkumulkkum.server.dto.participant.ParticipantUserInfoDto;
 import org.kkumulkkum.server.exception.ParticipantException;
 import org.kkumulkkum.server.exception.code.ParticipantErrorCode;
@@ -21,12 +22,7 @@ public class ParticipantRetriever {
                 .orElseThrow(() -> new ParticipantException(ParticipantErrorCode.NOT_JOINED_PROMISE));
     }
 
-    // Participant 검증
-    public boolean existsByPromiseIdAndUserId(Long promiseId, Long userId) {
-        return participantRepository.existsByPromiseIdAndUserId(promiseId, userId);
-    }
-
-    public List<ParticipantUserInfoDto> findAllByPromiseId(Long promiseId) {
+    public List<ParticipantStatusUserInfoDto> findAllByPromiseId(Long promiseId) {
         return participantRepository.findAllByPromiseId(promiseId);
     }
 
