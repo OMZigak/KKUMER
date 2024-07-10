@@ -126,6 +126,7 @@ public class ParticipantService {
         return time != null;
     }
 
+    // 이거 Participant 검증
 //    private void validateParticipant(Long userId, Long promiseId) {
 //        if (!participantRetriever.existsByPromiseIdAndUserId(promiseId, userId)) {
 //            throw new ParticipantException(ParticipantErrorCode.FORBIDDEN_PARTICIPANT);
