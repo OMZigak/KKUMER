@@ -47,6 +47,14 @@ public class GlobalExceptionHandler {
                 .body(e.getErrorCode());
     }
 
+    @ExceptionHandler(value = {MemberException.class})
+    public ResponseEntity<MemberErrorCode> handleMemberException(MemberException e) {
+        log.error("GlobalExceptionHandler catch MemberException : {}", e.getErrorCode().getMessage());
+        return ResponseEntity
+                .status(e.getErrorCode().getHttpStatus())
+                .body(e.getErrorCode());
+    }
+
     @ExceptionHandler(value = {AwsException.class})
     public ResponseEntity<AwsErrorCode> handleAwsException(AwsException e) {
         log.error("GlobalExceptionHandler catch AwsException : {}", e.getErrorCode().getMessage());

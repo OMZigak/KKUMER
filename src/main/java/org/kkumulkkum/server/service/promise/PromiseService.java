@@ -28,8 +28,6 @@ public class PromiseService {
 
     @Transactional
     public Long createPromise(Long userId, Long meetingId, PromiseCreateDto createPromiseDto) {
-        // TODO: Member 검증
-
         Promise promise = Promise.builder()
                 .meeting(entityManager.getReference(Meeting.class, meetingId))
                 .name(createPromiseDto.name())
@@ -65,26 +63,18 @@ public class PromiseService {
 
     @Transactional(readOnly = true)
     public PromisesDto getPromises(
-            final Long userId,
             final Long meetingId,
             final Boolean done
     ) {
-        //TODO: Member 검증
-//        memberRetreiver.existsByMeetingIdAndUserId(meetingId, userId);
         List<Promise> promises = promiseRetriever.findAllByMeetingId(meetingId);
-
         return PromisesDto.of(promises, done);
     }
 
     @Transactional(readOnly = true)
     public PromiseDto getPromise(
-            final Long userId,
-            final Long promiseId) {
-
-        //TODO: Member 검증
-//        memberRetreiver.existsByMeetingIdAndUserId(meetingId, userId);
+            final Long promiseId
+    ) {
         Promise promise = promiseRetriever.findById(promiseId);
-
         return PromiseDto.from(promise);
     }
 }
