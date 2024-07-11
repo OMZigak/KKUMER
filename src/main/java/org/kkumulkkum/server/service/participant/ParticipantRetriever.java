@@ -30,4 +30,7 @@ public class ParticipantRetriever {
         return participantRepository.findAllLateComersByPromiseId(promiseId);
     }
 
+    public boolean existsByPromiseIdAndUserId(Long promiseId, Long userId) {
+        return participantRepository.existsByPromiseIdAndUserId(promiseId, userId);
+    }
 }

@@ -60,8 +60,7 @@ public class ParticipantService {
     }
 
     @Transactional(readOnly = true)
-    public ParticipantsDto getParticipants(final Long userId, final Long promiseId) {
-        // TODO: Member 검증
+    public ParticipantsDto getParticipants(final Long promiseId) {
         List<ParticipantStatusUserInfoDto> participants = participantRetriever.findAllByPromiseId(promiseId);
         return ParticipantsDto.from(
                 participants.stream()
@@ -78,8 +77,7 @@ public class ParticipantService {
     }
 
     @Transactional(readOnly = true)
-    public LateComersDto getLateComers(final Long userId, final Long promiseId) {
-        // TODO: MEMBER 검증
+    public LateComersDto getLateComers(final Long promiseId) {
         Promise promise = promiseRetriever.findById(promiseId);
         List<LateComerDto> lateComers = participantRetriever.findAllLateComersByPromiseId(promiseId);
         return LateComersDto.of(

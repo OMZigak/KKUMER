@@ -20,4 +20,8 @@ public class MemberRetreiver {
     public List<MemberDto> findAllByMeetingId(Long meetingId) {
         return memberRepository.findAllByMeetingId(meetingId);
     }
+
+    public boolean existsByPromiseIdAndUserId(Long promiseId, Long userId) {
+        return memberRepository.existsByPromiseIdAndUserId(promiseId, userId);
+    }
 }
