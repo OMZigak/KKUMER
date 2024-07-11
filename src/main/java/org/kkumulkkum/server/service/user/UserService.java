@@ -23,8 +23,9 @@ public class UserService {
 
     private final UserInfoRetriever userInfoRetriever;
     private final S3Service s3Service;
-    static final String PROFILE_S3_UPLOAD_FOLDER = "profile/";
     private final UserInfoEditor userInfoEditor;
+
+    static final String PROFILE_S3_UPLOAD_FOLDER = "profile/";
 
     @Transactional
     public void updateImage(
