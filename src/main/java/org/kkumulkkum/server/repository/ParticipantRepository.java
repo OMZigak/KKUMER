@@ -30,7 +30,7 @@ public interface ParticipantRepository extends JpaRepository<Participant, Long> 
             "JOIN Member m ON p.member.id = m.id " +
             "JOIN UserInfo ui ON m.user.id = ui.user.id " +
             "JOIN Promise pr ON p.promise.id = pr.id " +
-            "WHERE p.promise.id = :promiseId AND p.arrivalAt > pr.time")
+            "WHERE p.promise.id = :promiseId AND (p.arrivalAt IS NULL OR p.arrivalAt > pr.time)")
     List<LateComerDto> findAllLateComersByPromiseId(Long promiseId);
 
     @Query("SELECT CASE WHEN EXISTS (" +
