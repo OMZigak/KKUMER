@@ -1,7 +1,7 @@
 package org.kkumulkkum.server.repository;
 
 import org.kkumulkkum.server.domain.Member;
-import org.kkumulkkum.server.dto.member.MemberUserInfoDto;
+import org.kkumulkkum.server.dto.member.response.MemberDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -14,12 +14,12 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
             "THEN TRUE ELSE FALSE END FROM Member m")
     boolean existsByMeetingIdAndUserId(Long meetingId, Long userId);
 
-    @Query("SELECT new org.kkumulkkum.server.dto.member.MemberUserInfoDto" +
+    @Query("SELECT new org.kkumulkkum.server.dto.member.response.MemberDto" +
             "(m.id, ui.name, ui.profileImg) " +
             "FROM Member m " +
             "JOIN UserInfo ui ON m.user.id = ui.user.id " +
             "WHERE m.meeting.id = :meetingId")
-    List<MemberUserInfoDto> findAllByMeetingId(Long meetingId);
+    List<MemberDto> findAllByMeetingId(Long meetingId);
 
     @Query("SELECT CASE WHEN EXISTS (" +
             "SELECT m FROM Member m " +
@@ -30,4 +30,5 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
             ") THEN TRUE ELSE FALSE END " +
             "FROM Member m")
     boolean existsByPromiseIdAndUserId(Long promiseId, Long userId);
+
 }

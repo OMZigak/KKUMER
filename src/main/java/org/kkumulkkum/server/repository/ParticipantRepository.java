@@ -2,7 +2,7 @@ package org.kkumulkkum.server.repository;
 
 import org.kkumulkkum.server.domain.Participant;
 import org.kkumulkkum.server.dto.participant.ParticipantStatusUserInfoDto;
-import org.kkumulkkum.server.dto.participant.ParticipantUserInfoDto;
+import org.kkumulkkum.server.dto.participant.response.LateComerDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -24,14 +24,14 @@ public interface ParticipantRepository extends JpaRepository<Participant, Long> 
             "WHERE p.promise.id = :promiseId")
     List<ParticipantStatusUserInfoDto> findAllByPromiseId(Long promiseId);
 
-    @Query("SELECT new org.kkumulkkum.server.dto.participant.ParticipantUserInfoDto " +
+    @Query("SELECT new org.kkumulkkum.server.dto.participant.response.LateComerDto " +
             "(p.id, ui.name, ui.profileImg) " +
             "FROM Participant p " +
             "JOIN Member m ON p.member.id = m.id " +
             "JOIN UserInfo ui ON m.user.id = ui.user.id " +
             "JOIN Promise pr ON p.promise.id = pr.id " +
             "WHERE p.promise.id = :promiseId AND p.arrivalAt > pr.time")
-    List<ParticipantUserInfoDto> findAllLateComersByPromiseId(Long promiseId);
+    List<LateComerDto> findAllLateComersByPromiseId(Long promiseId);
 
     @Query("SELECT CASE WHEN EXISTS (" +
             "SELECT p FROM Participant p " +
