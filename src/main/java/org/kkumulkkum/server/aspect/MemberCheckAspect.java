@@ -21,17 +21,17 @@ public class MemberCheckAspect {
     @Before("@annotation(checkUserInMeeting)")
     public void checkUserInMeeting(JoinPoint joinPoint, IsMember checkUserInMeeting) throws Throwable {
         Object[] args = joinPoint.getArgs();
-        Long meetingId = (Long) args[(int) checkUserInMeeting.meetingIdParamIndex()];
-        Long promiseId = (Long) args[(int) checkUserInMeeting.promiseIdParamIndex()];
+        int meetingIdParamIndex = checkUserInMeeting.meetingIdParamIndex();
+        int promiseIdParamIndex = checkUserInMeeting.promiseIdParamIndex();
         Long userId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
-        if (meetingId != -1) {
-            if (!memberRetreiver.existsByMeetingIdAndUserId(meetingId, userId)) {
+        if (meetingIdParamIndex != -1) {
+            if (!memberRetreiver.existsByMeetingIdAndUserId((Long) args[meetingIdParamIndex], userId)) {
                 throw new MemberException(MemberErrorCode.NOT_JOINED_MEMBER);
             }
         }
-        if (promiseId != -1) {
-            if (!memberRetreiver.existsByPromiseIdAndUserId(promiseId, userId)) {
+        if (promiseIdParamIndex != -1) {
+            if (!memberRetreiver.existsByPromiseIdAndUserId((Long) args[promiseIdParamIndex], userId)) {
                 throw new MemberException(MemberErrorCode.NOT_JOINED_MEMBER);
             }
         }
