@@ -108,11 +108,4 @@ public class MeetingService {
         }
     }
 
-//    private MemberDto setDefaultImageUrl(MemberUserInfoDto dto) {
-//        if (dto.profileImg() == null) {
-//            return MemberDto.of(dto.id(), dto.name(), DEFAULT_PROFILE_IMG);
-//        }
-//        return MemberDto.of(dto.id(), dto.name(), dto.profileImg());
-//    }
-
 }
