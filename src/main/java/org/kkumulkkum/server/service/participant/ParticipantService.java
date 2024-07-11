@@ -14,6 +14,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -79,6 +80,11 @@ public class ParticipantService {
     @Transactional(readOnly = true)
     public LateComersDto getLateComers(final Long promiseId) {
         Promise promise = promiseRetriever.findById(promiseId);
+        
+        if (promise.getTime().isAfter(LocalDateTime.now())) {
+            return LateComersDto.of(promise, Collections.emptyList());
+        }
+
         List<LateComerDto> lateComers = participantRetriever.findAllLateComersByPromiseId(promiseId);
         return LateComersDto.of(
                 promise,
