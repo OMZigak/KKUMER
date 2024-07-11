@@ -80,9 +80,8 @@ public class ParticipantService {
     @Transactional(readOnly = true)
     public LateComersDto getLateComers(final Long promiseId) {
         Promise promise = promiseRetriever.findById(promiseId);
-        LocalDateTime now = LocalDateTime.now();
-
-        if (promise.getTime().isAfter(now)) {
+        
+        if (promise.getTime().isAfter(LocalDateTime.now())) {
             return LateComersDto.of(promise, Collections.emptyList());
         }
 
