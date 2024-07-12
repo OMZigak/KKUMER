@@ -24,4 +24,22 @@ public interface PromiseRepository extends JpaRepository<Promise, Long> {
             "ORDER BY p.time ASC, p.createdAt ASC")
     Page<Promise> findNextPromiseByUserId(Long userId, LocalDateTime startOfDay, LocalDateTime startOfNextDay, Pageable pageable);
 
+    @Query("SELECT p FROM Participant pt " +
+            "JOIN pt.member m " +
+            "JOIN pt.promise p " +
+            "WHERE m.user.id = :userId " +
+            "AND p.time > CURRENT_TIMESTAMP " +
+            "AND p.isCompleted = false " +
+            "AND p.id <> :nextPromiseId " +
+            "ORDER BY p.time ASC, p.createdAt ASC")
+    Page<Promise> findUpcomingPromisesExcludingNext(Long userId, Long nextPromiseId, Pageable pageable);
+
+    @Query("SELECT p FROM Participant pt " +
+            "JOIN pt.member m " +
+            "JOIN pt.promise p " +
+            "WHERE m.user.id = :userId " +
+            "AND p.time > CURRENT_TIMESTAMP " +
+            "AND p.isCompleted = false " +
+            "ORDER BY p.time ASC, p.createdAt ASC")
+    Page<Promise> findUpcomingPromises(Long userId, Pageable pageable);
 }

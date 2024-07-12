@@ -6,6 +6,7 @@ import org.kkumulkkum.server.annotation.IsMember;
 import org.kkumulkkum.server.annotation.UserId;
 import org.kkumulkkum.server.dto.promise.PromiseCreateDto;
 import org.kkumulkkum.server.dto.promise.response.MainPromiseDto;
+import org.kkumulkkum.server.dto.promise.response.MainPromisesDto;
 import org.kkumulkkum.server.dto.promise.response.PromiseDto;
 import org.kkumulkkum.server.dto.promise.response.PromisesDto;
 import org.kkumulkkum.server.service.promise.PromiseService;
@@ -63,5 +64,12 @@ public class PromiseController {
             @UserId final Long userId
     ) {
         return ResponseEntity.ok().body(promiseService.getNextPromise(userId));
+    }
+
+    @GetMapping("/promises/upcoming")
+    public ResponseEntity<MainPromisesDto> getUpcomingPromise(
+            @UserId final Long userId
+    ) {
+        return ResponseEntity.ok().body(promiseService.getUpcomingPromises(userId));
     }
 }

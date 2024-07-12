@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 @RequiredArgsConstructor
@@ -33,5 +34,15 @@ public class PromiseRetriever {
         return promisePage.stream()
                 .findFirst()
                 .orElseThrow(() -> new PromiseException(PromiseErrorCode.NOT_FOUND_PROMISE));
+    }
+
+    public List<Promise> findUpcomingPromisesExcludingNext(Long userId, Promise nextPromise, int limit) {
+        Page<Promise> promisePage = promiseRepository.findUpcomingPromisesExcludingNext(userId, nextPromise.getId(), PageRequest.of(0, limit));
+        return promisePage.stream().collect(Collectors.toList());
+    }
+
+    public List<Promise> findUpcomingPromises(Long userId, int limit) {
+        Page<Promise> promisePage = promiseRepository.findUpcomingPromises(userId, PageRequest.of(0, limit));
+        return promisePage.stream().collect(Collectors.toList());
     }
 }
