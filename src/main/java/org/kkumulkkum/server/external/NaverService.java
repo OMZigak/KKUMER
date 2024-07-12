@@ -7,6 +7,7 @@ import org.kkumulkkum.server.external.dto.NaverLocationResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestClient;
@@ -28,6 +29,7 @@ public class NaverService {
     @Value("${naver.location-search-url}")
     private String naverLocationSearchUrl;
 
+    @Transactional(readOnly = true)
     public List<LocationsDto> getLocations(String query) {
         try {
             NaverLocationResponse naverLocationResponse = locationSearch(requestMap(query));

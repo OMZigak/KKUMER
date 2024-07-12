@@ -17,6 +17,7 @@ import org.kkumulkkum.server.service.member.MemberRetreiver;
 import org.kkumulkkum.server.service.member.MemberSaver;
 import org.kkumulkkum.server.service.user.UserRetriever;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.security.SecureRandom;
 import java.util.List;
@@ -32,6 +33,7 @@ public class MeetingService {
     private final MemberSaver memberSaver;
     private final MemberRetreiver memberRetreiver;
 
+    @Transactional
     public CreatedMeetingDto createMeeting(
             Long userId, MeetingCreateDto meetingCreateDto
     ) {
@@ -51,6 +53,7 @@ public class MeetingService {
         return new CreatedMeetingDto(meeting.getId(), meeting.getInvitationCode());
     }
 
+    @Transactional
     public void registerMeeting(Long userId, MeetingRegisterDto meetingRegisterDto) {
         Meeting meeting = meetingRetriever.findByInvitationCode(meetingRegisterDto.invitationCode());
         Member member = Member.builder()
@@ -63,15 +66,18 @@ public class MeetingService {
         memberSaver.save(member);
     }
 
+    @Transactional(readOnly = true)
     public MeetingsDto getMeetings(Long userId) {
         List<Meeting> meetings = meetingRetriever.findAllByUserId(userId);
         return MeetingsDto.of(meetings);
     }
 
+    @Transactional(readOnly = true)
     public MeetingDto getMeeting(Long meetingId) {
         return MeetingDto.of(meetingRetriever.findById(meetingId));
     }
 
+    @Transactional(readOnly = true)
     public MembersDto getMembers(Long meetingId) {
         List<MemberDto> members = memberRetreiver.findAllByMeetingId(meetingId);
         return MembersDto.of(members);
