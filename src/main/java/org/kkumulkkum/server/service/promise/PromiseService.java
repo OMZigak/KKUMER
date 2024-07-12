@@ -99,7 +99,11 @@ public class PromiseService {
     public MainPromisesDto getUpcomingPromises(final Long userId) {
         LocalDateTime startOfDay = LocalDate.now().atStartOfDay();
         LocalDateTime startOfNextDay = startOfDay.plusDays(1);
-        Promise nextPromise = promiseRetriever.findNextPromiseByUserId(userId, startOfDay, startOfNextDay).get(0);
-        return MainPromisesDto.from(promiseRetriever.findUpcomingPromisesExcludingNext(userId, nextPromise,4));
+        List<Promise> nextPromise = promiseRetriever.findNextPromiseByUserId(userId, startOfDay, startOfNextDay);
+
+        if (!nextPromise.isEmpty()) {
+            return MainPromisesDto.from(promiseRetriever.findUpcomingPromisesExcludingNext(userId, nextPromise.get(0), 4));
+        }
+        return MainPromisesDto.from(promiseRetriever.findUpcomingPromises(userId, 4));
     }
 }
