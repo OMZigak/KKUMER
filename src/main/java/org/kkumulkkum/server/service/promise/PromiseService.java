@@ -4,6 +4,8 @@ import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.kkumulkkum.server.domain.*;
 import org.kkumulkkum.server.dto.promise.PromiseCreateDto;
+import org.kkumulkkum.server.dto.promise.response.MainPromiseDto;
+import org.kkumulkkum.server.dto.promise.response.MainPromisesDto;
 import org.kkumulkkum.server.dto.promise.response.PromiseDto;
 import org.kkumulkkum.server.dto.promise.response.PromisesDto;
 import org.kkumulkkum.server.exception.PromiseException;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -89,6 +92,29 @@ public class PromiseService {
     ) {
         Promise promise = promiseRetriever.findById(promiseId);
         return PromiseDto.from(promise);
+    }
+
+    @Transactional(readOnly = true)
+    public MainPromiseDto getNextPromise(final Long userId) {
+        LocalDateTime startOfDay = LocalDate.now().atStartOfDay();
+        LocalDateTime startOfNextDay = startOfDay.plusDays(1);
+        List<Promise> promise = promiseRetriever.findNextPromiseByUserId(userId, startOfDay, startOfNextDay);
+        if (promise.isEmpty()) {
+            return null;
+        }
+        return MainPromiseDto.from(promise.get(0));
+    }
+
+    @Transactional(readOnly = true)
+    public MainPromisesDto getUpcomingPromises(final Long userId) {
+        LocalDateTime startOfDay = LocalDate.now().atStartOfDay();
+        LocalDateTime startOfNextDay = startOfDay.plusDays(1);
+        List<Promise> nextPromise = promiseRetriever.findNextPromiseByUserId(userId, startOfDay, startOfNextDay);
+
+        if (!nextPromise.isEmpty()) {
+            return MainPromisesDto.from(promiseRetriever.findUpcomingPromisesExcludingNext(userId, nextPromise.get(0), 4));
+        }
+        return MainPromisesDto.from(promiseRetriever.findUpcomingPromises(userId, 4));
     }
 
     private void updateUserInfo(Participant participant, LocalDateTime promiseTime) {
