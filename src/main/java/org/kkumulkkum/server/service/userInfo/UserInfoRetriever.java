@@ -13,13 +13,13 @@ public class UserInfoRetriever {
 
     private final UserInfoRepository userInfoRepository;
 
-    public UserInfo findByUserId(final Long id) {
-        return userInfoRepository.findByUserId(id)
+    public UserInfo findByUserId(final Long userId) {
+        return userInfoRepository.findByUserId(userId)
                 .orElseThrow(() -> new UserException(UserErrorCode.NOT_FOUND_USER));
     }
 
-    public UserInfo findByParticipantId(final Long id) {
-        return userInfoRepository.findByParticipantId(id)
+    public UserInfo findByParticipantId(final Long participantId) {
+        return userInfoRepository.findByParticipantId(participantId)
                 .orElseThrow(() -> new UserException(UserErrorCode.NOT_FOUND_USER));
     }
 }
