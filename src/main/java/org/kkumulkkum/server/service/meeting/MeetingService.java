@@ -68,13 +68,11 @@ public class MeetingService {
         return MeetingsDto.of(meetings);
     }
 
-    public MeetingDto getMeeting(Long userId, Long meetingId) {
-        validateMember(userId, meetingId);
+    public MeetingDto getMeeting(Long meetingId) {
         return MeetingDto.of(meetingRetriever.findById(meetingId));
     }
 
-    public MembersDto getMembers(Long userId, Long meetingId) {
-        validateMember(userId, meetingId);
+    public MembersDto getMembers(Long meetingId) {
         List<MemberDto> members = memberRetreiver.findAllByMeetingId(meetingId);
         return MembersDto.of(members);
     }
@@ -100,12 +98,6 @@ public class MeetingService {
         }
 
         return codeBuilder.toString();
-    }
-
-    private void validateMember(Long userId, Long meetingId) {
-        if (!memberRetreiver.existsByMeetingIdAndUserId(meetingId, userId)) {
-            throw new MeetingException(MeetingErrorCode.NOT_JOINED_MEETING);
-        }
     }
 
 }
