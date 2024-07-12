@@ -8,6 +8,7 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.method.annotation.HandlerMethodValidationException;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
@@ -81,9 +82,9 @@ public class GlobalExceptionHandler {
                 .body(BusinessErrorCode.NOT_FOUND_END_POINT);
     }
 
-    @ExceptionHandler(value = {MethodArgumentNotValidException.class})
-    public ResponseEntity<BusinessErrorCode> handleException(MethodArgumentNotValidException e) {
-        log.error("handleException() in GlobalExceptionHandler throw MethodArgumentNotValidException : {}", e.getMessage());
+    @ExceptionHandler(value = {HandlerMethodValidationException.class, MethodArgumentNotValidException.class})
+    public ResponseEntity<BusinessErrorCode> handleValidationException(Exception e) {
+        log.error("GlobalExceptionHandler catch MethodArgumentNotValidException : {}", e.getMessage());
         return ResponseEntity
                 .status(BusinessErrorCode.INVALID_ARGUMENTS.getHttpStatus())
                 .body(BusinessErrorCode.INVALID_ARGUMENTS);
@@ -91,6 +92,8 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MaxUploadSizeExceededException.class)
     public ResponseEntity<BusinessErrorCode> handleMaxSizeException(MaxUploadSizeExceededException e) {
+        log.error("GlobalExceptionHandler catch MaxUploadSizeExceededException : {}", e.getMessage());
+        e.printStackTrace();
         return ResponseEntity
                 .status(BusinessErrorCode.PAYLOAD_TOO_LARGE.getHttpStatus())
                 .body(BusinessErrorCode.PAYLOAD_TOO_LARGE);
