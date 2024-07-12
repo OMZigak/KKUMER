@@ -6,6 +6,8 @@ import org.kkumulkkum.server.exception.code.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingRequestHeaderException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.method.annotation.HandlerMethodValidationException;
@@ -74,12 +76,21 @@ public class GlobalExceptionHandler {
     }
 
     // 존재하지 않는 요청에 대한 예외
-    @ExceptionHandler(value = {NoHandlerFoundException.class, HttpRequestMethodNotSupportedException.class})
-    public ResponseEntity<BusinessErrorCode> handleNoPageFoundException(Exception e) {
+    @ExceptionHandler(value = {NoHandlerFoundException.class})
+    public ResponseEntity<BusinessErrorCode> handleNoPageFoundException(NoHandlerFoundException e) {
         log.error("GlobalExceptionHandler catch NoHandlerFoundException : {}", BusinessErrorCode.NOT_FOUND_END_POINT.getMessage());
         return ResponseEntity
                 .status(BusinessErrorCode.NOT_FOUND_END_POINT.getHttpStatus())
                 .body(BusinessErrorCode.NOT_FOUND_END_POINT);
+    }
+
+    // 잘못된 Method로 요청한 경우
+    @ExceptionHandler(value = {HttpRequestMethodNotSupportedException.class})
+    public ResponseEntity<BusinessErrorCode> handleNoPageFoundException(HttpRequestMethodNotSupportedException e) {
+        log.error("GlobalExceptionHandler catch NoHandlerFoundException : {}", BusinessErrorCode.NOT_FOUND_END_POINT.getMessage());
+        return ResponseEntity
+                .status(BusinessErrorCode.METHOD_NOT_ALLOWED.getHttpStatus())
+                .body(BusinessErrorCode.METHOD_NOT_ALLOWED);
     }
 
     @ExceptionHandler(value = {HandlerMethodValidationException.class, MethodArgumentNotValidException.class})
@@ -88,6 +99,22 @@ public class GlobalExceptionHandler {
         return ResponseEntity
                 .status(BusinessErrorCode.INVALID_ARGUMENTS.getHttpStatus())
                 .body(BusinessErrorCode.INVALID_ARGUMENTS);
+    }
+
+    @ExceptionHandler(value = {MissingServletRequestParameterException.class})
+    public ResponseEntity<BusinessErrorCode> handleMissingParameterException(MissingServletRequestParameterException e) {
+        log.error("GlobalExceptionHandler catch MissingServletRequestParameterException : {}", e.getMessage());
+        return ResponseEntity
+                .status(BusinessErrorCode.MISSING_REQUIRED_PARAM.getHttpStatus())
+                .body(BusinessErrorCode.MISSING_REQUIRED_PARAM);
+    }
+
+    @ExceptionHandler(value = {MissingRequestHeaderException.class})
+    public ResponseEntity<BusinessErrorCode> handleMissingHeaderException(MissingRequestHeaderException e) {
+        log.error("GlobalExceptionHandler catch MissingRequestHeaderException : {}", e.getMessage());
+        return ResponseEntity
+                .status(BusinessErrorCode.MISSING_REQUIRED_HEADER.getHttpStatus())
+                .body(BusinessErrorCode.MISSING_REQUIRED_HEADER);
     }
 
     @ExceptionHandler(MaxUploadSizeExceededException.class)
