@@ -89,7 +89,7 @@ public class ParticipantService {
         return LateComersDto.of(
                 promise,
                 lateComers.stream()
-                        .map(lateComer -> LateComerDto.of(lateComer.id(), lateComer.name(), lateComer.profileImg()))
+                        .map(lateComer -> LateComerDto.of(lateComer.participantId(), lateComer.name(), lateComer.profileImg()))
                         .collect(Collectors.toList())
         );
     }
@@ -124,7 +124,7 @@ public class ParticipantService {
     private ParticipantDto createParticipantDto(ParticipantStatusUserInfoDto dto) {
         String state = determineState(dto.preparationAt(), dto.departureAt(), dto.arrivalAt());  // 상태 결정 로직 호출
 
-        return ParticipantDto.of(dto.id(), dto.name(), dto.profileImg(), state);
+        return ParticipantDto.of(dto.participantId(), dto.memberId(), dto.name(), dto.profileImg(), state);
     }
 
     private String determineState(

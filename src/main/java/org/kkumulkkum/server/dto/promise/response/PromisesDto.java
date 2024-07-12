@@ -20,7 +20,7 @@ public record PromisesDto(
     }
 
     public record PromiseDto(
-            Long id,
+            Long promiseId,
             String name,
             int dDay,
             @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd")

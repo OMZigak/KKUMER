@@ -7,8 +7,8 @@ import org.springframework.http.HttpStatus;
 @Getter
 @AllArgsConstructor
 public enum MemberErrorCode implements DefaultErrorCode {
-    // 403 Forbidden
-    NOT_JOINED_MEMBER(HttpStatus.FORBIDDEN, 40310, "모임에 참여하지 않은 회원입니다."),
+    // 403 FORBIDDEN
+    NOT_JOINED_MEMBER(HttpStatus.FORBIDDEN, 40340, "모임에 참여하지 않은 회원입니다."),
     ;
 
     private HttpStatus httpStatus;

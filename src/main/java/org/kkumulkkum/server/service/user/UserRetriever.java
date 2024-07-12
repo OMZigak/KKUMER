@@ -14,8 +14,8 @@ public class UserRetriever {
 
     private final UserRepository userRepository;
 
-    public User findById(final Long id) {
-        return userRepository.findById(id)
+    public User findById(final Long userId) {
+        return userRepository.findById(userId)
                 .orElseThrow(() -> new UserException(UserErrorCode.NOT_FOUND_USER));
     }
   

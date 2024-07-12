@@ -19,7 +19,7 @@ public record MeetingsDto (
     }
 
     public record MeetingDto (
-            Long id,
+            Long meetingId,
             String name,
             int memberCount
     ) {

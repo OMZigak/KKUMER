@@ -2,6 +2,7 @@ package org.kkumulkkum.server.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.kkumulkkum.server.annotation.IsMember;
 import org.kkumulkkum.server.annotation.UserId;
 import org.kkumulkkum.server.dto.meeting.request.MeetingCreateDto;
 import org.kkumulkkum.server.dto.meeting.request.MeetingRegisterDto;
@@ -49,20 +50,20 @@ public class MeetingController {
         return ResponseEntity.ok(meetingService.getMeetings(userId));
     }
 
+    @IsMember(meetingIdParamIndex = 0)
     @GetMapping("/meetings/{meetingId}")
     public ResponseEntity<MeetingDto> getMeeting(
-            @UserId Long userId,
             @PathVariable Long meetingId
     ) {
-        return ResponseEntity.ok(meetingService.getMeeting(userId, meetingId));
+        return ResponseEntity.ok(meetingService.getMeeting(meetingId));
     }
 
+    @IsMember(meetingIdParamIndex = 0)
     @GetMapping("/meetings/{meetingId}/members")
     public ResponseEntity<MembersDto> getMembers(
-            @UserId Long userId,
             @PathVariable Long meetingId
     ) {
-        return ResponseEntity.ok(meetingService.getMembers(userId, meetingId));
+        return ResponseEntity.ok(meetingService.getMembers(meetingId));
     }
 
 }

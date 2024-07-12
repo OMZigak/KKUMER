@@ -1,7 +1,7 @@
 package org.kkumulkkum.server.dto.participant.response;
 
 public record LateComerDto(
-        Long id,
+        Long participantId,
         String name,
         String profileImg
 ) {

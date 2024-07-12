@@ -3,7 +3,8 @@ package org.kkumulkkum.server.dto.participant;
 import java.time.LocalDateTime;
 
 public record ParticipantStatusUserInfoDto(
-        Long id,
+        Long participantId,
+        Long memberId,
         String name,
         String profileImg,
         LocalDateTime preparationAt,
@@ -11,7 +12,8 @@ public record ParticipantStatusUserInfoDto(
         LocalDateTime arrivalAt
 ) {
     public static ParticipantStatusUserInfoDto from(
-            Long id,
+            Long participantId,
+            Long memberId,
             String name,
             String profileImg,
             LocalDateTime preparationAt,
@@ -19,7 +21,8 @@ public record ParticipantStatusUserInfoDto(
             LocalDateTime arrivalAt
     ) {
         return new ParticipantStatusUserInfoDto(
-                id,
+                participantId,
+                memberId,
                 name,
                 profileImg,
                 preparationAt,

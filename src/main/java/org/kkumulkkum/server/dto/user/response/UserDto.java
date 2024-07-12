@@ -3,6 +3,7 @@ package org.kkumulkkum.server.dto.user.response;
 import org.kkumulkkum.server.domain.UserInfo;
 
 public record UserDto(
+        Long userId,
         String name,
         int level,
         int promiseCount,
@@ -12,6 +13,7 @@ public record UserDto(
 ) {
     public static UserDto from(UserInfo userInfo) {
         return new UserDto(
+                userInfo.getUser().getId(),
                 userInfo.getName(),
                 userInfo.getLevel(),
                 userInfo.getPromiseCount(),
