@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 
 public record MainPromiseDto(
-        Long id,
+        Long promiseId,
         String name,
         String meetingName,
         String dressLevel,

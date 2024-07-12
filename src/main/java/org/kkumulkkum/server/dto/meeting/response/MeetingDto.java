@@ -6,7 +6,7 @@ import org.kkumulkkum.server.domain.Meeting;
 import java.time.LocalDateTime;
 
 public record MeetingDto (
-        Long id,
+        Long meetingId,
         String name,
         @JsonFormat(pattern = "yyyy-MM-DD")
         LocalDateTime createdAt,

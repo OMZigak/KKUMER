@@ -1,7 +1,7 @@
 package org.kkumulkkum.server.dto.member.response;
 
 public record MemberDto(
-        Long id,
+        Long memberId,
         String name,
         String profileImg
 ) {

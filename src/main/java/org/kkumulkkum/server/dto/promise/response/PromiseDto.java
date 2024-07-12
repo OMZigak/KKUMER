@@ -6,6 +6,7 @@ import org.kkumulkkum.server.domain.Promise;
 import java.time.LocalDateTime;
 
 public record PromiseDto(
+        Long promiseId,
         String placeName,
         String address,
         String roadAddress,
@@ -16,6 +17,7 @@ public record PromiseDto(
 ) {
     public static PromiseDto from(Promise promise) {
         return new PromiseDto(
+                promise.getId(),
                 promise.getPlaceName(),
                 promise.getAddress(),
                 promise.getRoadAddress(),

@@ -17,7 +17,7 @@ public interface ParticipantRepository extends JpaRepository<Participant, Long> 
     Optional<Participant> findByPromiseIdAndUserId(Long promiseId, Long userId);
 
     @Query("SELECT new org.kkumulkkum.server.dto.participant.ParticipantStatusUserInfoDto " +
-            "(p.id, ui.name, ui.profileImg, p.preparationStartAt, p.departureAt, p.arrivalAt) " +
+            "(p.id, p.member.id, ui.name, ui.profileImg, p.preparationStartAt, p.departureAt, p.arrivalAt) " +
             "FROM Participant p " +
             "JOIN Member m ON p.member.id = m.id " +
             "JOIN UserInfo ui ON m.user.id = ui.user.id " +

@@ -1,14 +1,16 @@
 package org.kkumulkkum.server.dto.participant.response;
 
 public record ParticipantDto(
-        Long id,
+        Long participantId,
+        Long memberId,
         String name,
         String profileImg,
         String state
 ) {
-    public static ParticipantDto of(Long id, String name, String profileImg, String state) {
+    public static ParticipantDto of(Long participantId, Long memberId, String name, String profileImg, String state) {
         return new ParticipantDto(
-                id,
+                participantId,
+                memberId,
                 name,
                 profileImg,
                 state
