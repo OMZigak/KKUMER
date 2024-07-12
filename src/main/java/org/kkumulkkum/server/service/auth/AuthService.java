@@ -16,6 +16,7 @@ import org.kkumulkkum.server.exception.AuthException;
 import org.kkumulkkum.server.exception.code.AuthErrorCode;
 import org.kkumulkkum.server.service.user.UserRetriever;
 import org.kkumulkkum.server.service.user.UserSaver;
+import org.kkumulkkum.server.service.userInfo.UserInfoRetriever;
 import org.kkumulkkum.server.service.userInfo.UserInfoSaver;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,11 +34,14 @@ public class AuthService {
     private final JwtTokenProvider jwtTokenProvider;
     private final TokenRetriever tokenRetriever;
     private final TokenRemover tokenRemover;
+    private final UserInfoRetriever userInfoRetriever;
 
     @Transactional
     public JwtTokenDto signin(final String providerToken, final UserLoginDto userLoginDto) {
         SocialUserDto socialUserDto = getSocialInfo(providerToken, userLoginDto);
         User user = loadOrCreateUser(userLoginDto.provider(), socialUserDto);
+        UserInfo userInfo = userInfoRetriever.findByUserId(user.getId());
+        userInfo.updateFcmToken(userLoginDto.fcmToken());
         JwtTokenDto tokens = jwtTokenProvider.issueTokens(user.getId());
         saveToken(user.getId(), tokens);
         return tokens;

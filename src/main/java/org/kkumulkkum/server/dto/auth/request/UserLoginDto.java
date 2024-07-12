@@ -5,6 +5,8 @@ import org.kkumulkkum.server.domain.enums.Provider;
 
 public record UserLoginDto(
         @NotNull
-        Provider provider
+        Provider provider,
+        @NotNull
+        String fcmToken
 ) {
 }
