@@ -12,6 +12,7 @@ import org.kkumulkkum.server.domain.enums.Provider;
 import org.kkumulkkum.server.domain.enums.Role;
 import org.kkumulkkum.server.dto.auth.request.UserLoginDto;
 import org.kkumulkkum.server.dto.auth.response.JwtTokenDto;
+import org.kkumulkkum.server.dto.auth.response.UserTokenDto;
 import org.kkumulkkum.server.exception.AuthException;
 import org.kkumulkkum.server.exception.code.AuthErrorCode;
 import org.kkumulkkum.server.service.user.UserRetriever;
@@ -37,14 +38,14 @@ public class AuthService {
     private final UserInfoRetriever userInfoRetriever;
 
     @Transactional
-    public JwtTokenDto signin(final String providerToken, final UserLoginDto userLoginDto) {
+    public UserTokenDto signin(final String providerToken, final UserLoginDto userLoginDto) {
         SocialUserDto socialUserDto = getSocialInfo(providerToken, userLoginDto);
         User user = loadOrCreateUser(userLoginDto.provider(), socialUserDto);
         UserInfo userInfo = userInfoRetriever.findByUserId(user.getId());
         userInfo.updateFcmToken(userLoginDto.fcmToken());
         JwtTokenDto tokens = jwtTokenProvider.issueTokens(user.getId());
         saveToken(user.getId(), tokens);
-        return tokens;
+        return UserTokenDto.of(userInfo, tokens);
     }
 
     @Transactional

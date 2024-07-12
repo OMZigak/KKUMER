@@ -7,6 +7,7 @@ import org.kkumulkkum.server.annotation.UserId;
 import org.kkumulkkum.server.constant.Constant;
 import org.kkumulkkum.server.dto.auth.request.UserLoginDto;
 import org.kkumulkkum.server.dto.auth.response.JwtTokenDto;
+import org.kkumulkkum.server.dto.auth.response.UserTokenDto;
 import org.kkumulkkum.server.service.auth.AuthService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,7 @@ public class AuthController {
     private final AuthService authService;
 
     @PostMapping("/auth/signin")
-    public ResponseEntity<JwtTokenDto> signin(
+    public ResponseEntity<UserTokenDto> signin(
             @NotNull @RequestHeader(Constant.AUTHORIZATION_HEADER) final String providerToken,
             @Valid @RequestBody final UserLoginDto userLoginDto
     ) {
