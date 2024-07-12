@@ -4,6 +4,7 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.kkumulkkum.server.annotation.UserId;
 import org.kkumulkkum.server.dto.user.request.ImageUpdateDto;
+import org.kkumulkkum.server.dto.user.request.NameUpdateDto;
 import org.kkumulkkum.server.dto.user.response.UserDto;
 import org.kkumulkkum.server.dto.user.response.UserNameDto;
 import org.kkumulkkum.server.service.user.UserService;
@@ -37,9 +38,9 @@ public class UserController {
     @PatchMapping("/users/me/name")
     public ResponseEntity<UserNameDto> updateName(
             @UserId final Long userId,
-            @Valid @RequestBody final UserNameDto userNameDto
+            @Valid @RequestBody final NameUpdateDto nameUpdateDto
     ) {
-        return ResponseEntity.ok().body(userService.updateName(userId, userNameDto));
+        return ResponseEntity.ok().body(userService.updateName(userId, nameUpdateDto));
     }
 
     @GetMapping("/users/me")

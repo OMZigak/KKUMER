@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.kkumulkkum.server.domain.UserInfo;
 import org.kkumulkkum.server.dto.user.request.ImageUpdateDto;
+import org.kkumulkkum.server.dto.user.request.NameUpdateDto;
 import org.kkumulkkum.server.dto.user.response.UserDto;
 import org.kkumulkkum.server.dto.user.response.UserNameDto;
 import org.kkumulkkum.server.exception.AwsException;
@@ -71,9 +72,9 @@ public class UserService {
     }
 
     @Transactional
-    public UserNameDto updateName(final Long userId, final UserNameDto userNameDto) {
+    public UserNameDto updateName(final Long userId, final NameUpdateDto nameUpdateDto) {
         UserInfo userInfo = userInfoRetriever.findByUserId(userId);
-        userInfoEditor.updateName(userInfo, userNameDto.name());
+        userInfoEditor.updateName(userInfo, nameUpdateDto.name());
 
         return UserNameDto.from(userInfo);
     }
