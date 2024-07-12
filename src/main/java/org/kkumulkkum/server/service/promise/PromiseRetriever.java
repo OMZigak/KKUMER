@@ -23,4 +23,8 @@ public class PromiseRetriever {
         return promiseRepository.findById(id)
                 .orElseThrow(() -> new PromiseException(PromiseErrorCode.NOT_FOUND_PROMISE));
     }
+
+    public boolean existsByArrivedAtIsNull(Long promiseId) {
+        return promiseRepository.existsByArrivedAtIsNull(promiseId);
+    }
 }
