@@ -17,4 +17,9 @@ public class UserInfoRetriever {
         return userInfoRepository.findByUserId(id)
                 .orElseThrow(() -> new UserException(UserErrorCode.NOT_FOUND_USER));
     }
+
+    public UserInfo findByParticipantId(final Long id) {
+        return userInfoRepository.findByParticipantId(id)
+                .orElseThrow(() -> new UserException(UserErrorCode.NOT_FOUND_USER));
+    }
 }

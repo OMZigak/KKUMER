@@ -3,6 +3,7 @@ package org.kkumulkkum.server.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.kkumulkkum.server.annotation.IsMember;
+import org.kkumulkkum.server.annotation.IsParticipant;
 import org.kkumulkkum.server.annotation.UserId;
 import org.kkumulkkum.server.dto.promise.PromiseCreateDto;
 import org.kkumulkkum.server.dto.promise.response.PromiseDto;
@@ -31,12 +32,12 @@ public class PromiseController {
         return ResponseEntity.created(URI.create(promiseId.toString())).build();
     }
 
+    @IsParticipant(promiseIdParamIndex = 0)
     @PatchMapping("/promises/{promiseId}/completion")
     public ResponseEntity<Void> completePromise(
-            @UserId Long userId,
             @PathVariable Long promiseId
     ) {
-        promiseService.completePromise(userId, promiseId);
+        promiseService.completePromise(promiseId);
         return ResponseEntity.ok().build();
     }
 

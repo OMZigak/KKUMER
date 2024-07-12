@@ -22,8 +22,12 @@ public class ParticipantRetriever {
                 .orElseThrow(() -> new ParticipantException(ParticipantErrorCode.NOT_JOINED_PROMISE));
     }
 
-    public List<ParticipantStatusUserInfoDto> findAllByPromiseId(Long promiseId) {
+    public List<Participant> findAllByPromiseId(Long promiseId) {
         return participantRepository.findAllByPromiseId(promiseId);
+    }
+
+    public List<ParticipantStatusUserInfoDto> findAllByPromiseIdWithUserInfo(Long promiseId) {
+        return participantRepository.findAllByPromiseIdWithUserInfo(promiseId);
     }
 
     public List<LateComerDto> findAllLateComersByPromiseId(Long promiseId) {

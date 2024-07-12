@@ -2,18 +2,20 @@ package org.kkumulkkum.server.service.promise;
 
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
-import org.kkumulkkum.server.domain.Meeting;
-import org.kkumulkkum.server.domain.Member;
-import org.kkumulkkum.server.domain.Participant;
-import org.kkumulkkum.server.domain.Promise;
+import org.kkumulkkum.server.domain.*;
 import org.kkumulkkum.server.dto.promise.PromiseCreateDto;
 import org.kkumulkkum.server.dto.promise.response.PromiseDto;
 import org.kkumulkkum.server.dto.promise.response.PromisesDto;
+import org.kkumulkkum.server.exception.PromiseException;
+import org.kkumulkkum.server.exception.code.PromiseErrorCode;
+import org.kkumulkkum.server.service.participant.ParticipantRetriever;
 import org.kkumulkkum.server.service.participant.ParticipantSaver;
-import org.kkumulkkum.server.service.member.MemberRetreiver;
+import org.kkumulkkum.server.service.userInfo.UserInfoRetriever;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Duration;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -24,6 +26,8 @@ public class PromiseService {
     private final PromiseRetriever promiseRetriever;
     private final PromiseEditor promiseEditor;
     private final ParticipantSaver participantSaver;
+    private final ParticipantRetriever participantRetriever;
+    private final UserInfoRetriever userInfoRetriever;
     private final EntityManager entityManager;
 
     @Transactional
@@ -55,10 +59,19 @@ public class PromiseService {
     }
 
     @Transactional
-    public void completePromise(Long userId, Long promiseId) {
-        // TODO: PARTICIPANT 검증
+    public void completePromise(Long promiseId) {
         Promise promise = promiseRetriever.findById(promiseId);
+        if (promise.getTime().isAfter(LocalDateTime.now())) {
+            throw new PromiseException(PromiseErrorCode.NOT_PAST_DUE);
+        }
+
+        if (promiseRetriever.existsByArrivedAtIsNull(promiseId)) {
+            throw new PromiseException(PromiseErrorCode.NOT_ARRIVED_PARTICIPANT_EXISTS);
+        }
+
         promiseEditor.completePromise(promise);
+        List<Participant> participants = participantRetriever.findAllByPromiseId(promiseId);
+        participants.forEach(participant -> updateUserInfo(participant, promise.getTime()));
     }
 
     @Transactional(readOnly = true)
@@ -77,4 +90,16 @@ public class PromiseService {
         Promise promise = promiseRetriever.findById(promiseId);
         return PromiseDto.from(promise);
     }
+
+    private void updateUserInfo(Participant participant, LocalDateTime promiseTime) {
+        UserInfo userInfo = userInfoRetriever.findByParticipantId(participant.getId());
+        userInfo.addPromiseCount();
+        if (promiseTime.isBefore(participant.getArrivalAt())) {
+            userInfo.addLateCount();
+            userInfo.addLateTime(Duration.between(promiseTime, participant.getArrivalAt()).getSeconds());
+        } else {
+            userInfo.levelUp();
+        }
+    }
+
 }

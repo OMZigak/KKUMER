@@ -59,4 +59,27 @@ public class UserInfo extends BaseTimeEntity {
     public void updateName(String name) {
         this.name = name;
     }
+
+    public void addPromiseCount() {
+        this.promiseCount++;
+    }
+
+    public void addLateCount() {
+        this.tardyCount++;
+    }
+
+    public void addLateTime(long time) {
+        this.tardySum += time;
+    }
+
+    public void levelUp() {
+        int count = this.promiseCount - this.tardyCount;
+        if (count == 2) {
+            this.level = 2;
+        } else if (count == 5) {
+            this.level = 3;
+        } else if (count == 10) {
+            this.level = 4;
+        }
+    }
 }

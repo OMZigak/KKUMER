@@ -22,7 +22,7 @@ public interface ParticipantRepository extends JpaRepository<Participant, Long> 
             "JOIN Member m ON p.member.id = m.id " +
             "JOIN UserInfo ui ON m.user.id = ui.user.id " +
             "WHERE p.promise.id = :promiseId")
-    List<ParticipantStatusUserInfoDto> findAllByPromiseId(Long promiseId);
+    List<ParticipantStatusUserInfoDto> findAllByPromiseIdWithUserInfo(Long promiseId);
 
     @Query("SELECT new org.kkumulkkum.server.dto.participant.response.LateComerDto " +
             "(p.id, ui.name, ui.profileImg) " +
@@ -42,4 +42,6 @@ public interface ParticipantRepository extends JpaRepository<Participant, Long> 
             ") THEN TRUE ELSE FALSE END " +
             "FROM Participant p")
     boolean existsByPromiseIdAndUserId(Long promiseId, Long userId);
+
+    List<Participant> findAllByPromiseId(Long promiseId);
 }
