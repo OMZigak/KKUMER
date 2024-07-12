@@ -15,6 +15,8 @@ public class UserInfo extends BaseTimeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String fcmToken;
+
     private String name;
 
     private String profileImg;
@@ -46,6 +48,11 @@ public class UserInfo extends BaseTimeEntity {
         this.tardyCount = 0;
         this.user = user;
         this.tardySum = 0L;
+    }
+
+
+    public void updateFcmToken(String fcmToken) {
+        this.fcmToken = fcmToken;
     }
 
     public void updateImage(String imageUrl) {
