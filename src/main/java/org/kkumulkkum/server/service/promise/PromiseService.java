@@ -12,7 +12,9 @@ import org.kkumulkkum.server.dto.promise.response.MainPromisesDto;
 import org.kkumulkkum.server.dto.promise.response.PromiseDto;
 import org.kkumulkkum.server.dto.promise.response.PromisesDto;
 import org.kkumulkkum.server.exception.PromiseException;
+import org.kkumulkkum.server.exception.code.PromiseErrorCode;
 import org.kkumulkkum.server.service.participant.ParticipantSaver;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -86,19 +88,18 @@ public class PromiseService {
     public MainPromiseDto getNextPromise(final Long userId) {
         LocalDateTime startOfDay = LocalDate.now().atStartOfDay();
         LocalDateTime startOfNextDay = startOfDay.plusDays(1);
-        return MainPromiseDto.from(promiseRetriever.findNextPromiseByUserId(userId, startOfDay, startOfNextDay));
+        List<Promise> promise = promiseRetriever.findNextPromiseByUserId(userId, startOfDay, startOfNextDay);
+        if (promise.isEmpty()) {
+            return null;
+        }
+        return MainPromiseDto.from(promise.get(0));
     }
 
     @Transactional(readOnly = true)
     public MainPromisesDto getUpcomingPromises(final Long userId) {
         LocalDateTime startOfDay = LocalDate.now().atStartOfDay();
         LocalDateTime startOfNextDay = startOfDay.plusDays(1);
-        try {
-            Promise nextPromise = promiseRetriever.findNextPromiseByUserId(userId, startOfDay, startOfNextDay);
-            return MainPromisesDto.from(promiseRetriever.findUpcomingPromisesExcludingNext(userId, nextPromise, 4));
-        } catch (PromiseException e) {
-            // 오늘의 약속이 없는 경우
-            return MainPromisesDto.from(promiseRetriever.findUpcomingPromises(userId, 4));
-        }
+        Promise nextPromise = promiseRetriever.findNextPromiseByUserId(userId, startOfDay, startOfNextDay).get(0);
+        return MainPromisesDto.from(promiseRetriever.findUpcomingPromisesExcludingNext(userId, nextPromise,4));
     }
 }

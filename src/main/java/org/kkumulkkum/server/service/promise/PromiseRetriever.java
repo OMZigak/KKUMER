@@ -28,12 +28,9 @@ public class PromiseRetriever {
                 .orElseThrow(() -> new PromiseException(PromiseErrorCode.NOT_FOUND_PROMISE));
     }
 
-    public Promise findNextPromiseByUserId(Long userId, LocalDateTime startOfDay, LocalDateTime startOfNextDay) {
-        Page<Promise> promisePage = promiseRepository.findNextPromiseByUserId(userId, startOfDay, startOfNextDay, PageRequest.of(0,1));
+    public List<Promise> findNextPromiseByUserId(Long userId, LocalDateTime startOfDay, LocalDateTime startOfNextDay) {
+        return promiseRepository.findNextPromiseByUserId(userId, startOfDay, startOfNextDay, PageRequest.of(0,1));
 
-        return promisePage.stream()
-                .findFirst()
-                .orElseThrow(() -> new PromiseException(PromiseErrorCode.NOT_FOUND_PROMISE));
     }
 
     public List<Promise> findUpcomingPromisesExcludingNext(Long userId, Promise nextPromise, int limit) {

@@ -22,7 +22,7 @@ public interface PromiseRepository extends JpaRepository<Promise, Long> {
             "AND p.time > CURRENT_TIMESTAMP " +
             "AND p.isCompleted = false " +
             "ORDER BY p.time ASC, p.createdAt ASC")
-    Page<Promise> findNextPromiseByUserId(Long userId, LocalDateTime startOfDay, LocalDateTime startOfNextDay, Pageable pageable);
+    List<Promise> findNextPromiseByUserId(Long userId, LocalDateTime startOfDay, LocalDateTime startOfNextDay, Pageable pageable);
 
     @Query("SELECT p FROM Participant pt " +
             "JOIN pt.member m " +
