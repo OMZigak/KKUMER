@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.kkumulkkum.server.annotation.IsMember;
 import org.kkumulkkum.server.annotation.UserId;
 import org.kkumulkkum.server.dto.promise.PromiseCreateDto;
+import org.kkumulkkum.server.dto.promise.response.MainPromiseDto;
 import org.kkumulkkum.server.dto.promise.response.PromiseDto;
 import org.kkumulkkum.server.dto.promise.response.PromisesDto;
 import org.kkumulkkum.server.service.promise.PromiseService;
@@ -57,4 +58,10 @@ public class PromiseController {
         return ResponseEntity.ok().body(promiseService.getPromise(promiseId));
     }
 
+    @GetMapping("/promises/today/next")
+    public ResponseEntity<MainPromiseDto> getNextPromise(
+            @UserId final Long userId
+    ) {
+        return ResponseEntity.ok().body(promiseService.getNextPromise(userId));
+    }
 }

@@ -7,13 +7,15 @@ import org.kkumulkkum.server.domain.Member;
 import org.kkumulkkum.server.domain.Participant;
 import org.kkumulkkum.server.domain.Promise;
 import org.kkumulkkum.server.dto.promise.PromiseCreateDto;
+import org.kkumulkkum.server.dto.promise.response.MainPromiseDto;
 import org.kkumulkkum.server.dto.promise.response.PromiseDto;
 import org.kkumulkkum.server.dto.promise.response.PromisesDto;
 import org.kkumulkkum.server.service.participant.ParticipantSaver;
-import org.kkumulkkum.server.service.member.MemberRetreiver;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -76,5 +78,12 @@ public class PromiseService {
     ) {
         Promise promise = promiseRetriever.findById(promiseId);
         return PromiseDto.from(promise);
+    }
+
+    @Transactional(readOnly = true)
+    public MainPromiseDto getNextPromise(final Long userId) {
+        LocalDateTime startOfDay = LocalDate.now().atStartOfDay();
+        LocalDateTime startOfNextDay = startOfDay.plusDays(1);
+        return MainPromiseDto.from(promiseRetriever.findNextPromiseByUserId(userId, startOfDay, startOfNextDay));
     }
 }
