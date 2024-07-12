@@ -16,7 +16,7 @@ public record UserDto(
                 userInfo.getLevel(),
                 userInfo.getPromiseCount(),
                 userInfo.getTardyCount(),
-                userInfo.getTardySum(),
+                userInfo.getTardySum()/60,
                 userInfo.getProfileImg()
         );
     }

@@ -62,7 +62,7 @@ public class ParticipantService {
 
     @Transactional(readOnly = true)
     public ParticipantsDto getParticipants(final Long promiseId) {
-        List<ParticipantStatusUserInfoDto> participants = participantRetriever.findAllByPromiseId(promiseId);
+        List<ParticipantStatusUserInfoDto> participants = participantRetriever.findAllByPromiseIdWithUserInfo(promiseId);
         return ParticipantsDto.from(
                 participants.stream()
                         .map(this::createParticipantDto)

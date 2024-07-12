@@ -41,5 +41,9 @@ public class PromiseRetriever {
     public List<Promise> findUpcomingPromises(Long userId, int limit) {
         Page<Promise> promisePage = promiseRepository.findUpcomingPromises(userId, PageRequest.of(0, limit));
         return promisePage.stream().collect(Collectors.toList());
+
+    public boolean existsByArrivedAtIsNull(Long promiseId) {
+        return promiseRepository.existsByArrivedAtIsNull(promiseId);
+
     }
 }

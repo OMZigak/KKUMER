@@ -42,4 +42,10 @@ public interface PromiseRepository extends JpaRepository<Promise, Long> {
             "AND p.isCompleted = false " +
             "ORDER BY p.time ASC, p.createdAt ASC")
     Page<Promise> findUpcomingPromises(Long userId, Pageable pageable);
+
+    @Query("SELECT CASE WHEN EXISTS " +
+            "(SELECT p FROM Participant p WHERE p.promise.id = :promiseId AND p.arrivalAt IS NULL) " +
+            "THEN TRUE ELSE FALSE END FROM Participant p")
+    boolean existsByArrivedAtIsNull(Long promiseId);
+
 }
