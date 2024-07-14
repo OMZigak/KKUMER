@@ -19,11 +19,17 @@ public class UserRetriever {
                 .orElseThrow(() -> new UserException(UserErrorCode.NOT_FOUND_USER));
     }
   
-    public boolean existsByProviderIdAndProvider(final String providerId, final Provider provider) {
+    public boolean existsByProviderIdAndProvider(
+            final String providerId,
+            final Provider provider
+    ) {
         return userRepository.existsByProviderIdAndProvider(providerId, provider);
     }
 
-    public User findByProviderIdAndProvider(final String providerId, final Provider provider) {
+    public User findByProviderIdAndProvider(
+            final String providerId,
+            final Provider provider
+    ) {
         return userRepository.findByProviderIdAndProvider(providerId, provider)
                 .orElseThrow(() -> new UserException(UserErrorCode.NOT_FOUND_USER));
     }

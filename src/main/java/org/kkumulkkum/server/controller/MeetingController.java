@@ -25,8 +25,8 @@ public class MeetingController {
 
     @PostMapping("/meetings")
     public ResponseEntity<CreatedMeetingDto> createMeeting(
-            @UserId Long userId,
-            @Valid @RequestBody MeetingCreateDto meetingCreateDto
+            @UserId final Long userId,
+            @Valid @RequestBody final MeetingCreateDto meetingCreateDto
     ) {
         CreatedMeetingDto createdMeetingDto = meetingService.createMeeting(userId, meetingCreateDto);
         return ResponseEntity
@@ -36,8 +36,8 @@ public class MeetingController {
 
     @PostMapping("/meetings/register")
     public ResponseEntity<Void> registerMeeting(
-            @UserId Long userId,
-            @Valid @RequestBody MeetingRegisterDto meetingRegisterDto
+            @UserId final Long userId,
+            @Valid @RequestBody final MeetingRegisterDto meetingRegisterDto
     ) {
         meetingService.registerMeeting(userId, meetingRegisterDto);
         return ResponseEntity.ok().build();
@@ -45,7 +45,7 @@ public class MeetingController {
 
     @GetMapping("/meetings")
     public ResponseEntity<MeetingsDto> getMeetings(
-            @UserId Long userId
+            @UserId final Long userId
     ) {
         return ResponseEntity.ok(meetingService.getMeetings(userId));
     }
@@ -53,7 +53,7 @@ public class MeetingController {
     @IsMember(meetingIdParamIndex = 0)
     @GetMapping("/meetings/{meetingId}")
     public ResponseEntity<MeetingDto> getMeeting(
-            @PathVariable Long meetingId
+            @PathVariable final Long meetingId
     ) {
         return ResponseEntity.ok(meetingService.getMeeting(meetingId));
     }
@@ -61,7 +61,7 @@ public class MeetingController {
     @IsMember(meetingIdParamIndex = 0)
     @GetMapping("/meetings/{meetingId}/members")
     public ResponseEntity<MembersDto> getMembers(
-            @PathVariable Long meetingId
+            @PathVariable final Long meetingId
     ) {
         return ResponseEntity.ok(meetingService.getMembers(meetingId));
     }

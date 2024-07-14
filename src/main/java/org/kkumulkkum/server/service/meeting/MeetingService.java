@@ -35,7 +35,8 @@ public class MeetingService {
 
     @Transactional
     public CreatedMeetingDto createMeeting(
-            Long userId, MeetingCreateDto meetingCreateDto
+            final Long userId,
+            final MeetingCreateDto meetingCreateDto
     ) {
         String invitationCode = generateInvitationCode();
 
@@ -54,7 +55,10 @@ public class MeetingService {
     }
 
     @Transactional
-    public void registerMeeting(Long userId, MeetingRegisterDto meetingRegisterDto) {
+    public void registerMeeting(
+            final Long userId,
+            final MeetingRegisterDto meetingRegisterDto
+    ) {
         Meeting meeting = meetingRetriever.findByInvitationCode(meetingRegisterDto.invitationCode());
         Member member = Member.builder()
                 .meeting(meeting)
@@ -67,18 +71,18 @@ public class MeetingService {
     }
 
     @Transactional(readOnly = true)
-    public MeetingsDto getMeetings(Long userId) {
+    public MeetingsDto getMeetings(final Long userId) {
         List<Meeting> meetings = meetingRetriever.findAllByUserId(userId);
         return MeetingsDto.from(meetings);
     }
 
     @Transactional(readOnly = true)
-    public MeetingDto getMeeting(Long meetingId) {
+    public MeetingDto getMeeting(final Long meetingId) {
         return MeetingDto.from(meetingRetriever.findById(meetingId));
     }
 
     @Transactional(readOnly = true)
-    public MembersDto getMembers(Long meetingId) {
+    public MembersDto getMembers(final Long meetingId) {
         List<MemberDto> members = memberRetreiver.findAllByMeetingId(meetingId);
         return MembersDto.from(members);
     }

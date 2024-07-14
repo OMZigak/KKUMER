@@ -30,7 +30,8 @@ public class UserService {
 
     @Transactional
     public void updateImage(
-            final Long userId, final ImageUpdateDto imageUpdateDto
+            final Long userId,
+            final ImageUpdateDto imageUpdateDto
     ) {
         UserInfo userInfo = userInfoRetriever.findByUserId(userId);
 
@@ -45,7 +46,9 @@ public class UserService {
         }
 
         try {
-            userInfoEditor.updateImage(userInfo, s3Service.uploadImage(PROFILE_S3_UPLOAD_FOLDER, imageUpdateDto.image()));
+            userInfoEditor.updateImage(
+                    userInfo, s3Service.uploadImage(PROFILE_S3_UPLOAD_FOLDER, imageUpdateDto.image())
+            );
         } catch (AwsException e) {
             throw new AwsException(e.getErrorCode());
         } catch (RuntimeException | IOException e) {
@@ -72,7 +75,10 @@ public class UserService {
     }
 
     @Transactional
-    public UserNameDto updateName(final Long userId, final NameUpdateDto nameUpdateDto) {
+    public UserNameDto updateName(
+            final Long userId,
+            final NameUpdateDto nameUpdateDto
+    ) {
         UserInfo userInfo = userInfoRetriever.findByUserId(userId);
         userInfoEditor.updateName(userInfo, nameUpdateDto.name());
 

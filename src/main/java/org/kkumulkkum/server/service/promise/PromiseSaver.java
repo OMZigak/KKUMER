@@ -11,7 +11,7 @@ public class PromiseSaver {
 
     private final PromiseRepository promiseRepository;
 
-    public void save(Promise promise) {
+    public void save(final Promise promise) {
         promiseRepository.save(promise);
     }
 }

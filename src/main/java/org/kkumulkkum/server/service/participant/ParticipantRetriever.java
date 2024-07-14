@@ -17,24 +17,30 @@ public class ParticipantRetriever {
 
     private final ParticipantRepository participantRepository;
 
-    public Participant findByPromiseIdAndUserId(Long promiseId, Long userId) {
+    public Participant findByPromiseIdAndUserId(
+            final Long promiseId,
+            final Long userId
+    ) {
         return participantRepository.findByPromiseIdAndUserId(promiseId, userId)
                 .orElseThrow(() -> new ParticipantException(ParticipantErrorCode.NOT_JOINED_PROMISE));
     }
 
-    public List<Participant> findAllByPromiseId(Long promiseId) {
+    public List<Participant> findAllByPromiseId(final Long promiseId) {
         return participantRepository.findAllByPromiseId(promiseId);
     }
 
-    public List<ParticipantStatusUserInfoDto> findAllByPromiseIdWithUserInfo(Long promiseId) {
+    public List<ParticipantStatusUserInfoDto> findAllByPromiseIdWithUserInfo(final Long promiseId) {
         return participantRepository.findAllByPromiseIdWithUserInfo(promiseId);
     }
 
-    public List<LateComerDto> findAllLateComersByPromiseId(Long promiseId) {
+    public List<LateComerDto> findAllLateComersByPromiseId(final Long promiseId) {
         return participantRepository.findAllLateComersByPromiseId(promiseId);
     }
 
-    public boolean existsByPromiseIdAndUserId(Long promiseId, Long userId) {
+    public boolean existsByPromiseIdAndUserId(
+            final Long promiseId,
+            final Long userId
+    ) {
         return participantRepository.existsByPromiseIdAndUserId(promiseId, userId);
     }
 }

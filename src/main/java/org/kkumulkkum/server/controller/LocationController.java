@@ -20,7 +20,7 @@ public class LocationController {
 
     @GetMapping("/locations")
     public ResponseEntity<List<LocationsDto>> getLocations(
-            @RequestParam(name="q") String query
+            @RequestParam(name="q") final String query
     ) {
         return ResponseEntity.ok(naverService.getLocations(query));
     }
