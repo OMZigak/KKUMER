@@ -19,31 +19,54 @@ public class PromiseRetriever {
 
     private final PromiseRepository promiseRepository;
 
-    public List<Promise> findAllByMeetingId(Long meetingId) {
+    public List<Promise> findAllByMeetingId(final Long meetingId) {
         return promiseRepository.findAllByMeetingId(meetingId);
     }
 
-    public Promise findById(Long id) {
+    public Promise findById(final Long id) {
         return promiseRepository.findById(id)
                 .orElseThrow(() -> new PromiseException(PromiseErrorCode.NOT_FOUND_PROMISE));
     }
 
-    public List<Promise> findNextPromiseByUserId(Long userId, LocalDateTime startOfDay, LocalDateTime startOfNextDay) {
-        return promiseRepository.findNextPromiseByUserId(userId, startOfDay, startOfNextDay, PageRequest.of(0,1));
+    public List<Promise> findNextPromiseByUserId(
+            final Long userId,
+            final LocalDateTime startOfDay,
+            final LocalDateTime startOfNextDay
+    ) {
+        return promiseRepository.findNextPromiseByUserId(
+                userId,
+                startOfDay,
+                startOfNextDay,
+                PageRequest.of(0,1)
+        );
 
     }
 
-    public List<Promise> findUpcomingPromisesExcludingNext(Long userId, Promise nextPromise, int limit) {
-        Page<Promise> promisePage = promiseRepository.findUpcomingPromisesExcludingNext(userId, nextPromise.getId(), PageRequest.of(0, limit));
+    public List<Promise> findUpcomingPromisesExcludingNext(
+            final Long userId,
+            final Promise nextPromise,
+            final int limit
+    ) {
+        Page<Promise> promisePage = promiseRepository.findUpcomingPromisesExcludingNext(
+                userId,
+                nextPromise.getId(),
+                PageRequest.of(0, limit)
+        );
         return promisePage.stream().collect(Collectors.toList());
     }
 
-    public List<Promise> findUpcomingPromises(Long userId, int limit) {
-        Page<Promise> promisePage = promiseRepository.findUpcomingPromises(userId, PageRequest.of(0, limit));
+    public List<Promise> findUpcomingPromises(
+            final Long userId,
+            final int limit
+    ) {
+        Page<Promise> promisePage = promiseRepository.findUpcomingPromises(
+                userId,
+                PageRequest.of(0, limit)
+        );
         return promisePage.stream().collect(Collectors.toList());
     }
 
-    public boolean existsByArrivedAtIsNull(Long promiseId) {
+    public boolean existsByArrivedAtIsNull(final Long promiseId) {
         return promiseRepository.existsByArrivedAtIsNull(promiseId);
 
     }

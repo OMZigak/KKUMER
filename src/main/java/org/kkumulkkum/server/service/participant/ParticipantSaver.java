@@ -13,11 +13,7 @@ public class ParticipantSaver {
 
     private final ParticipantRepository participantRepository;
 
-    public void save(Participant participant) {
-        participantRepository.save(participant);
-    }
-
-    public void saveAll(List<Participant> participants) {
+    public void saveAll(final List<Participant> participants) {
         participantRepository.saveAll(participants);
     }
 }

@@ -6,7 +6,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class PromiseEditor {
 
-    public void completePromise(Promise promise) {
+    public void completePromise(final Promise promise) {
         promise.complete();
     }
 }

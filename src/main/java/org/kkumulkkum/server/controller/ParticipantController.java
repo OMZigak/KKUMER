@@ -20,8 +20,8 @@ public class ParticipantController {
 
     @PatchMapping("/promises/{promiseId}/preperation")
     public ResponseEntity<Void> preparePromise(
-            @UserId Long userId,
-            @PathVariable Long promiseId
+            @UserId final Long userId,
+            @PathVariable final Long promiseId
     ) {
         participantService.preparePromise(userId, promiseId);
         return ResponseEntity.ok().build();
@@ -29,8 +29,8 @@ public class ParticipantController {
 
     @PatchMapping("/promises/{promiseId}/departure")
     public ResponseEntity<Void> departurePromise(
-            @UserId Long userId,
-            @PathVariable Long promiseId
+            @UserId final Long userId,
+            @PathVariable final Long promiseId
     ) {
         participantService.departurePromise(userId, promiseId);
         return ResponseEntity.ok().build();
@@ -38,8 +38,8 @@ public class ParticipantController {
 
     @PatchMapping("/promises/{promiseId}/arrival")
     public ResponseEntity<Void> arrivalPromise(
-            @UserId Long userId,
-            @PathVariable Long promiseId
+            @UserId final Long userId,
+            @PathVariable final Long promiseId
     ) {
         participantService.arrivalPromise(userId, promiseId);
         return ResponseEntity.ok().build();

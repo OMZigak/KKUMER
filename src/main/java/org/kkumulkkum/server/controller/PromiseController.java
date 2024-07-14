@@ -26,9 +26,9 @@ public class PromiseController {
     @IsMember(meetingIdParamIndex = 1)
     @PostMapping("/meetings/{meetingId}/promises")
     public ResponseEntity<Void> createPromise(
-            @UserId Long userId,
-            @PathVariable Long meetingId,
-            @Valid @RequestBody PromiseCreateDto createPromiseDto
+            @UserId final Long userId,
+            @PathVariable final Long meetingId,
+            @Valid @RequestBody final PromiseCreateDto createPromiseDto
     ) {
         Long promiseId = promiseService.createPromise(userId, meetingId, createPromiseDto);
         return ResponseEntity.created(URI.create(promiseId.toString())).build();
@@ -37,7 +37,7 @@ public class PromiseController {
     @IsParticipant(promiseIdParamIndex = 0)
     @PatchMapping("/promises/{promiseId}/completion")
     public ResponseEntity<Void> completePromise(
-            @PathVariable Long promiseId
+            @PathVariable final Long promiseId
     ) {
         promiseService.completePromise(promiseId);
         return ResponseEntity.ok().build();

@@ -44,16 +44,17 @@ public class Promise extends BaseTimeEntity {
     private Meeting meeting;
 
     @Builder
-    public Promise(String name,
-                   LocalDateTime time,
-                   DressUpLevel dressUpLevel,
-                   String penalty,
-                   String placeName,
-                   Double x,
-                   Double y,
-                   String address,
-                   String roadAddress,
-                   Meeting meeting
+    public Promise(
+            String name,
+            LocalDateTime time,
+            DressUpLevel dressUpLevel,
+            String penalty,
+            String placeName,
+            Double x,
+            Double y,
+            String address,
+            String roadAddress,
+            Meeting meeting
     ) {
         this.name = name;
         this.time = time;

@@ -15,20 +15,20 @@ public class MeetingRetriever {
 
     private final MeetingRepository meetingRepository;
 
-    public boolean existsByInvitationCode(String invitationCode) {
+    public boolean existsByInvitationCode(final String invitationCode) {
         return meetingRepository.existsByInvitationCode(invitationCode);
     }
 
-    public Meeting findByInvitationCode(String invitationCode) {
+    public Meeting findByInvitationCode(final String invitationCode) {
         return meetingRepository.findByInvitationCode(invitationCode)
                 .orElseThrow(() -> new MeetingException(MeetingErrorCode.NOT_FOUND_MEETING));
     }
 
-    public List<Meeting> findAllByUserId(Long userId) {
+    public List<Meeting> findAllByUserId(final Long userId) {
         return meetingRepository.findAllByUserId(userId);
     }
 
-    public Meeting findById(Long meetingId) {
+    public Meeting findById(final Long meetingId) {
         return meetingRepository.findById(meetingId)
                 .orElseThrow(() -> new MeetingException(MeetingErrorCode.NOT_FOUND_MEETING));
     }

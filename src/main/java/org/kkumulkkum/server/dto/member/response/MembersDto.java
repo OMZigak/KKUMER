@@ -6,7 +6,7 @@ public record MembersDto(
         int memberCount,
         List<MemberDto> members
 ) {
-    public static MembersDto of(List<MemberDto> members) {
+    public static MembersDto from(List<MemberDto> members) {
         return new MembersDto(
                 members.size(),
                 members

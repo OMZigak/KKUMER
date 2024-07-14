@@ -34,7 +34,11 @@ public class PromiseService {
     private final EntityManager entityManager;
 
     @Transactional
-    public Long createPromise(Long userId, Long meetingId, PromiseCreateDto createPromiseDto) {
+    public Long createPromise(
+            final Long userId,
+            final Long meetingId,
+            final PromiseCreateDto createPromiseDto
+    ) {
         Promise promise = Promise.builder()
                 .meeting(entityManager.getReference(Meeting.class, meetingId))
                 .name(createPromiseDto.name())
@@ -62,7 +66,7 @@ public class PromiseService {
     }
 
     @Transactional
-    public void completePromise(Long promiseId) {
+    public void completePromise(final Long promiseId) {
         Promise promise = promiseRetriever.findById(promiseId);
         if (promise.getTime().isAfter(LocalDateTime.now())) {
             throw new PromiseException(PromiseErrorCode.NOT_PAST_DUE);
@@ -112,12 +116,17 @@ public class PromiseService {
         List<Promise> nextPromise = promiseRetriever.findNextPromiseByUserId(userId, startOfDay, startOfNextDay);
 
         if (!nextPromise.isEmpty()) {
-            return MainPromisesDto.from(promiseRetriever.findUpcomingPromisesExcludingNext(userId, nextPromise.get(0), 4));
+            return MainPromisesDto.from(
+                    promiseRetriever.findUpcomingPromisesExcludingNext(userId, nextPromise.get(0), 4)
+            );
         }
         return MainPromisesDto.from(promiseRetriever.findUpcomingPromises(userId, 4));
     }
 
-    private void updateUserInfo(Participant participant, LocalDateTime promiseTime) {
+    private void updateUserInfo(
+            final Participant participant,
+            final LocalDateTime promiseTime
+    ) {
         UserInfo userInfo = userInfoRetriever.findByParticipantId(participant.getId());
         userInfo.addPromiseCount();
         if (promiseTime.isBefore(participant.getArrivalAt())) {

@@ -21,11 +21,17 @@ public class ParticipantEditor {
         participant.arrivalPromise();
     }
 
-    public void updatePreparationTime(Participant participant, PreparationInfoDto preparationInfoDto) {
+    public void updatePreparationTime(
+            final Participant participant,
+            final PreparationInfoDto preparationInfoDto
+    ) {
         participant.updatePreparationTime(preparationInfoDto.preparationTime());
     }
 
-    public void updateTravelTime(Participant participant, PreparationInfoDto preparationInfoDto) {
+    public void updateTravelTime(
+            final Participant participant,
+            final PreparationInfoDto preparationInfoDto
+    ) {
         participant.updateTravelTime(preparationInfoDto.travelTime());
     }
 }

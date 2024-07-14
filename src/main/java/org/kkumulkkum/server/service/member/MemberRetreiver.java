@@ -13,15 +13,21 @@ public class MemberRetreiver {
 
     private final MemberRepository memberRepository;
 
-    public boolean existsByMeetingIdAndUserId(Long meetingId, Long userId) {
+    public boolean existsByMeetingIdAndUserId(
+            final Long meetingId,
+            final Long userId
+    ) {
         return memberRepository.existsByMeetingIdAndUserId(meetingId, userId);
     }
 
-    public List<MemberDto> findAllByMeetingId(Long meetingId) {
+    public List<MemberDto> findAllByMeetingId(final Long meetingId) {
         return memberRepository.findAllByMeetingId(meetingId);
     }
 
-    public boolean existsByPromiseIdAndUserId(Long promiseId, Long userId) {
+    public boolean existsByPromiseIdAndUserId(
+            final Long promiseId,
+            final Long userId
+    ) {
         return memberRepository.existsByPromiseIdAndUserId(promiseId, userId);
     }
 }

@@ -13,7 +13,7 @@ public record MeetingDto (
         int metCount,
         String invitationCode
 ) {
-    public static MeetingDto of(Meeting meeting) {
+    public static MeetingDto from(Meeting meeting) {
         return new MeetingDto(
                 meeting.getId(),
                 meeting.getName(),

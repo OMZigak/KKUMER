@@ -17,6 +17,7 @@ import org.kkumulkkum.server.service.member.MemberRetreiver;
 import org.kkumulkkum.server.service.member.MemberSaver;
 import org.kkumulkkum.server.service.user.UserRetriever;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.security.SecureRandom;
 import java.util.List;
@@ -32,8 +33,10 @@ public class MeetingService {
     private final MemberSaver memberSaver;
     private final MemberRetreiver memberRetreiver;
 
+    @Transactional
     public CreatedMeetingDto createMeeting(
-            Long userId, MeetingCreateDto meetingCreateDto
+            final Long userId,
+            final MeetingCreateDto meetingCreateDto
     ) {
         String invitationCode = generateInvitationCode();
 
@@ -51,7 +54,11 @@ public class MeetingService {
         return new CreatedMeetingDto(meeting.getId(), meeting.getInvitationCode());
     }
 
-    public void registerMeeting(Long userId, MeetingRegisterDto meetingRegisterDto) {
+    @Transactional
+    public void registerMeeting(
+            final Long userId,
+            final MeetingRegisterDto meetingRegisterDto
+    ) {
         Meeting meeting = meetingRetriever.findByInvitationCode(meetingRegisterDto.invitationCode());
         Member member = Member.builder()
                 .meeting(meeting)
@@ -63,18 +70,21 @@ public class MeetingService {
         memberSaver.save(member);
     }
 
-    public MeetingsDto getMeetings(Long userId) {
+    @Transactional(readOnly = true)
+    public MeetingsDto getMeetings(final Long userId) {
         List<Meeting> meetings = meetingRetriever.findAllByUserId(userId);
-        return MeetingsDto.of(meetings);
+        return MeetingsDto.from(meetings);
     }
 
-    public MeetingDto getMeeting(Long meetingId) {
-        return MeetingDto.of(meetingRetriever.findById(meetingId));
+    @Transactional(readOnly = true)
+    public MeetingDto getMeeting(final Long meetingId) {
+        return MeetingDto.from(meetingRetriever.findById(meetingId));
     }
 
-    public MembersDto getMembers(Long meetingId) {
+    @Transactional(readOnly = true)
+    public MembersDto getMembers(final Long meetingId) {
         List<MemberDto> members = memberRetreiver.findAllByMeetingId(meetingId);
-        return MembersDto.of(members);
+        return MembersDto.from(members);
     }
 
     private String generateInvitationCode() {

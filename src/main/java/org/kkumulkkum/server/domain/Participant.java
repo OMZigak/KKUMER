@@ -23,9 +23,9 @@ public class Participant extends BaseTimeEntity {
 
     private LocalDateTime arrivalAt;
 
-    private int preparationTime;
+    private Integer preparationTime;
 
-    private int travelTime;
+    private Integer travelTime;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "promise_id")
@@ -36,13 +36,14 @@ public class Participant extends BaseTimeEntity {
     private Member member;
 
     @Builder
-    public Participant(LocalDateTime preparationStartAt,
-                       LocalDateTime departureAt,
-                       LocalDateTime arrivalAt,
-                       int preparationTime,
-                       int travelTime,
-                       Promise promise,
-                       Member member
+    public Participant(
+            LocalDateTime preparationStartAt,
+            LocalDateTime departureAt,
+            LocalDateTime arrivalAt,
+            Integer preparationTime,
+            Integer travelTime,
+            Promise promise,
+            Member member
     ) {
         this.preparationStartAt = preparationStartAt;
         this.departureAt = departureAt;
@@ -65,11 +66,11 @@ public class Participant extends BaseTimeEntity {
         this.arrivalAt = LocalDateTime.now();
     }
 
-    public void updatePreparationTime(int preparationTime) {
+    public void updatePreparationTime(Integer preparationTime) {
         this.preparationTime = preparationTime;
     }
 
-    public void updateTravelTime(int travelTime) {
+    public void updateTravelTime(Integer travelTime) {
         this.travelTime = travelTime;
     }
 }

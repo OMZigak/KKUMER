@@ -11,8 +11,8 @@ public class UserInfoSaver {
 
     private final UserInfoRepository userInfoRepository;
 
-    public UserInfo save(final UserInfo user){
-        return userInfoRepository.save(user);
+    public void save(final UserInfo user){
+        userInfoRepository.save(user);
     }
 
 }

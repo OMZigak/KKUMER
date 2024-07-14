@@ -28,7 +28,10 @@ public class ParticipantService {
     private final PromiseRetriever promiseRetriever;
 
     @Transactional
-    public void preparePromise(final Long userId, final Long promiseId) {
+    public void preparePromise(
+            final Long userId,
+            final Long promiseId
+    ) {
         Participant participant = participantRetriever.findByPromiseIdAndUserId(promiseId, userId);
         if (!validateState(participant, "preperation")) {
             throw new ParticipantException(ParticipantErrorCode.INVALID_STATE);
@@ -37,7 +40,10 @@ public class ParticipantService {
     }
 
     @Transactional
-    public void departurePromise(final Long userId, final Long promiseId) {
+    public void departurePromise(
+            final Long userId,
+            final Long promiseId
+    ) {
         Participant participant = participantRetriever.findByPromiseIdAndUserId(promiseId, userId);
         if (!validateState(participant, "departure")) {
             throw new ParticipantException(ParticipantErrorCode.INVALID_STATE);
@@ -46,7 +52,10 @@ public class ParticipantService {
     }
 
     @Transactional
-    public void arrivalPromise(final Long userId, final Long promiseId) {
+    public void arrivalPromise(
+            final Long userId,
+            final Long promiseId
+    ) {
         Participant participant = participantRetriever.findByPromiseIdAndUserId(promiseId, userId);
         if (!validateState(participant, "arrival")) {
             throw new ParticipantException(ParticipantErrorCode.INVALID_STATE);
@@ -55,7 +64,10 @@ public class ParticipantService {
     }
 
     @Transactional(readOnly = true)
-    public PreparationStatusDto getPreparation(final Long userId, final Long promiseId) {
+    public PreparationStatusDto getPreparation(
+            final Long userId,
+            final Long promiseId
+    ) {
         Participant participant = participantRetriever.findByPromiseIdAndUserId(promiseId, userId);
         return PreparationStatusDto.from(participant);
     }
@@ -71,7 +83,11 @@ public class ParticipantService {
     }
 
     @Transactional
-    public void insertPreparationInfo(final Long userId, final Long promiseId, final PreparationInfoDto preparationInfoDto) {
+    public void insertPreparationInfo(
+            final Long userId,
+            final Long promiseId,
+            final PreparationInfoDto preparationInfoDto
+    ) {
         Participant participant = participantRetriever.findByPromiseIdAndUserId(promiseId, userId);
         participantEditor.updatePreparationTime(participant, preparationInfoDto);
         participantEditor.updateTravelTime(participant, preparationInfoDto);
@@ -89,12 +105,19 @@ public class ParticipantService {
         return LateComersDto.of(
                 promise,
                 lateComers.stream()
-                        .map(lateComer -> LateComerDto.of(lateComer.participantId(), lateComer.name(), lateComer.profileImg()))
+                        .map(lateComer -> LateComerDto.of(
+                                lateComer.participantId(),
+                                lateComer.name(),
+                                lateComer.profileImg())
+                        )
                         .collect(Collectors.toList())
         );
     }
 
-    private boolean validateState(final Participant participant, final String status) {
+    private boolean validateState(
+            final Participant participant,
+            final String status
+    ) {
         switch (status) {
             case "preperation":
                 return isNull(participant.getPreparationStartAt())
@@ -113,24 +136,24 @@ public class ParticipantService {
         }
     }
 
-    private boolean isNull(LocalDateTime time) {
+    private boolean isNull(final LocalDateTime time) {
         return time == null;
     }
 
-    private boolean isNotNull(LocalDateTime time) {
+    private boolean isNotNull(final LocalDateTime time) {
         return time != null;
     }
 
-    private ParticipantDto createParticipantDto(ParticipantStatusUserInfoDto dto) {
+    private ParticipantDto createParticipantDto(final ParticipantStatusUserInfoDto dto) {
         String state = determineState(dto.preparationAt(), dto.departureAt(), dto.arrivalAt());  // 상태 결정 로직 호출
 
         return ParticipantDto.of(dto.participantId(), dto.memberId(), dto.name(), dto.profileImg(), state);
     }
 
     private String determineState(
-            LocalDateTime preparationAt,
-            LocalDateTime departureAt,
-            LocalDateTime arrivalAt
+            final LocalDateTime preparationAt,
+            final LocalDateTime departureAt,
+            final LocalDateTime arrivalAt
     ) {
         if (arrivalAt != null) {
             return "도착";

@@ -6,8 +6,8 @@ import org.kkumulkkum.server.domain.Participant;
 import java.time.LocalDateTime;
 
 public record PreparationStatusDto(
-        int preparationTime,
-        int travelTime,
+        Integer preparationTime,
+        Integer travelTime,
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "a h:mm", locale = "en")
         LocalDateTime preparationStartAt,
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "a h:mm", locale = "en")
