@@ -36,10 +36,12 @@ public class UserInfo extends BaseTimeEntity {
     private User user;
 
     @Builder
-    public UserInfo(String name,
-                    String profileImg,
-                    String email,
-                    User user) {
+    public UserInfo(
+            String name,
+            String profileImg,
+            String email,
+            User user
+    ) {
         this.name = name;
         this.profileImg = profileImg;
         this.email = email;

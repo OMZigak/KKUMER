@@ -27,10 +27,12 @@ public class User extends BaseTimeEntity {
     private Role role;
 
     @Builder
-    public User(Long id,
-                Provider provider,
-                String providerId,
-                Role role) {
+    public User(
+            Long id,
+            Provider provider,
+            String providerId,
+            Role role
+    ) {
         this.id = id;
         this.provider = provider;
         this.providerId = providerId;

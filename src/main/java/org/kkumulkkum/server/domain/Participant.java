@@ -36,13 +36,14 @@ public class Participant extends BaseTimeEntity {
     private Member member;
 
     @Builder
-    public Participant(LocalDateTime preparationStartAt,
-                       LocalDateTime departureAt,
-                       LocalDateTime arrivalAt,
-                       int preparationTime,
-                       int travelTime,
-                       Promise promise,
-                       Member member
+    public Participant(
+            LocalDateTime preparationStartAt,
+            LocalDateTime departureAt,
+            LocalDateTime arrivalAt,
+            int preparationTime,
+            int travelTime,
+            Promise promise,
+            Member member
     ) {
         this.preparationStartAt = preparationStartAt;
         this.departureAt = departureAt;
