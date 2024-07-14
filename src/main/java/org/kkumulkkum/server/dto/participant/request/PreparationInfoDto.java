@@ -4,8 +4,8 @@ import jakarta.validation.constraints.Size;
 
 public record PreparationInfoDto(
         @Size(max = 1440)
-        int preparationTime,
+        Integer preparationTime,
         @Size(max = 1440)
-        int travelTime
+        Integer travelTime
 ) {
 }
