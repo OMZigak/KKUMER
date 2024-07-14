@@ -69,18 +69,18 @@ public class MeetingService {
     @Transactional(readOnly = true)
     public MeetingsDto getMeetings(Long userId) {
         List<Meeting> meetings = meetingRetriever.findAllByUserId(userId);
-        return MeetingsDto.of(meetings);
+        return MeetingsDto.from(meetings);
     }
 
     @Transactional(readOnly = true)
     public MeetingDto getMeeting(Long meetingId) {
-        return MeetingDto.of(meetingRetriever.findById(meetingId));
+        return MeetingDto.from(meetingRetriever.findById(meetingId));
     }
 
     @Transactional(readOnly = true)
     public MembersDto getMembers(Long meetingId) {
         List<MemberDto> members = memberRetreiver.findAllByMeetingId(meetingId);
-        return MembersDto.of(members);
+        return MembersDto.from(members);
     }
 
     private String generateInvitationCode() {

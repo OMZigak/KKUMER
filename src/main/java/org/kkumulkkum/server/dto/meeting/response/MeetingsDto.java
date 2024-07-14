@@ -9,11 +9,11 @@ public record MeetingsDto (
         List<MeetingDto> meetings
 ) {
 
-    public static MeetingsDto of(List<Meeting> meetings) {
+    public static MeetingsDto from(List<Meeting> meetings) {
         return new MeetingsDto(
                 meetings.size(),
                 meetings.stream()
-                        .map(MeetingDto::of)
+                        .map(MeetingDto::from)
                         .toList()
         );
     }
@@ -23,7 +23,7 @@ public record MeetingsDto (
             String name,
             int memberCount
     ) {
-        public static MeetingDto of(Meeting meeting) {
+        public static MeetingDto from(Meeting meeting) {
             return new MeetingDto(
                     meeting.getId(),
                     meeting.getName(),

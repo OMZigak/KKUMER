@@ -11,7 +11,7 @@ public record ParticipantStatusUserInfoDto(
         LocalDateTime departureAt,
         LocalDateTime arrivalAt
 ) {
-    public static ParticipantStatusUserInfoDto from(
+    public static ParticipantStatusUserInfoDto of(
             Long participantId,
             Long memberId,
             String name,
