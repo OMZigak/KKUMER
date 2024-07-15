@@ -4,7 +4,9 @@ import com.google.firebase.messaging.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.kkumulkkum.server.exception.BusinessException;
+import org.kkumulkkum.server.exception.FirebaseException;
 import org.kkumulkkum.server.exception.code.BusinessErrorCode;
+import org.kkumulkkum.server.exception.code.FirebaseErrorCode;
 import org.kkumulkkum.server.external.dto.FcmMessageDto;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -25,7 +27,7 @@ public class FcmService {
         try {
             FirebaseMessaging.getInstance().sendMulticast(message);
         } catch (FirebaseMessagingException e){
-            throw new BusinessException(BusinessErrorCode.FCM_ERROR);
+            throw new FirebaseException(FirebaseErrorCode.FCM_ERROR);
         }
     }
 

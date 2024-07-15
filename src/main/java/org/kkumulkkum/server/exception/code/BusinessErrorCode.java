@@ -13,7 +13,6 @@ public enum BusinessErrorCode implements DefaultErrorCode {
     PAYLOAD_TOO_LARGE(HttpStatus.BAD_REQUEST,40002,"최대 업로드 크기를 초과했습니다."),
     MISSING_REQUIRED_PARAM(HttpStatus.BAD_REQUEST,40003,"필수 파라미터가 누락되었습니다."),
     MISSING_REQUIRED_HEADER(HttpStatus.BAD_REQUEST,40004,"필수 헤더가 누락되었습니다."),
-    FCM_ERROR(HttpStatus.BAD_REQUEST,40005,"fcm 토큰 오류입니다."),
     // 404 NOT_FOUND
     NOT_FOUND(HttpStatus.NOT_FOUND,40400, "요청한 정보를 찾을 수 없습니다."),
     NOT_FOUND_END_POINT(HttpStatus.NOT_FOUND,40401, "요청한 엔드포인트를 찾을 수 없습니다."),
