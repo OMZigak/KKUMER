@@ -3,6 +3,8 @@ package org.kkumulkkum.server.external;
 import com.google.firebase.messaging.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.kkumulkkum.server.exception.BusinessException;
+import org.kkumulkkum.server.exception.code.BusinessErrorCode;
 import org.kkumulkkum.server.external.dto.FcmMessageDto;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
@@ -21,11 +23,9 @@ public class FcmService {
     ){
         MulticastMessage message = createBulkMessage(fcmTokens, fcmMessageDto);
         try {
-            BatchResponse response = FirebaseMessaging.getInstance().sendMulticast(message);
-            log.info("Successfully sent message to multiple devices: Success={} Failure={}",
-                    response.getSuccessCount(), response.getFailureCount());
+            FirebaseMessaging.getInstance().sendMulticast(message);
         } catch (FirebaseMessagingException e){
-            log.error("Failed to send message. Error: {}", e.getMessage());
+            throw new BusinessException(BusinessErrorCode.FCM_ERROR);
         }
     }
 
