@@ -30,6 +30,10 @@
 
 ![KKUM_ERD](https://github.com/OMZigak/KKUM_SERVER/assets/74230343/a4d5b4b4-002e-4484-b31c-1c952dacf665)
 
+## 💤 DEPLOYMENT ARCHITECTURE
+
+![꾸물꿈 배포 아키텍쳐](https://github.com/user-attachments/assets/fa9d622f-0c26-440b-8e8f-bbeebfad7908)
+
 ## 💤 FOLDERING
 ```plaintext
 📦KKUM_SERVER
@@ -52,9 +56,9 @@
  ┃ ┣ 📂domain
  ┃ ┣ 📂dto
  ┃ ┣ 📂exception
+ ┃ ┣ 📂external
  ┃ ┣ 📂repository
- ┃ ┣ 📂service
- ┃ ┗ 📂util
+ ┃ ┗ 📂service
  ┣ 📜.gitignore
  ┣ 📜.gitmodules
  ┣ 📜Dockerfile-dev
