@@ -13,12 +13,11 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1")
 public class UserController {
 
     private final UserService userService;
 
-    @PatchMapping("/users/me/image")
+    @PatchMapping("/v1/users/me/image")
     public ResponseEntity<Void> updateImage(
             @UserId final Long userId,
             @Valid @ModelAttribute final ImageUpdateDto imageUpdateDto
@@ -27,7 +26,7 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/users/me/image")
+    @DeleteMapping("/v1/users/me/image")
     public ResponseEntity<Void> deleteImage(
             @UserId final Long userId
     ) {
@@ -35,7 +34,7 @@ public class UserController {
         return ResponseEntity.ok().build();
     }
 
-    @PatchMapping("/users/me/name")
+    @PatchMapping("/v1/users/me/name")
     public ResponseEntity<UserNameDto> updateName(
             @UserId final Long userId,
             @Valid @RequestBody final NameUpdateDto nameUpdateDto
@@ -43,7 +42,7 @@ public class UserController {
         return ResponseEntity.ok().body(userService.updateName(userId, nameUpdateDto));
     }
 
-    @GetMapping("/users/me")
+    @GetMapping("/v1/users/me")
     public ResponseEntity<UserDto> getUserInfo(
             @UserId final Long userId
     ) {

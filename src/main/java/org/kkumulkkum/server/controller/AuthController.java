@@ -13,13 +13,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class AuthController {
 
     private final AuthService authService;
 
-    @PostMapping("/auth/signin")
+    @PostMapping("/v1/auth/signin")
     public ResponseEntity<UserTokenDto> signin(
             @NotNull @RequestHeader(AuthConstant.AUTHORIZATION_HEADER) final String providerToken,
             @Valid @RequestBody final UserLoginDto userLoginDto
@@ -28,7 +27,7 @@ public class AuthController {
     }
 
 
-    @PostMapping("/auth/signout")
+    @PostMapping("/v1/auth/signout")
     public ResponseEntity<Void> signout(
             @UserId final Long userId
     ) {
@@ -36,7 +35,7 @@ public class AuthController {
         return ResponseEntity.ok().build();
     }
 
-    @PostMapping("/auth/reissue")
+    @PostMapping("/v1/auth/reissue")
     public ResponseEntity<JwtTokenDto> reissue(
             @NotNull @RequestHeader(AuthConstant.AUTHORIZATION_HEADER) final String refreshToken
     ) {

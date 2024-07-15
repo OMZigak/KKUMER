@@ -17,14 +17,13 @@ import org.springframework.web.bind.annotation.*;
 import java.net.URI;
 
 @RestController
-@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class PromiseController {
 
     private final PromiseService promiseService;
 
     @IsMemberByMeetingId(meetingIdParamIndex = 1)
-    @PostMapping("/meetings/{meetingId}/promises")
+    @PostMapping("/v1/meetings/{meetingId}/promises")
     public ResponseEntity<Void> createPromise(
             @UserId final Long userId,
             @PathVariable final Long meetingId,
@@ -35,7 +34,7 @@ public class PromiseController {
     }
 
     @IsParticipant(promiseIdParamIndex = 0)
-    @PatchMapping("/promises/{promiseId}/completion")
+    @PatchMapping("/v1/promises/{promiseId}/completion")
     public ResponseEntity<Void> completePromise(
             @PathVariable final Long promiseId
     ) {
@@ -44,7 +43,7 @@ public class PromiseController {
     }
 
     @IsMemberByMeetingId(meetingIdParamIndex = 1)
-    @GetMapping("/meetings/{meetingId}/promises")
+    @GetMapping("/v1/meetings/{meetingId}/promises")
     public ResponseEntity<PromisesDto> getPromises(
             @PathVariable("meetingId") final Long meetingId,
             @RequestParam(required = false) final Boolean done
@@ -53,21 +52,21 @@ public class PromiseController {
     }
 
     @IsMemberByMeetingId(meetingIdParamIndex = 1)
-    @GetMapping("/promises/{promiseId}")
+    @GetMapping("/v1/promises/{promiseId}")
     public ResponseEntity<PromiseDto> getPromise(
             @PathVariable("promiseId") final Long promiseId
     ) {
         return ResponseEntity.ok().body(promiseService.getPromise(promiseId));
     }
 
-    @GetMapping("/promises/today/next")
+    @GetMapping("/v1/promises/today/next")
     public ResponseEntity<MainPromiseDto> getNextPromise(
             @UserId final Long userId
     ) {
         return ResponseEntity.ok().body(promiseService.getNextPromise(userId));
     }
 
-    @GetMapping("/promises/upcoming")
+    @GetMapping("/v1/promises/upcoming")
     public ResponseEntity<MainPromisesDto> getUpcomingPromise(
             @UserId final Long userId
     ) {

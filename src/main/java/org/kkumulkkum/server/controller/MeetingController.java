@@ -18,12 +18,11 @@ import java.net.URI;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1")
 public class MeetingController {
 
     private final MeetingService meetingService;
 
-    @PostMapping("/meetings")
+    @PostMapping("/v1/meetings")
     public ResponseEntity<CreatedMeetingDto> createMeeting(
             @UserId final Long userId,
             @Valid @RequestBody final MeetingCreateDto meetingCreateDto
@@ -34,7 +33,7 @@ public class MeetingController {
                 .body(createdMeetingDto);
     }
 
-    @PostMapping("/meetings/register")
+    @PostMapping("/v1/meetings/register")
     public ResponseEntity<Void> registerMeeting(
             @UserId final Long userId,
             @Valid @RequestBody final MeetingRegisterDto meetingRegisterDto
@@ -43,7 +42,7 @@ public class MeetingController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/meetings")
+    @GetMapping("/v1/meetings")
     public ResponseEntity<MeetingsDto> getMeetings(
             @UserId final Long userId
     ) {
@@ -51,7 +50,7 @@ public class MeetingController {
     }
 
     @IsMemberByMeetingId(meetingIdParamIndex = 0)
-    @GetMapping("/meetings/{meetingId}")
+    @GetMapping("/v1/meetings/{meetingId}")
     public ResponseEntity<MeetingDto> getMeeting(
             @PathVariable final Long meetingId
     ) {
@@ -59,7 +58,7 @@ public class MeetingController {
     }
 
     @IsMemberByMeetingId(meetingIdParamIndex = 0)
-    @GetMapping("/meetings/{meetingId}/members")
+    @GetMapping("/v1/meetings/{meetingId}/members")
     public ResponseEntity<MembersDto> getMembers(
             @PathVariable final Long meetingId
     ) {
