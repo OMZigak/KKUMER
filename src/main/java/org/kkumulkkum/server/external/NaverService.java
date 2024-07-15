@@ -14,6 +14,7 @@ import org.springframework.web.client.RestClient;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.net.URI;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -35,7 +36,7 @@ public class NaverService {
             NaverLocationResponse naverLocationResponse = locationSearch(requestMap(query));
             return convertResponse(naverLocationResponse);
         } catch (OpenApiException e) {
-            return List.of();
+            return Collections.emptyList();
         }
     }
 
