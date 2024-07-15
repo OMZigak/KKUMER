@@ -43,4 +43,21 @@ public class ParticipantRetriever {
     ) {
         return participantRepository.existsByPromiseIdAndUserId(promiseId, userId);
     }
+
+    public int countFirstPreparationByPromiseId(final Long promiseId) {
+        return participantRepository.countFirstPreparationByPromiseId(promiseId);
+    }
+
+    public int countFirstDepartureByPromiseId(final Long promiseId) {
+        return participantRepository.countFirstDepartureByPromiseId(promiseId);
+    }
+
+    public int countFirstArrivalByPromiseId(final Long promiseId) {
+        return participantRepository.countFirstArrivalByPromiseId(promiseId);
+    }
+
+    public List<String> findFcmTokenByPromiseId(final Long promiseId, final Long userId) {
+        return participantRepository.findFcmTokenByPromiseId(promiseId, userId);
+    }
+
 }

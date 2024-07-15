@@ -44,4 +44,24 @@ public interface ParticipantRepository extends JpaRepository<Participant, Long> 
     boolean existsByPromiseIdAndUserId(Long promiseId, Long userId);
 
     List<Participant> findAllByPromiseId(Long promiseId);
+
+    @Query("SELECT COUNT(p) FROM Participant p " +
+            "WHERE p.promise.id = :promiseId AND p.preparationStartAt IS NOT NULL")
+    int countFirstPreparationByPromiseId(Long promiseId);
+
+    @Query("SELECT COUNT(p) FROM Participant p " +
+            "WHERE p.promise.id = :promiseId AND p.departureAt IS NOT NULL")
+    int countFirstDepartureByPromiseId(Long promiseId);
+
+    @Query("SELECT COUNT(p) FROM Participant p " +
+            "WHERE p.promise.id = :promiseId AND p.arrivalAt IS NOT NULL")
+    int countFirstArrivalByPromiseId(Long promiseId);
+
+    @Query("SELECT ui.fcmToken " +
+            "FROM Participant p " +
+            "JOIN Member m ON p.member.id = m.id " +
+            "JOIN UserInfo ui ON m.user.id = ui.user.id " +
+            "WHERE p.promise.id = :promiseId AND m.user.id != :userId")
+    List<String> findFcmTokenByPromiseId(Long promiseId, Long userId);
+
 }

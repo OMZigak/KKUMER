@@ -9,6 +9,9 @@ import org.kkumulkkum.server.dto.participant.request.PreparationInfoDto;
 import org.kkumulkkum.server.dto.participant.response.*;
 import org.kkumulkkum.server.exception.ParticipantException;
 import org.kkumulkkum.server.exception.code.ParticipantErrorCode;
+import org.kkumulkkum.server.external.FcmService;
+import org.kkumulkkum.server.external.dto.FcmMessageDto;
+import org.kkumulkkum.server.external.enums.FcmContent;
 import org.kkumulkkum.server.service.promise.PromiseRetriever;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -26,6 +29,7 @@ public class ParticipantService {
     private final ParticipantRetriever participantRetriever;
     private final ParticipantEditor participantEditor;
     private final PromiseRetriever promiseRetriever;
+    private final FcmService fcmService;
 
     @Transactional
     public void preparePromise(
@@ -37,6 +41,12 @@ public class ParticipantService {
             throw new ParticipantException(ParticipantErrorCode.INVALID_STATE);
         }
         participantEditor.preparePromise(participant);
+
+        int preparationCount = participantRetriever.countFirstPreparationByPromiseId(promiseId);
+        if (preparationCount == 1) {
+            List<String> fcmTokens = participantRetriever.findFcmTokenByPromiseId(promiseId, userId);
+            fcmService.sendBulk(fcmTokens, FcmMessageDto.of(FcmContent.FIRST_PREPARATION, promiseId));
+        }
     }
 
     @Transactional
@@ -49,6 +59,12 @@ public class ParticipantService {
             throw new ParticipantException(ParticipantErrorCode.INVALID_STATE);
         }
         participantEditor.departurePromise(participant);
+
+        int departureCount = participantRetriever.countFirstDepartureByPromiseId(promiseId);
+        if (departureCount == 1) {
+            List<String> fcmTokens = participantRetriever.findFcmTokenByPromiseId(promiseId, userId);
+            fcmService.sendBulk(fcmTokens, FcmMessageDto.of(FcmContent.FIRST_DEPARTURE, promiseId));
+        }
     }
 
     @Transactional
@@ -61,6 +77,12 @@ public class ParticipantService {
             throw new ParticipantException(ParticipantErrorCode.INVALID_STATE);
         }
         participantEditor.arrivalPromise(participant);
+
+        int arrivalCount = participantRetriever.countFirstArrivalByPromiseId(promiseId);
+        if (arrivalCount == 1) {
+            List<String> fcmTokens = participantRetriever.findFcmTokenByPromiseId(promiseId, userId);
+            fcmService.sendBulk(fcmTokens, FcmMessageDto.of(FcmContent.FIRST_ARRIVAL, promiseId));
+        }
     }
 
     @Transactional(readOnly = true)
