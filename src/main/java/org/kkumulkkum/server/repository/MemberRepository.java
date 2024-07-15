@@ -18,7 +18,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
             SELECT new org.kkumulkkum.server.dto.member.response.MemberDto
             (m.id, ui.name, ui.profileImg)
             FROM Member m
-            JOIN UserInfo ui ON m.user.id = ui.user.id
+            JOIN FETCH UserInfo ui ON m.user.id = ui.user.id
             WHERE m.meeting.id = :meetingId""")
     List<MemberDto> findAllByMeetingId(Long meetingId);
 

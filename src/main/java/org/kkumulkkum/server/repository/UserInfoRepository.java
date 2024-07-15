@@ -12,7 +12,7 @@ public interface UserInfoRepository extends JpaRepository<UserInfo, Long> {
 
     @Query("""
             SELECT ui FROM UserInfo ui
-            JOIN Participant p ON ui.user.id = p.member.user.id
+            JOIN FETCH Participant p ON ui.user.id = p.member.user.id
             WHERE p.id = :id""")
     Optional<UserInfo> findByParticipantId(Long id);
 }

@@ -13,7 +13,7 @@ public interface ParticipantRepository extends JpaRepository<Participant, Long> 
 
     @Query("""
             SELECT p FROM Participant p
-            JOIN Member m ON p.member.id = m.id
+            JOIN FETCH Member m ON p.member.id = m.id
             WHERE p.promise.id = :promiseId AND m.user.id = :userId""")
     Optional<Participant> findByPromiseIdAndUserId(Long promiseId, Long userId);
 
