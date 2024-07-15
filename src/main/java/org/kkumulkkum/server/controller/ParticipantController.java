@@ -1,7 +1,7 @@
 package org.kkumulkkum.server.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.kkumulkkum.server.annotation.IsMember;
+import org.kkumulkkum.server.annotation.IsMemberByPromiseId;
 import org.kkumulkkum.server.annotation.UserId;
 import org.kkumulkkum.server.dto.participant.request.PreparationInfoDto;
 import org.kkumulkkum.server.dto.participant.response.LateComersDto;
@@ -53,7 +53,7 @@ public class ParticipantController {
         return ResponseEntity.ok().body(participantService.getPreparation(userId, promiseId));
     }
 
-    @IsMember(promiseIdParamIndex = 0)
+    @IsMemberByPromiseId(promiseIdParamIndex = 0)
     @GetMapping("/promises/{promiseId}/participants")
     public ResponseEntity<ParticipantsDto> getParticipants(
             @PathVariable("promiseId") final Long promiseId
@@ -71,7 +71,7 @@ public class ParticipantController {
         return ResponseEntity.ok().build();
     }
 
-    @IsMember(promiseIdParamIndex = 0)
+    @IsMemberByPromiseId(promiseIdParamIndex = 0)
     @GetMapping("/promises/{promiseId}/tardy")
     public ResponseEntity<LateComersDto> getLateComers(
             @PathVariable("promiseId") final Long promiseId

@@ -2,7 +2,7 @@ package org.kkumulkkum.server.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.kkumulkkum.server.annotation.IsMember;
+import org.kkumulkkum.server.annotation.IsMemberByMeetingId;
 import org.kkumulkkum.server.annotation.IsParticipant;
 import org.kkumulkkum.server.annotation.UserId;
 import org.kkumulkkum.server.dto.promise.PromiseCreateDto;
@@ -23,7 +23,7 @@ public class PromiseController {
 
     private final PromiseService promiseService;
 
-    @IsMember(meetingIdParamIndex = 1)
+    @IsMemberByMeetingId(meetingIdParamIndex = 1)
     @PostMapping("/meetings/{meetingId}/promises")
     public ResponseEntity<Void> createPromise(
             @UserId final Long userId,
@@ -43,7 +43,7 @@ public class PromiseController {
         return ResponseEntity.ok().build();
     }
 
-    @IsMember(meetingIdParamIndex = 1)
+    @IsMemberByMeetingId(meetingIdParamIndex = 1)
     @GetMapping("/meetings/{meetingId}/promises")
     public ResponseEntity<PromisesDto> getPromises(
             @PathVariable("meetingId") final Long meetingId,
@@ -52,7 +52,7 @@ public class PromiseController {
         return ResponseEntity.ok().body(promiseService.getPromises(meetingId, done));
     }
 
-    @IsMember(meetingIdParamIndex = 1)
+    @IsMemberByMeetingId(meetingIdParamIndex = 1)
     @GetMapping("/promises/{promiseId}")
     public ResponseEntity<PromiseDto> getPromise(
             @PathVariable("promiseId") final Long promiseId
