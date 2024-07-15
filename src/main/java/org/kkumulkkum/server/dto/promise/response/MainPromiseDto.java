@@ -10,7 +10,7 @@ public record MainPromiseDto(
         Long promiseId,
         String name,
         String meetingName,
-        String dressLevel,
+        String dressUpLevel,
         int dDay,
         @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd")
         LocalDateTime date,
