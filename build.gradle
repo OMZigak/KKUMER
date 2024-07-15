@@ -65,6 +65,9 @@ dependencies {
 	// AWS S3
 	implementation("software.amazon.awssdk:bom:2.21.0")
 	implementation("software.amazon.awssdk:s3:2.21.0")
+
+	// Firebase
+	implementation 'com.google.firebase:firebase-admin:9.2.0'
 }
 
 tasks.named('test') {
@@ -74,7 +77,7 @@ tasks.named('test') {
 task copyYml(type: Copy) {
 	copy {
 		from './SERVER_YML'
-		include "*.yml"
+		include "**"
 		into './src/main/resources'
 	}
 }

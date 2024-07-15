@@ -66,6 +66,14 @@ public class GlobalExceptionHandler {
                 .body(e.getErrorCode());
     }
 
+    @ExceptionHandler(value = {FirebaseException.class})
+    public ResponseEntity<FirebaseErrorCode> handleAwsException(FirebaseException e) {
+        log.error("GlobalExceptionHandler catch FirebaseException : {}", e.getErrorCode().getMessage());
+        return ResponseEntity
+                .status(e.getErrorCode().getHttpStatus())
+                .body(e.getErrorCode());
+    }
+
     // 도메인 관련된 에러가 아닐 경우
     @ExceptionHandler(value = {BusinessException.class})
     public ResponseEntity<BusinessErrorCode> handleBusinessException(BusinessException e) {
