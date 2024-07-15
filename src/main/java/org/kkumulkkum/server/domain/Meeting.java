@@ -5,6 +5,7 @@ import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.BatchSize;
 
 import java.util.List;
 
@@ -21,6 +22,7 @@ public class Meeting extends BaseTimeEntity {
 
     private String invitationCode;
 
+    @BatchSize(size = 50)
     @OneToMany(mappedBy = "meeting")
     private List<Member> members;
 
