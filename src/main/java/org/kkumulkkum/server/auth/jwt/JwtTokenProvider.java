@@ -4,7 +4,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Header;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
-import org.kkumulkkum.server.constant.Constant;
+import org.kkumulkkum.server.constant.AuthConstant;
 import org.kkumulkkum.server.dto.auth.response.JwtTokenDto;
 import org.kkumulkkum.server.exception.AuthException;
 import org.kkumulkkum.server.exception.code.AuthErrorCode;
@@ -18,6 +18,8 @@ import java.util.Date;
 
 @Component
 public class JwtTokenProvider implements InitializingBean {
+
+    private static final String ANONYMOUS_USER = "anonymousUser";
 
     @Value("${jwt.access_token_expiration_time}")
     private Long accessTokenExpirationTime;
@@ -47,7 +49,7 @@ public class JwtTokenProvider implements InitializingBean {
                  .setIssuedAt(now)
                  .setExpiration(expirationDate);
 
-         claims.put(Constant.USER_ID, userId);
+         claims.put(AuthConstant.USER_ID, userId);
 
          return Jwts.builder()
                  .setHeaderParam(Header.TYPE, Header.JWT_TYPE)
@@ -73,11 +75,11 @@ public class JwtTokenProvider implements InitializingBean {
 
     public Long getUserIdFromJwt(String token) {
         Claims claims = getBody(token);
-        return Long.valueOf(claims.get(Constant.USER_ID).toString());
+        return Long.valueOf(claims.get(AuthConstant.USER_ID).toString());
     }
 
     public static Object checkPrincipal(final Object principal) {
-        if ("anonymousUser".equals(principal)) {
+        if (ANONYMOUS_USER.equals(principal)) {
             throw new AuthException(AuthErrorCode.UNAUTHORIZED);
         }
         return principal;

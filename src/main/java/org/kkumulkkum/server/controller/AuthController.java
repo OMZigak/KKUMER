@@ -4,7 +4,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.kkumulkkum.server.annotation.UserId;
-import org.kkumulkkum.server.constant.Constant;
+import org.kkumulkkum.server.constant.AuthConstant;
 import org.kkumulkkum.server.dto.auth.request.UserLoginDto;
 import org.kkumulkkum.server.dto.auth.response.JwtTokenDto;
 import org.kkumulkkum.server.dto.auth.response.UserTokenDto;
@@ -21,7 +21,7 @@ public class AuthController {
 
     @PostMapping("/auth/signin")
     public ResponseEntity<UserTokenDto> signin(
-            @NotNull @RequestHeader(Constant.AUTHORIZATION_HEADER) final String providerToken,
+            @NotNull @RequestHeader(AuthConstant.AUTHORIZATION_HEADER) final String providerToken,
             @Valid @RequestBody final UserLoginDto userLoginDto
     ) {
         return ResponseEntity.ok(authService.signin(providerToken, userLoginDto));
@@ -38,7 +38,7 @@ public class AuthController {
 
     @PostMapping("/auth/reissue")
     public ResponseEntity<JwtTokenDto> reissue(
-            @NotNull @RequestHeader(Constant.AUTHORIZATION_HEADER) final String refreshToken
+            @NotNull @RequestHeader(AuthConstant.AUTHORIZATION_HEADER) final String refreshToken
     ) {
         return ResponseEntity.ok(authService.reissue(refreshToken));
     }

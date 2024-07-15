@@ -21,6 +21,9 @@ import java.util.stream.Collectors;
 @Service
 public class NaverService {
 
+    private final String NAVER_CLIENT_ID = "X-Naver-Client-Id";
+    private final String NAVER_CLIENT_SECRET = "X-Naver-Client-Secret";
+
     @Value("${naver.client-id}")
     private String naverClientId;
 
@@ -45,8 +48,8 @@ public class NaverService {
         URI uri = createUri(request);
         return restClient.get()
                 .uri(uri)
-                .header("X-Naver-Client-Id", naverClientId)
-                .header("X-Naver-Client-Secret", naverClientSecret)
+                .header(NAVER_CLIENT_ID, naverClientId)
+                .header(NAVER_CLIENT_SECRET, naverClientSecret)
                 .retrieve()
                 .onStatus(HttpStatusCode::is4xxClientError, (req, res) -> {
                     throw new OpenApiException(OpenApiErrorCode.INVALID_ARGUMENT);

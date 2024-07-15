@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
-import org.kkumulkkum.server.constant.Constant;
+import org.kkumulkkum.server.constant.AuthConstant;
 import org.kkumulkkum.server.dto.common.ResponseDto;
 import org.kkumulkkum.server.exception.code.AuthErrorCode;
 import org.kkumulkkum.server.exception.code.DefaultErrorCode;
@@ -44,7 +44,7 @@ public class CustomJwtAuthenticationEntryPoint implements AuthenticationEntryPoi
     ) throws IOException {
         DefaultErrorCode errorCode = (DefaultErrorCode) request.getAttribute("exception");
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        response.setCharacterEncoding(Constant.CHARACTER_ENCODING_UTF8);
+        response.setCharacterEncoding(AuthConstant.CHARACTER_ENCODING_UTF8);
         if (errorCode == null) {
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
             response.getWriter().write(
