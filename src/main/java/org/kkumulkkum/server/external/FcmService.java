@@ -4,6 +4,7 @@ import com.google.firebase.messaging.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.kkumulkkum.server.external.dto.FcmMessageDto;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -13,6 +14,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FcmService {
 
+    @Async
     public void sendBulk(
             final List<String> fcmTokens,
             final FcmMessageDto fcmMessageDto
