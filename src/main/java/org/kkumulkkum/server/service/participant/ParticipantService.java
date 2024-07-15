@@ -18,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -97,11 +98,12 @@ public class ParticipantService {
     @Transactional(readOnly = true)
     public ParticipantsDto getParticipants(final Long promiseId) {
         List<ParticipantStatusUserInfoDto> participants = participantRetriever.findAllByPromiseIdWithUserInfo(promiseId);
-        return ParticipantsDto.from(
-                participants.stream()
-                        .map(this::createParticipantDto)
-                        .collect(Collectors.toList())
-        );
+        List<ParticipantDto> sortedParticipants = participants.stream()
+                .map(this::createParticipantDto)
+                .sorted(Comparator.comparing(ParticipantDto::state, Comparator.comparingInt(this::stateOrder)))
+                .collect(Collectors.toList());
+
+        return ParticipantsDto.from(sortedParticipants);
     }
 
     @Transactional
@@ -185,5 +187,15 @@ public class ParticipantService {
             return "준비중";
         }
         return "꾸물중";
+    }
+
+    private int stateOrder(String state) {
+        switch(state) {
+            case "도착": return 1;
+            case "이동중": return 2;
+            case "준비중": return 3;
+            case "꾸물중": return 4;
+            default: return 5;
+        }
     }
 }
