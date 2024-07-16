@@ -25,10 +25,10 @@ public class SecurityConfig {
     private final CustomAccessDeniedHandler customAccessDeniedHandler;
 
     private static final String[] AUTH_WHITE_LIST = {
-            "/api/v1/test/**",
-            "/api/v1/auth/signin",
-            "/api/v1/auth/reissue",
-            "/api/actuator/health",
+            "/v1/test/**",
+            "/v1/auth/signin",
+            "/v1/auth/reissue",
+            "/actuator/health",
     };
 
     @Bean
