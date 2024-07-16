@@ -18,6 +18,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FcmService {
 
+    private final String FCM_DATA_SCREEN = "screen";
+    private final String FCM_DATA_PROMISE_ID = "promiseId";
+
     @Async
     public void sendBulk(
             final List<String> fcmTokens,
@@ -43,8 +46,8 @@ public class FcmService {
                                 .setBody(fcmMessageDto.body())
                                 .build()
                 )
-                .putData("screen", fcmMessageDto.screen())
-                .putData("promiseId", fcmMessageDto.promiseId().toString())
+                .putData(FCM_DATA_SCREEN, fcmMessageDto.screen())
+                .putData(FCM_DATA_PROMISE_ID, fcmMessageDto.promiseId().toString())
                 .build();
     }
 }

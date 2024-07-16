@@ -8,7 +8,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.kkumulkkum.server.auth.jwt.JwtTokenProvider;
 import org.kkumulkkum.server.auth.jwt.JwtTokenValidator;
-import org.kkumulkkum.server.constant.Constant;
+import org.kkumulkkum.server.constant.AuthConstant;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
@@ -42,9 +42,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private String getJwtFromRequest(HttpServletRequest request) {
-        String bearerToken = request.getHeader(Constant.AUTHORIZATION_HEADER);
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(Constant.BEARER_TOKEN_PREFIX)) {
-            return bearerToken.substring(Constant.BEARER_TOKEN_PREFIX.length());
+        String bearerToken = request.getHeader(AuthConstant.AUTHORIZATION_HEADER);
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(AuthConstant.BEARER_TOKEN_PREFIX)) {
+            return bearerToken.substring(AuthConstant.BEARER_TOKEN_PREFIX.length());
         }
         return null;
     }

@@ -13,7 +13,7 @@ public interface MeetingRepository extends JpaRepository<Meeting, Long> {
 
     Optional<Meeting> findByInvitationCode(String invitationCode);
 
-    @Query("SELECT m FROM Meeting m JOIN m.members mem WHERE mem.user.id = :userId")
+    @Query("SELECT m FROM Meeting m JOIN FETCH m.members mem WHERE mem.user.id = :userId")
     List<Meeting> findAllByUserId(Long userId);
 
 }

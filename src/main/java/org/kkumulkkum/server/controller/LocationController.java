@@ -12,13 +12,12 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1")
 @RequiredArgsConstructor
 public class LocationController {
 
     private final NaverService naverService;
 
-    @GetMapping("/locations")
+    @GetMapping("/v1/locations")
     public ResponseEntity<List<LocationsDto>> getLocations(
             @RequestParam(name="q") final String query
     ) {

@@ -4,7 +4,7 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class Constant {
+public class AuthConstant {
 
     public static final String USER_ID = "userId";
     public static final String AUTHORIZATION_HEADER = "Authorization";
