@@ -10,6 +10,7 @@ import org.kkumulkkum.server.dto.promise.response.PromiseDto;
 import org.kkumulkkum.server.dto.promise.response.PromisesDto;
 import org.kkumulkkum.server.exception.PromiseException;
 import org.kkumulkkum.server.exception.code.PromiseErrorCode;
+import org.kkumulkkum.server.service.member.MemberRetreiver;
 import org.kkumulkkum.server.service.participant.ParticipantRetriever;
 import org.kkumulkkum.server.service.participant.ParticipantSaver;
 import org.kkumulkkum.server.service.userInfo.UserInfoRetriever;
@@ -32,6 +33,7 @@ public class PromiseService {
     private final ParticipantRetriever participantRetriever;
     private final UserInfoRetriever userInfoRetriever;
     private final EntityManager entityManager;
+    private final MemberRetreiver memberRetreiver;
 
     @Transactional
     public Long createPromise(
@@ -53,7 +55,8 @@ public class PromiseService {
                 .build();
         promiseSaver.save(promise);
 
-        createPromiseDto.participants().add(userId);
+        Member member = memberRetreiver.findByUserId(userId);
+        createPromiseDto.participants().add(member.getId());
         participantSaver.saveAll(
                 createPromiseDto.participants().stream()
                 .map(participantId
