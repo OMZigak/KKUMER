@@ -17,7 +17,7 @@ public class ParticipantController {
 
     private final ParticipantService participantService;
 
-    @PatchMapping("/v1/promises/{promiseId}/preperation")
+    @PatchMapping("/v1/promises/{promiseId}/preparation")
     public ResponseEntity<Void> preparePromise(
             @UserId final Long userId,
             @PathVariable final Long promiseId

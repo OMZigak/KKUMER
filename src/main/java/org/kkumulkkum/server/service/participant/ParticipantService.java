@@ -38,7 +38,7 @@ public class ParticipantService {
             final Long promiseId
     ) {
         Participant participant = participantRetriever.findByPromiseIdAndUserId(promiseId, userId);
-        if (!validateState(participant, "preperation")) {
+        if (!validateState(participant, "preparation")) {
             throw new ParticipantException(ParticipantErrorCode.INVALID_STATE);
         }
         participantEditor.preparePromise(participant);
@@ -143,7 +143,7 @@ public class ParticipantService {
             final String status
     ) {
         switch (status) {
-            case "preperation":
+            case "preparation":
                 return isNull(participant.getPreparationStartAt())
                         && isNull(participant.getDepartureAt())
                         && isNull(participant.getArrivalAt());
