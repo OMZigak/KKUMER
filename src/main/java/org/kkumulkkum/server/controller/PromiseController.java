@@ -11,6 +11,7 @@ import org.kkumulkkum.server.dto.promise.response.MainPromisesDto;
 import org.kkumulkkum.server.dto.promise.response.PromiseDto;
 import org.kkumulkkum.server.dto.promise.response.PromisesDto;
 import org.kkumulkkum.server.service.promise.PromiseService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,13 +25,13 @@ public class PromiseController {
 
     @IsMemberByMeetingId(meetingIdParamIndex = 1)
     @PostMapping("/v1/meetings/{meetingId}/promises")
-    public ResponseEntity<Void> createPromise(
+    public ResponseEntity<PromiseDto> createPromise(
             @UserId final Long userId,
             @PathVariable final Long meetingId,
             @Valid @RequestBody final PromiseCreateDto createPromiseDto
     ) {
-        Long promiseId = promiseService.createPromise(userId, meetingId, createPromiseDto);
-        return ResponseEntity.created(URI.create(promiseId.toString())).build();
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(promiseService.createPromise(userId, meetingId, createPromiseDto));
     }
 
     @IsParticipant(promiseIdParamIndex = 0)

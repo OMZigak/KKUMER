@@ -36,7 +36,7 @@ public class PromiseService {
     private final MemberRetreiver memberRetreiver;
 
     @Transactional
-    public Long createPromise(
+    public PromiseDto createPromise(
             final Long userId,
             final Long meetingId,
             final PromiseCreateDto createPromiseDto
@@ -65,7 +65,7 @@ public class PromiseService {
                         .member(entityManager.getReference(Member.class, participantId))
                         .build()).toList()
         );
-        return promise.getId();
+        return PromiseDto.from(promise);
     }
 
     @Transactional
