@@ -7,13 +7,13 @@ import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.kkumulkkum.server.exception.FirebaseException;
 import org.kkumulkkum.server.exception.code.FirebaseErrorCode;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
 @Slf4j
-@Component
+@Configuration
 public class FirebaseConfig {
 
     @PostConstruct
