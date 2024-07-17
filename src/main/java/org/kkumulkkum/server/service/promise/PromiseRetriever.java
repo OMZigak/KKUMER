@@ -20,7 +20,7 @@ public class PromiseRetriever {
     private final PromiseRepository promiseRepository;
 
     public List<Promise> findAllByMeetingId(final Long meetingId) {
-        return promiseRepository.findAllByMeetingId(meetingId);
+        return promiseRepository.findAllByMeetingIdOrderByTimeAscCreatedAtAsc(meetingId);
     }
 
     public Promise findById(final Long id) {
