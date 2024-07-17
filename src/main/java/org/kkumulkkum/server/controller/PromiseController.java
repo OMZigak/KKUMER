@@ -43,7 +43,7 @@ public class PromiseController {
         return ResponseEntity.ok().build();
     }
 
-    @IsMemberByMeetingId(meetingIdParamIndex = 1)
+    @IsMemberByMeetingId(meetingIdParamIndex = 0)
     @GetMapping("/v1/meetings/{meetingId}/promises")
     public ResponseEntity<PromisesDto> getPromises(
             @PathVariable("meetingId") final Long meetingId,
