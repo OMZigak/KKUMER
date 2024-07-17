@@ -32,7 +32,7 @@ public class MemberRetreiver {
         return memberRepository.existsByPromiseIdAndUserId(promiseId, userId);
     }
 
-    public Member findByUserId(Long userId) {
-        return memberRepository.findByUserId(userId);
+    public Member findByMeetingIdAndUserId(Long meetingId, Long userId) {
+        return memberRepository.findByMeetingIdAndUserId(meetingId, userId);
     }
 }
