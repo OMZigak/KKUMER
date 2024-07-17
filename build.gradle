@@ -21,6 +21,7 @@ configurations {
 
 repositories {
 	mavenCentral()
+	maven { url 'https://jitpack.io' }
 }
 
 dependencies {
@@ -68,6 +69,9 @@ dependencies {
 
 	// Firebase
 	implementation 'com.google.firebase:firebase-admin:9.2.0'
+
+	// Logback Discord Appender
+	implementation('com.github.napstr:logback-discord-appender:1.0.0')
 }
 
 tasks.named('test') {
