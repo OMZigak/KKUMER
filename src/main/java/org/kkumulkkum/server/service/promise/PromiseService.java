@@ -55,7 +55,7 @@ public class PromiseService {
                 .build();
         promiseSaver.save(promise);
 
-        Member member = memberRetreiver.findByUserId(userId);
+        Member member = memberRetreiver.findByMeetingIdAndUserId(meetingId, userId);
         createPromiseDto.participants().add(member.getId());
         participantSaver.saveAll(
                 createPromiseDto.participants().stream()

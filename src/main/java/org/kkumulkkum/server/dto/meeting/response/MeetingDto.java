@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 public record MeetingDto (
         Long meetingId,
         String name,
-        @JsonFormat(pattern = "yyyy-MM-DD")
+        @JsonFormat(pattern = "yyyy-MM-dd")
         LocalDateTime createdAt,
         int metCount,
         String invitationCode

@@ -33,5 +33,5 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
             FROM Member m""")
     boolean existsByPromiseIdAndUserId(Long promiseId, Long userId);
 
-    Member findByUserId(Long userId);
+    Member findByMeetingIdAndUserId(Long meetingId, Long userId);
 }

@@ -11,7 +11,7 @@ import java.util.List;
 
 public interface PromiseRepository extends JpaRepository<Promise, Long> {
 
-    List<Promise> findAllByMeetingId(Long meetingId);
+    List<Promise> findAllByMeetingIdOrderByTimeAscCreatedAtAsc(Long meetingId);
 
     @Query("""
             SELECT p FROM Participant pt
