@@ -8,6 +8,7 @@ import org.kkumulkkum.server.dto.meeting.request.MeetingCreateDto;
 import org.kkumulkkum.server.dto.meeting.request.MeetingRegisterDto;
 import org.kkumulkkum.server.dto.meeting.response.CreatedMeetingDto;
 import org.kkumulkkum.server.dto.meeting.response.MeetingDto;
+import org.kkumulkkum.server.dto.meeting.response.MeetingIdDto;
 import org.kkumulkkum.server.dto.meeting.response.MeetingsDto;
 import org.kkumulkkum.server.dto.member.response.MemberDto;
 import org.kkumulkkum.server.dto.member.response.MembersDto;
@@ -55,7 +56,7 @@ public class MeetingService {
     }
 
     @Transactional
-    public void registerMeeting(
+    public Long registerMeeting(
             final Long userId,
             final MeetingRegisterDto meetingRegisterDto
     ) {
@@ -68,6 +69,8 @@ public class MeetingService {
             throw new MeetingException(MeetingErrorCode.ALREADY_JOINED);
         }
         memberSaver.save(member);
+
+        return meeting.getId();
     }
 
     @Transactional(readOnly = true)

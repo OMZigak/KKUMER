@@ -18,6 +18,14 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
+    @ExceptionHandler(value = {UserException.class})
+    public ResponseEntity<UserErrorCode> handleMeetingException(UserException e) {
+        log.error("GlobalExceptionHandler catch UserException : {}", e.getErrorCode().getMessage());
+        return ResponseEntity
+                .status(e.getErrorCode().getHttpStatus())
+                .body(e.getErrorCode());
+    }
+
     @ExceptionHandler(value = {MeetingException.class})
     public ResponseEntity<MeetingErrorCode> handleMeetingException(MeetingException e) {
         log.error("GlobalExceptionHandler catch MeetingException : {}", e.getErrorCode().getMessage());
