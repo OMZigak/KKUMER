@@ -145,8 +145,7 @@ public class GlobalExceptionHandler {
     // 기본 예외
     @ExceptionHandler(value = {Exception.class})
     public ResponseEntity<BusinessErrorCode> handleException(Exception e) {
-        log.error("GlobalExceptionHandler catch Exception : {}", e.getMessage());
-        e.printStackTrace();
+        log.error("GlobalExceptionHandler catch Exception : {}", e.getMessage(), e);
         return ResponseEntity
                 .status(BusinessErrorCode.INTERNAL_SERVER_ERROR.getHttpStatus())
                 .body(BusinessErrorCode.INTERNAL_SERVER_ERROR);
