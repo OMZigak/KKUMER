@@ -7,6 +7,7 @@ import java.time.LocalDateTime;
 
 public record PromiseDto(
         Long promiseId,
+        String promiseName,
         String placeName,
         String address,
         String roadAddress,
@@ -18,6 +19,7 @@ public record PromiseDto(
     public static PromiseDto from(Promise promise) {
         return new PromiseDto(
                 promise.getId(),
+                promise.getName(),
                 promise.getPlaceName(),
                 promise.getAddress(),
                 promise.getRoadAddress(),
