@@ -3,6 +3,7 @@ package org.kkumulkkum.server.controller;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.kkumulkkum.server.annotation.IsMemberByMeetingId;
+import org.kkumulkkum.server.annotation.IsMemberByPromiseId;
 import org.kkumulkkum.server.annotation.IsParticipant;
 import org.kkumulkkum.server.annotation.UserId;
 import org.kkumulkkum.server.dto.promise.PromiseCreateDto;
@@ -52,7 +53,7 @@ public class PromiseController {
         return ResponseEntity.ok().body(promiseService.getPromises(meetingId, done));
     }
 
-    @IsMemberByMeetingId(meetingIdParamIndex = 1)
+    @IsMemberByPromiseId(promiseIdParamIndex = 0)
     @GetMapping("/v1/promises/{promiseId}")
     public ResponseEntity<PromiseDto> getPromise(
             @PathVariable("promiseId") final Long promiseId
