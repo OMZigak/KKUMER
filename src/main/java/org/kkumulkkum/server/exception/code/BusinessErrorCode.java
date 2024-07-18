@@ -20,6 +20,7 @@ public enum BusinessErrorCode implements DefaultErrorCode {
     METHOD_NOT_ALLOWED(HttpStatus.METHOD_NOT_ALLOWED,40500, "지원하지 않는 메소드입니다."),
     // 500 INTERNAL_SEVER_ERROR
     INTERNAL_SERVER_ERROR(HttpStatus.INTERNAL_SERVER_ERROR,50000, "서버 내부 오류입니다."),
+    DISCORD_WEBHOOK_ERROR(HttpStatus.INTERNAL_SERVER_ERROR,50001,"디스코드 웹훅 전송에 실패했습니다."),
     ;
 
     private HttpStatus httpStatus;
