@@ -8,9 +8,11 @@ import org.kkumulkkum.server.dto.meeting.request.MeetingCreateDto;
 import org.kkumulkkum.server.dto.meeting.request.MeetingRegisterDto;
 import org.kkumulkkum.server.dto.meeting.response.CreatedMeetingDto;
 import org.kkumulkkum.server.dto.meeting.response.MeetingDto;
+import org.kkumulkkum.server.dto.meeting.response.MeetingIdDto;
 import org.kkumulkkum.server.dto.meeting.response.MeetingsDto;
 import org.kkumulkkum.server.dto.member.response.MembersDto;
 import org.kkumulkkum.server.service.meeting.MeetingService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -34,12 +36,13 @@ public class MeetingController {
     }
 
     @PostMapping("/v1/meetings/register")
-    public ResponseEntity<Void> registerMeeting(
+    public ResponseEntity<MeetingIdDto> registerMeeting(
             @UserId final Long userId,
             @Valid @RequestBody final MeetingRegisterDto meetingRegisterDto
     ) {
-        meetingService.registerMeeting(userId, meetingRegisterDto);
-        return ResponseEntity.ok().build();
+        Long meetingId = meetingService.registerMeeting(userId, meetingRegisterDto);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(new MeetingIdDto(meetingId));
     }
 
     @GetMapping("/v1/meetings")
