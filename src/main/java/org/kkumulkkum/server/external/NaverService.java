@@ -2,6 +2,7 @@ package org.kkumulkkum.server.external;
 
 import org.kkumulkkum.server.exception.OpenApiException;
 import org.kkumulkkum.server.exception.code.OpenApiErrorCode;
+import org.kkumulkkum.server.external.dto.LocationDto;
 import org.kkumulkkum.server.external.dto.LocationsDto;
 import org.kkumulkkum.server.external.dto.NaverLocationResponse;
 import org.springframework.beans.factory.annotation.Value;
@@ -34,12 +35,12 @@ public class NaverService {
     private String naverLocationSearchUrl;
 
     @Transactional(readOnly = true)
-    public List<LocationsDto> getLocations(String query) {
+    public LocationsDto getLocations(String query) {
         try {
             NaverLocationResponse naverLocationResponse = locationSearch(requestMap(query));
-            return convertResponse(naverLocationResponse);
+            return LocationsDto.of(convertResponse(naverLocationResponse));
         } catch (OpenApiException e) {
-            return Collections.emptyList();
+            return LocationsDto.of(Collections.emptyList());
         }
     }
 
@@ -60,11 +61,11 @@ public class NaverService {
                 .body(NaverLocationResponse.class);
     }
 
-    private List<LocationsDto> convertResponse(NaverLocationResponse response) {
+    private List<LocationDto> convertResponse(NaverLocationResponse response) {
         List<NaverLocationResponse.SearchLocationItem> items = response.items();
 
         return items.stream()
-                .map(item -> new LocationsDto(convertX(item.getMapx()), convertY(item.getMapy()), trim(item.getTitle()), trim(item.getAddress()), trim(item.getRoadAddress())))
+                .map(item -> new LocationDto(convertX(item.getMapx()), convertY(item.getMapy()), trim(item.getTitle()), trim(item.getAddress()), trim(item.getRoadAddress())))
                 .collect(Collectors.toList());
     }
 
