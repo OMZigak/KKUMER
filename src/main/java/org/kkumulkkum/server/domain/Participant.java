@@ -11,6 +11,11 @@ import java.time.LocalDateTime;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Table(
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"promise_id", "member_id"})
+        }
+)
 public class Participant extends BaseTimeEntity {
 
     @Id
