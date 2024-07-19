@@ -1,6 +1,7 @@
 package org.kkumulkkum.server.repository;
 
 import org.kkumulkkum.server.domain.Meeting;
+import org.kkumulkkum.server.dto.meeting.MeetingMetCountDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -13,7 +14,15 @@ public interface MeetingRepository extends JpaRepository<Meeting, Long> {
 
     Optional<Meeting> findByInvitationCode(String invitationCode);
 
-    @Query("SELECT m FROM Meeting m JOIN FETCH m.members mem WHERE mem.user.id = :userId")
+    @Query("SELECT m FROM Meeting m JOIN m.members mem WHERE mem.user.id = :userId")
     List<Meeting> findAllByUserId(Long userId);
+
+    @Query("""
+        SELECT new org.kkumulkkum.server.dto.meeting.MeetingMetCountDto (m, COUNT(p.id)) 
+        FROM Meeting m 
+        JOIN Promise p ON p.meeting.id = m.id AND p.isCompleted = true 
+        WHERE m.id = :meetingId 
+        GROUP BY m.id """)
+    Optional<MeetingMetCountDto> findByIdWithMetCount(Long meetingId);
 
 }

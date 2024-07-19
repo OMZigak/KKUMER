@@ -4,11 +4,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.kkumulkkum.server.domain.Meeting;
 import org.kkumulkkum.server.domain.Member;
+import org.kkumulkkum.server.dto.meeting.MeetingMetCountDto;
 import org.kkumulkkum.server.dto.meeting.request.MeetingCreateDto;
 import org.kkumulkkum.server.dto.meeting.request.MeetingRegisterDto;
 import org.kkumulkkum.server.dto.meeting.response.CreatedMeetingDto;
 import org.kkumulkkum.server.dto.meeting.response.MeetingDto;
-import org.kkumulkkum.server.dto.meeting.response.MeetingIdDto;
 import org.kkumulkkum.server.dto.meeting.response.MeetingsDto;
 import org.kkumulkkum.server.dto.member.response.MemberDto;
 import org.kkumulkkum.server.dto.member.response.MembersDto;
@@ -81,7 +81,8 @@ public class MeetingService {
 
     @Transactional(readOnly = true)
     public MeetingDto getMeeting(final Long meetingId) {
-        return MeetingDto.from(meetingRetriever.findById(meetingId));
+        MeetingMetCountDto meeting = meetingRetriever.findByIdWithMetCount(meetingId);
+        return MeetingDto.of(meeting.meeting(), meeting.metCount());
     }
 
     @Transactional(readOnly = true)
