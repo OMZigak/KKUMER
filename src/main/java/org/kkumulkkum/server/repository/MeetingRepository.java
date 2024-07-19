@@ -20,7 +20,7 @@ public interface MeetingRepository extends JpaRepository<Meeting, Long> {
     @Query("""
         SELECT new org.kkumulkkum.server.dto.meeting.MeetingMetCountDto (m, COUNT(p.id)) 
         FROM Meeting m 
-        JOIN Promise p ON p.meeting.id = m.id AND p.isCompleted = true 
+        LEFT JOIN Promise p ON p.meeting.id = m.id AND p.isCompleted = true 
         WHERE m.id = :meetingId 
         GROUP BY m.id """)
     Optional<MeetingMetCountDto> findByIdWithMetCount(Long meetingId);
