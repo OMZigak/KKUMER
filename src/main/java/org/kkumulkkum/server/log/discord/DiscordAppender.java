@@ -69,7 +69,7 @@ public class DiscordAppender extends UnsynchronizedAppenderBase<ILoggingEvent> {
                         false)
                 .addField(
                         "[" + MDCUtil.REQUEST_URI_MDC + "]",
-                        StringEscapeUtils.escapeJson(mdcPropertyMap.get(MDCUtil.REQUEST_URI_MDC)),
+                        StringEscapeUtils.escapeJson(mdcPropertyMap.get(MDCUtil.REQUEST_METHOD_MDC) +"\n"+ mdcPropertyMap.get(MDCUtil.REQUEST_URI_MDC)),
                         false)
                 .addField(
                         "[" + MDCUtil.USER_IP_MDC + "]",

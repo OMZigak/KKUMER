@@ -21,6 +21,10 @@ public class HttpRequestUtil {
         return request.getRequestURI();
     }
 
+    public static String getRequestMethod(HttpServletRequest request) {
+        return "[{}]".replace("{}", request.getMethod());
+    }
+
     public static Map<String, String> getHeaderMap(HttpServletRequest request) {
         Map<String, String> headerMap = new HashMap<>();
         request.getHeaderNames().asIterator()

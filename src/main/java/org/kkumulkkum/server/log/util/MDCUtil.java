@@ -11,6 +11,7 @@ import org.slf4j.spi.MDCAdapter;
 public class MDCUtil {
 
     public static final String REQUEST_URI_MDC = "이용자 요청 URI 정보";
+    public static final String REQUEST_METHOD_MDC = "이용자 요청 메소드 정보";
     public static final String USER_IP_MDC = "이용자 IP 정보";
 //    public static final String USER_REQUEST_COOKIES = "이용자 Cookie 정보";
     public static final String USER_INFO = "이용자 로그인 정보";
