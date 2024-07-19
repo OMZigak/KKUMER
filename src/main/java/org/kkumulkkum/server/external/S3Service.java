@@ -12,6 +12,7 @@ import software.amazon.awssdk.services.s3.model.DeleteObjectRequest;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -48,14 +49,20 @@ public class S3Service {
         return s3Client.utilities().getUrl(builder -> builder.bucket(bucketName).key(key)).toExternalForm();
     }
 
-    public void deleteImage(String key) throws IOException {
+    public void deleteImage(String imageUrl) throws IOException {
+        String key = extractKeyFromUrl(imageUrl); // URL에서 키 추출
         final S3Client s3Client = awsConfig.getS3Client();
+        DeleteObjectRequest deleteRequest = DeleteObjectRequest.builder()
+                .bucket(bucketName)
+                .key(key)
+                .build();
+        s3Client.deleteObject(deleteRequest);
+    }
 
-        s3Client.deleteObject((DeleteObjectRequest.Builder builder) ->
-                builder.bucket(bucketName)
-                        .key(key)
-                        .build()
-        );
+    public String extractKeyFromUrl(String url) throws IOException {
+        URL s3Url = new URL(url);
+        String path = s3Url.getPath();
+        return path.substring(1);
     }
 
     private String getFileExtension(String fileName) {
