@@ -31,7 +31,7 @@ public class MeetingController {
     ) {
         CreatedMeetingDto createdMeetingDto = meetingService.createMeeting(userId, meetingCreateDto);
         return ResponseEntity
-                .created(URI.create(createdMeetingDto.id().toString()))
+                .created(URI.create(createdMeetingDto.meetingId().toString()))
                 .body(createdMeetingDto);
     }
 
