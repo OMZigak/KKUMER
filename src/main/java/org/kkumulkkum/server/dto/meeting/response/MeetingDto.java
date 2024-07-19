@@ -10,15 +10,15 @@ public record MeetingDto (
         String name,
         @JsonFormat(pattern = "yyyy-MM-dd")
         LocalDateTime createdAt,
-        int metCount,
+        Long metCount,
         String invitationCode
 ) {
-    public static MeetingDto from(Meeting meeting) {
+    public static MeetingDto of(Meeting meeting, Long metCount) {
         return new MeetingDto(
                 meeting.getId(),
                 meeting.getName(),
                 meeting.getCreatedAt(),
-                meeting.getMembers().size(),
+                metCount,
                 meeting.getInvitationCode()
         );
     }
