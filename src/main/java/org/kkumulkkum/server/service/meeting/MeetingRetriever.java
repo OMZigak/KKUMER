@@ -2,6 +2,7 @@ package org.kkumulkkum.server.service.meeting;
 
 import lombok.RequiredArgsConstructor;
 import org.kkumulkkum.server.domain.Meeting;
+import org.kkumulkkum.server.dto.meeting.MeetingMetCountDto;
 import org.kkumulkkum.server.exception.MeetingException;
 import org.kkumulkkum.server.exception.code.MeetingErrorCode;
 import org.kkumulkkum.server.repository.MeetingRepository;
@@ -30,6 +31,11 @@ public class MeetingRetriever {
 
     public Meeting findById(final Long meetingId) {
         return meetingRepository.findById(meetingId)
+                .orElseThrow(() -> new MeetingException(MeetingErrorCode.NOT_FOUND_MEETING));
+    }
+
+    public MeetingMetCountDto findByIdWithMetCount(final Long meetingId) {
+        return meetingRepository.findByIdWithMetCount(meetingId)
                 .orElseThrow(() -> new MeetingException(MeetingErrorCode.NOT_FOUND_MEETING));
     }
 }
