@@ -85,8 +85,12 @@ public class MeetingService {
     }
 
     @Transactional(readOnly = true)
-    public MembersDto getMembers(final Long meetingId) {
+    public MembersDto getMembers(final Long meetingId, final String exclude, final Long userId) {
         List<MemberDto> members = memberRetreiver.findAllByMeetingId(meetingId);
+        if (exclude != null) {
+            Member authenticatedMember = memberRetreiver.findByMeetingIdAndUserId(meetingId, userId);
+            members.removeIf(member -> member.memberId().equals(authenticatedMember.getId()));
+        }
         return MembersDto.from(members);
     }
 

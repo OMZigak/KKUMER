@@ -63,9 +63,11 @@ public class MeetingController {
     @IsMemberByMeetingId(meetingIdParamIndex = 0)
     @GetMapping("/v1/meetings/{meetingId}/members")
     public ResponseEntity<MembersDto> getMembers(
-            @PathVariable final Long meetingId
+            @PathVariable final Long meetingId,
+            @RequestParam(name = "exclude", required = false) final String exclude,
+            @UserId final Long userId
     ) {
-        return ResponseEntity.ok(meetingService.getMembers(meetingId));
+        return ResponseEntity.ok(meetingService.getMembers(meetingId, exclude, userId));
     }
 
 }
