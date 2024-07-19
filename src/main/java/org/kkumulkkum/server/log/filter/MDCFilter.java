@@ -29,6 +29,7 @@ public class MDCFilter extends OncePerRequestFilter {
         HttpServletRequest httpReq = WebUtils.getNativeRequest(request, HttpServletRequest.class);
 
         MDCUtil.setJsonValue(MDCUtil.REQUEST_URI_MDC, HttpRequestUtil.getRequestUri(Objects.requireNonNull(httpReq)));
+        MDCUtil.setJsonValue(MDCUtil.REQUEST_METHOD_MDC, HttpRequestUtil.getRequestMethod(Objects.requireNonNull(httpReq)));
         MDCUtil.setJsonValue(MDCUtil.USER_IP_MDC, HttpRequestUtil.getUserIP(Objects.requireNonNull(httpReq)));
         MDCUtil.setJsonValue(MDCUtil.HEADER_MAP_MDC, HttpRequestUtil.getHeaderMap(httpReq));
         MDCUtil.setJsonValue(MDCUtil.USER_INFO, SecurityContextHolder.getContext().getAuthentication().getPrincipal());

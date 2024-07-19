@@ -20,7 +20,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = {UserException.class})
     public ResponseEntity<UserErrorCode> handleMeetingException(UserException e) {
-        log.error("GlobalExceptionHandler catch UserException : {}", e.getErrorCode().getMessage());
+        log.warn("GlobalExceptionHandler catch UserException : {}", e.getErrorCode().getMessage());
         return ResponseEntity
                 .status(e.getErrorCode().getHttpStatus())
                 .body(e.getErrorCode());
@@ -28,7 +28,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = {MeetingException.class})
     public ResponseEntity<MeetingErrorCode> handleMeetingException(MeetingException e) {
-        log.error("GlobalExceptionHandler catch MeetingException : {}", e.getErrorCode().getMessage());
+        log.warn("GlobalExceptionHandler catch MeetingException : {}", e.getErrorCode().getMessage());
         return ResponseEntity
                 .status(e.getErrorCode().getHttpStatus())
                 .body(e.getErrorCode());
@@ -36,7 +36,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = {AuthException.class})
     public ResponseEntity<AuthErrorCode> handleAuthException(AuthException e) {
-        log.error("GlobalExceptionHandler catch AuthException : {}", e.getErrorCode().getMessage());
+        log.warn("GlobalExceptionHandler catch AuthException : {}", e.getErrorCode().getMessage());
         return ResponseEntity
                 .status(e.getErrorCode().getHttpStatus())
                 .body(e.getErrorCode());
@@ -44,7 +44,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = {ParticipantException.class})
     public ResponseEntity<ParticipantErrorCode> handleParticipantException(ParticipantException e) {
-        log.error("GlobalExceptionHandler catch ParticipantException : {}", e.getErrorCode().getMessage());
+        log.warn("GlobalExceptionHandler catch ParticipantException : {}", e.getErrorCode().getMessage());
         return ResponseEntity
                 .status(e.getErrorCode().getHttpStatus())
                 .body(e.getErrorCode());
@@ -52,7 +52,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = {PromiseException.class})
     public ResponseEntity<PromiseErrorCode> handlePromiseException(PromiseException e) {
-        log.error("GlobalExceptionHandler catch PromiseException : {}", e.getErrorCode().getMessage());
+        log.warn("GlobalExceptionHandler catch PromiseException : {}", e.getErrorCode().getMessage());
         return ResponseEntity
                 .status(e.getErrorCode().getHttpStatus())
                 .body(e.getErrorCode());
@@ -60,7 +60,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = {MemberException.class})
     public ResponseEntity<MemberErrorCode> handleMemberException(MemberException e) {
-        log.error("GlobalExceptionHandler catch MemberException : {}", e.getErrorCode().getMessage());
+        log.warn("GlobalExceptionHandler catch MemberException : {}", e.getErrorCode().getMessage());
         return ResponseEntity
                 .status(e.getErrorCode().getHttpStatus())
                 .body(e.getErrorCode());
@@ -68,7 +68,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = {AwsException.class})
     public ResponseEntity<AwsErrorCode> handleAwsException(AwsException e) {
-        log.error("GlobalExceptionHandler catch AwsException : {}", e.getErrorCode().getMessage());
+        log.warn("GlobalExceptionHandler catch AwsException : {}", e.getErrorCode().getMessage());
         return ResponseEntity
                 .status(e.getErrorCode().getHttpStatus())
                 .body(e.getErrorCode());
@@ -76,7 +76,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = {FirebaseException.class})
     public ResponseEntity<FirebaseErrorCode> handleAwsException(FirebaseException e) {
-        log.error("GlobalExceptionHandler catch FirebaseException : {}", e.getErrorCode().getMessage());
+        log.warn("GlobalExceptionHandler catch FirebaseException : {}", e.getErrorCode().getMessage());
         return ResponseEntity
                 .status(e.getErrorCode().getHttpStatus())
                 .body(e.getErrorCode());
@@ -85,7 +85,7 @@ public class GlobalExceptionHandler {
     // 도메인 관련된 에러가 아닐 경우
     @ExceptionHandler(value = {BusinessException.class})
     public ResponseEntity<BusinessErrorCode> handleBusinessException(BusinessException e) {
-        log.error("GlobalExceptionHandler catch BusinessException : {}", e.getErrorCode().getMessage());
+        log.warn("GlobalExceptionHandler catch BusinessException : {}", e.getErrorCode().getMessage());
         return ResponseEntity
                 .status(e.getErrorCode().getHttpStatus())
                 .body(e.getErrorCode());
@@ -94,7 +94,7 @@ public class GlobalExceptionHandler {
     // 존재하지 않는 요청에 대한 예외
     @ExceptionHandler(value = {NoHandlerFoundException.class})
     public ResponseEntity<BusinessErrorCode> handleNoPageFoundException(NoHandlerFoundException e) {
-        log.error("GlobalExceptionHandler catch NoHandlerFoundException : {}", BusinessErrorCode.NOT_FOUND_END_POINT.getMessage());
+        log.warn("GlobalExceptionHandler catch NoHandlerFoundException : {}", BusinessErrorCode.NOT_FOUND_END_POINT.getMessage());
         return ResponseEntity
                 .status(BusinessErrorCode.NOT_FOUND_END_POINT.getHttpStatus())
                 .body(BusinessErrorCode.NOT_FOUND_END_POINT);
@@ -103,7 +103,7 @@ public class GlobalExceptionHandler {
     // 잘못된 Method로 요청한 경우
     @ExceptionHandler(value = {HttpRequestMethodNotSupportedException.class})
     public ResponseEntity<BusinessErrorCode> handleNoPageFoundException(HttpRequestMethodNotSupportedException e) {
-        log.error("GlobalExceptionHandler catch NoHandlerFoundException : {}", BusinessErrorCode.NOT_FOUND_END_POINT.getMessage());
+        log.warn("GlobalExceptionHandler catch NoHandlerFoundException : {}", BusinessErrorCode.NOT_FOUND_END_POINT.getMessage());
         return ResponseEntity
                 .status(BusinessErrorCode.METHOD_NOT_ALLOWED.getHttpStatus())
                 .body(BusinessErrorCode.METHOD_NOT_ALLOWED);
@@ -111,7 +111,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = {HandlerMethodValidationException.class, MethodArgumentNotValidException.class})
     public ResponseEntity<BusinessErrorCode> handleValidationException(Exception e) {
-        log.error("GlobalExceptionHandler catch MethodArgumentNotValidException : {}", e.getMessage());
+        log.warn("GlobalExceptionHandler catch MethodArgumentNotValidException : {}", e.getMessage());
         return ResponseEntity
                 .status(BusinessErrorCode.INVALID_ARGUMENTS.getHttpStatus())
                 .body(BusinessErrorCode.INVALID_ARGUMENTS);
@@ -119,7 +119,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = {MissingServletRequestParameterException.class})
     public ResponseEntity<BusinessErrorCode> handleMissingParameterException(MissingServletRequestParameterException e) {
-        log.error("GlobalExceptionHandler catch MissingServletRequestParameterException : {}", e.getMessage());
+        log.warn("GlobalExceptionHandler catch MissingServletRequestParameterException : {}", e.getMessage());
         return ResponseEntity
                 .status(BusinessErrorCode.MISSING_REQUIRED_PARAM.getHttpStatus())
                 .body(BusinessErrorCode.MISSING_REQUIRED_PARAM);
@@ -127,7 +127,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(value = {MissingRequestHeaderException.class})
     public ResponseEntity<BusinessErrorCode> handleMissingHeaderException(MissingRequestHeaderException e) {
-        log.error("GlobalExceptionHandler catch MissingRequestHeaderException : {}", e.getMessage());
+        log.warn("GlobalExceptionHandler catch MissingRequestHeaderException : {}", e.getMessage());
         return ResponseEntity
                 .status(BusinessErrorCode.MISSING_REQUIRED_HEADER.getHttpStatus())
                 .body(BusinessErrorCode.MISSING_REQUIRED_HEADER);
@@ -135,8 +135,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(MaxUploadSizeExceededException.class)
     public ResponseEntity<BusinessErrorCode> handleMaxSizeException(MaxUploadSizeExceededException e) {
-        log.error("GlobalExceptionHandler catch MaxUploadSizeExceededException : {}", e.getMessage());
-        e.printStackTrace();
+        log.warn("GlobalExceptionHandler catch MaxUploadSizeExceededException : {}", e.getMessage());
         return ResponseEntity
                 .status(BusinessErrorCode.PAYLOAD_TOO_LARGE.getHttpStatus())
                 .body(BusinessErrorCode.PAYLOAD_TOO_LARGE);
