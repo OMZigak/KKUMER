@@ -30,11 +30,12 @@ public record PromisesDto(
             String placeName
     ) {
         public static PromiseDto from(Promise promise) {
+            int dday = (int) ChronoUnit.DAYS.between(LocalDateTime.now().toLocalDate(), promise.getTime().toLocalDate());
+            if (dday < 0) dday = 0;
             return new PromiseDto(
                     promise.getId(),
                     promise.getName(),
-                    //약속 시간이랑 지금 시간이랑 비교해서 dDay 계산
-                    (int) ChronoUnit.DAYS.between(LocalDateTime.now(), promise.getTime()),
+                    dday,
                     promise.getTime(),
                     promise.getTime(),
                     promise.getPlaceName()

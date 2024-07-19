@@ -19,12 +19,14 @@ public record MainPromiseDto(
         String placeName
 ) {
     public static MainPromiseDto from(Promise promise) {
+        int dday = (int) ChronoUnit.DAYS.between(LocalDateTime.now().toLocalDate(), promise.getTime().toLocalDate());
+        if (dday < 0) dday = 0;
         return new MainPromiseDto(
                 promise.getId(),
                 promise.getName(),
                 promise.getMeeting().getName(),
                 promise.getDressUpLevel().getContent(),
-                (int) ChronoUnit.DAYS.between(LocalDateTime.now(), promise.getTime()),
+                dday,
                 promise.getTime(),
                 promise.getTime(),
                 promise.getPlaceName()
