@@ -29,11 +29,11 @@ public class JwtExceptionFilter extends OncePerRequestFilter {
         try {
             filterChain.doFilter(request, response);
         } catch (AuthException e) {
-            log.error("FilterException throw AuthException : {}", e.getErrorCode().getMessage());
+//            log.error("FilterException throw AuthException : {}", e.getErrorCode().getMessage());
             request.setAttribute("exception", e.getErrorCode());
             filterChain.doFilter(request, response);
         } catch (JwtException e) {
-            log.error("FilterException throw JwtException Exception : {}", e.getMessage());
+//            log.error("FilterException throw JwtException Exception : {}", e.getMessage());
             request.setAttribute("exception", AuthErrorCode.UNKNOWN_TOKEN);
             filterChain.doFilter(request, response);
         } catch (Exception e) {
