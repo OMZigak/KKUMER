@@ -2,7 +2,6 @@ package org.kkumulkkum.server.controller;
 
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.kkumulkkum.server.annotation.UserId;
 import org.kkumulkkum.server.constant.AuthConstant;
@@ -21,7 +20,7 @@ public class AuthController {
 
     @PostMapping("/v1/auth/signin")
     public ResponseEntity<UserTokenDto> signin(
-            @NotNull @RequestHeader(AuthConstant.AUTHORIZATION_HEADER) final String providerToken,
+            @NotBlank @RequestHeader(AuthConstant.AUTHORIZATION_HEADER) final String providerToken,
             @Valid @RequestBody final UserLoginDto userLoginDto
     ) {
         return ResponseEntity.ok(authService.signin(providerToken, userLoginDto));
