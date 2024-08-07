@@ -1,6 +1,7 @@
 package org.kkumulkkum.server.controller;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.kkumulkkum.server.annotation.UserId;
@@ -37,7 +38,7 @@ public class AuthController {
 
     @PostMapping("/v1/auth/reissue")
     public ResponseEntity<JwtTokenDto> reissue(
-            @NotNull @RequestHeader(AuthConstant.AUTHORIZATION_HEADER) final String refreshToken
+            @NotBlank @RequestHeader(AuthConstant.AUTHORIZATION_HEADER) final String refreshToken
     ) {
         return ResponseEntity.ok(authService.reissue(refreshToken));
     }
