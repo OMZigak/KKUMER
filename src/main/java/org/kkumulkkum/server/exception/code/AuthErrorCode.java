@@ -15,7 +15,7 @@ public enum AuthErrorCode implements DefaultErrorCode {
     EXPIRED_APPLE_IDENTITY_TOKEN(HttpStatus.BAD_REQUEST, 40014, "Apple Identity Token 유효기간이 만료됐습니다."),
     // 401 UNAUTHORIZED
     UNAUTHORIZED(HttpStatus.UNAUTHORIZED, 40110, "인증되지 않은 사용자입니다."),
-    INVALID_TOKEN(HttpStatus.UNAUTHORIZED, 40111, "액세스 토큰의 형식이 올바르지 않습니다."),
+    INVALID_TOKEN(HttpStatus.UNAUTHORIZED, 40111, "올바르지 않은 토큰입니다."),
     EXPIRED_TOKEN(HttpStatus.UNAUTHORIZED, 40112, "액세스 토큰이 만료되었습니다."),
     UNSUPPORTED_TOKEN(HttpStatus.UNAUTHORIZED, 40113, "지원하지 않는 토큰 형식입니다."),
     EMPTY_TOKEN(HttpStatus.UNAUTHORIZED, 40114, "토큰이 제공되지 않았습니다."),
