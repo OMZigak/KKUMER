@@ -55,7 +55,12 @@ public class AuthService {
 
     @Transactional
     public JwtTokenDto reissue(final String refreshToken) {
-        Long userId = jwtTokenProvider.getUserIdFromJwt(refreshToken);
+        Long userId;
+        try{
+            userId = jwtTokenProvider.getUserIdFromJwt(refreshToken);
+        } catch (Exception e) {
+            throw new AuthException(AuthErrorCode.INVALID_TOKEN);
+        }
         Token token = tokenRetriever.findByRefreshToken(refreshToken);
 
         if(!userId.equals(token.getId())) {
