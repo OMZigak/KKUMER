@@ -59,6 +59,7 @@ dependencies {
 
 	// Social Login
 	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:4.1.2'
+	implementation 'org.bouncycastle:bcpkix-jdk18on:1.75'
 
 	// Validation
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
