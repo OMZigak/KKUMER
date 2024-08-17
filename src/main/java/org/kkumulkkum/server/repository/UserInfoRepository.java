@@ -15,4 +15,6 @@ public interface UserInfoRepository extends JpaRepository<UserInfo, Long> {
             JOIN FETCH Participant p ON ui.user.id = p.member.user.id
             WHERE p.id = :id""")
     Optional<UserInfo> findByParticipantId(Long id);
+
+    void deleteByUserId(Long userId);
 }
