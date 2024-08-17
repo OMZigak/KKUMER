@@ -5,6 +5,7 @@ import org.kkumulkkum.server.auth.jwt.JwtTokenProvider;
 import org.kkumulkkum.server.auth.openfeign.kakao.dto.SocialUserDto;
 import org.kkumulkkum.server.auth.openfeign.apple.service.AppleService;
 import org.kkumulkkum.server.auth.openfeign.kakao.service.KakaoService;
+import org.kkumulkkum.server.domain.Member;
 import org.kkumulkkum.server.domain.Token;
 import org.kkumulkkum.server.domain.User;
 import org.kkumulkkum.server.domain.UserInfo;
@@ -15,12 +16,19 @@ import org.kkumulkkum.server.dto.auth.response.JwtTokenDto;
 import org.kkumulkkum.server.dto.auth.response.UserTokenDto;
 import org.kkumulkkum.server.exception.AuthException;
 import org.kkumulkkum.server.exception.code.AuthErrorCode;
+import org.kkumulkkum.server.service.member.MemberRemover;
+import org.kkumulkkum.server.service.member.MemberRetreiver;
+import org.kkumulkkum.server.service.participant.ParticipantRemover;
+import org.kkumulkkum.server.service.user.UserRemover;
 import org.kkumulkkum.server.service.user.UserRetriever;
 import org.kkumulkkum.server.service.user.UserSaver;
+import org.kkumulkkum.server.service.userInfo.UserInfoRemover;
 import org.kkumulkkum.server.service.userInfo.UserInfoRetriever;
 import org.kkumulkkum.server.service.userInfo.UserInfoSaver;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -36,6 +44,11 @@ public class AuthService {
     private final TokenRetriever tokenRetriever;
     private final TokenRemover tokenRemover;
     private final UserInfoRetriever userInfoRetriever;
+    private final MemberRetreiver memberRetreiver;
+    private final ParticipantRemover participantRemover;
+    private final MemberRemover memberRemover;
+    private final UserInfoRemover userInfoRemover;
+    private final UserRemover userRemover;
 
     @Transactional
     public UserTokenDto signin(final String providerToken, final UserLoginDto userLoginDto) {
@@ -70,6 +83,20 @@ public class AuthService {
         JwtTokenDto tokens = jwtTokenProvider.issueTokens(userId);
         saveToken(userId, tokens);
         return tokens;
+    }
+
+    @Transactional
+    public void withdrawal(final Long userId, final String authCode) {
+        User user = userRetriever.findById(userId);
+
+        if(user.getProvider() == Provider.KAKAO) {
+            kakaoService.unlinkKakaoUser(user.getProviderId());
+        } else if(user.getProvider() == Provider.APPLE) {
+            appleService.revoke(authCode);
+        } else {
+            throw new AuthException(AuthErrorCode.INVALID_PROVIDER);
+        }
+        deleteUser(user);
     }
 
     private SocialUserDto getSocialInfo(final String providerToken, final UserLoginDto userLoginDto) {
@@ -111,5 +138,24 @@ public class AuthService {
                         .refreshToken(tokens.refreshToken())
                         .build()
         );
+    }
+
+    private void deleteUser(final User user) {
+
+        // User와 연결된 모든 Member 찾기
+        List<Member> members = memberRetreiver.findByUserId(user.getId());
+
+        // 각 Member에 대한 Participant 삭제
+        for(Member member : members) {
+           participantRemover.deleteByMemberId(member.getId());
+        }
+
+        // Member 데이터 삭제
+        memberRemover.deleteAll(members);
+
+        // UserInfo 삭제
+        userInfoRemover.deleteByUserId(user.getId());
+        // User 삭제
+        userRemover.delete(user);
     }
 }
