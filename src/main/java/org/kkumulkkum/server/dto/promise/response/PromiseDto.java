@@ -11,7 +11,7 @@ public record PromiseDto(
         String placeName,
         String address,
         String roadAddress,
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "M월 d일 HH:mm")
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
         LocalDateTime time,
         String dressUpLevel,
         String penalty

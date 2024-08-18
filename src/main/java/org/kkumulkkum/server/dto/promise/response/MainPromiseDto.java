@@ -12,9 +12,7 @@ public record MainPromiseDto(
         String meetingName,
         String dressUpLevel,
         int dDay,
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd")
-        LocalDateTime date,
-        @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "a h:mm", locale = "en")
+        @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
         LocalDateTime time,
         String placeName
 ) {
@@ -26,7 +24,6 @@ public record MainPromiseDto(
                 promise.getMeeting().getName(),
                 promise.getDressUpLevel().getContent(),
                 dday,
-                promise.getTime(),
                 promise.getTime(),
                 promise.getPlaceName()
         );

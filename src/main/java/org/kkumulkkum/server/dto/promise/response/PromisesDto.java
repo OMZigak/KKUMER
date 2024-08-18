@@ -23,9 +23,7 @@ public record PromisesDto(
             Long promiseId,
             String name,
             int dDay,
-            @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd")
-            LocalDateTime date,
-            @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "a h:mm", locale = "en")
+            @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
             LocalDateTime time,
             String placeName
     ) {
@@ -35,7 +33,6 @@ public record PromisesDto(
                     promise.getId(),
                     promise.getName(),
                     dday,
-                    promise.getTime(),
                     promise.getTime(),
                     promise.getPlaceName()
             );
