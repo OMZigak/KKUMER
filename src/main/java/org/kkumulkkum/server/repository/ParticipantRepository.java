@@ -72,4 +72,5 @@ public interface ParticipantRepository extends JpaRepository<Participant, Long> 
             WHERE p.promise.id = :promiseId AND m.user.id != :userId""")
     List<String> findFcmTokenByPromiseId(Long promiseId, Long userId);
 
+    void deleteByMemberId(Long memberId);
 }

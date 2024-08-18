@@ -35,4 +35,8 @@ public class MemberRetreiver {
     public Member findByMeetingIdAndUserId(Long meetingId, Long userId) {
         return memberRepository.findByMeetingIdAndUserId(meetingId, userId);
     }
+
+    public List<Member> findByUserId(final Long userId) {
+        return memberRepository.findByUserId(userId);
+    }
 }

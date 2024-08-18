@@ -1,5 +1,6 @@
 package org.kkumulkkum.server.controller;
 
+import com.google.firebase.database.annotations.Nullable;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
@@ -42,4 +43,12 @@ public class AuthController {
         return ResponseEntity.ok(authService.reissue(refreshToken));
     }
 
+    @DeleteMapping("/v1/auth/withdrawal")
+    public ResponseEntity<Void> withdraw(
+            @UserId final Long userId,
+            @Nullable @RequestHeader(value = AuthConstant.APPLE_WITHDRAW_HEADER, required = false) final String authCode
+    ) {
+        authService.withdrawal(userId, authCode);
+        return ResponseEntity.ok().build();
+    }
 }
