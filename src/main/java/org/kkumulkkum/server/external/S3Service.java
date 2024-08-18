@@ -22,7 +22,7 @@ public class S3Service {
 
     private final String bucketName;
     private final AwsConfig awsConfig;
-    private static final List<String> IMAGE_EXTENSIONS = Arrays.asList("image/jpeg", "image/png", "image/jpg", "image/webp");
+    private static final List<String> IMAGE_EXTENSIONS = Arrays.asList("image/jpeg", "image/png", "image/jpg", "image/webp", "image/heic");
 
     public S3Service(@Value("${aws-property.s3-bucket-name}") final String bucketName, AwsConfig awsConfig) {
         this.bucketName = bucketName;
