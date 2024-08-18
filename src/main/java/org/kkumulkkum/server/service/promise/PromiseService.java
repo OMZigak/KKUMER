@@ -21,6 +21,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -86,10 +87,25 @@ public class PromiseService {
 
     @Transactional(readOnly = true)
     public PromisesDto getPromises(
+            final Long userId,
             final Long meetingId,
-            final Boolean done
+            final Boolean done,
+            final Boolean isParticipant
     ) {
-        List<Promise> promises = promiseRetriever.findAllByMeetingId(meetingId);
+        List<Promise> allPromises = promiseRetriever.findAllByMeetingId(meetingId);
+        List<Promise> userPromises = promiseRetriever.findPromiseByUserIdAndMeetingId(userId, meetingId);
+        List<Promise> promises;
+
+        if (Boolean.TRUE.equals(isParticipant)) {
+            promises = userPromises;
+        } else if (Boolean.FALSE.equals(isParticipant)) {
+            promises = allPromises.stream()
+                    .filter(promise -> !userPromises.contains(promise))
+                    .collect(Collectors.toList());
+        } else {
+            promises = allPromises;
+        }
+
         return PromisesDto.of(promises, done);
     }
 

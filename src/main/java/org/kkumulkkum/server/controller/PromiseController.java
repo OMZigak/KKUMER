@@ -45,10 +45,12 @@ public class PromiseController {
     @IsMemberByMeetingId(meetingIdParamIndex = 0)
     @GetMapping("/v1/meetings/{meetingId}/promises")
     public ResponseEntity<PromisesDto> getPromises(
+            @UserId final Long userId,
             @PathVariable("meetingId") final Long meetingId,
-            @RequestParam(required = false) final Boolean done
+            @RequestParam(required = false) final Boolean done,
+            @RequestParam(required = false) final Boolean isParticipant
     ) {
-        return ResponseEntity.ok().body(promiseService.getPromises(meetingId, done));
+        return ResponseEntity.ok().body(promiseService.getPromises(userId, meetingId, done, isParticipant));
     }
 
     @IsMemberByPromiseId(promiseIdParamIndex = 0)

@@ -52,4 +52,12 @@ public interface PromiseRepository extends JpaRepository<Promise, Long> {
             THEN TRUE ELSE FALSE END FROM Participant p""")
     boolean existsByArrivedAtIsNull(Long promiseId);
 
+    @Query("""
+            SELECT p FROM Participant pt
+            JOIN pt.member m
+            JOIN pt.promise p
+            WHERE p.meeting.id = :meetingId
+            AND m.user.id = :userId
+            ORDER BY p.time ASC, p.createdAt ASC""")
+    List<Promise> findPromiseByUserIdAndMeetingId(Long userId, Long meetingId);
 }
