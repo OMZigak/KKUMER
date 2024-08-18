@@ -60,4 +60,12 @@ public interface PromiseRepository extends JpaRepository<Promise, Long> {
             AND m.user.id = :userId
             ORDER BY p.time ASC, p.createdAt ASC""")
     List<Promise> findPromiseByUserIdAndMeetingId(Long userId, Long meetingId);
+
+    @Query("""
+            SELECT p FROM Participant pt
+            JOIN pt.member m
+            JOIN pt.promise p
+            WHERE pt.promise.id = :promiseId
+            AND m.user.id = :userId""")
+    Promise findByUserIdAndPromiseId(Long userId, Long promiseId);
 }

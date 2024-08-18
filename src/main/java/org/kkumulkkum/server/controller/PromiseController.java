@@ -42,7 +42,7 @@ public class PromiseController {
         return ResponseEntity.ok().build();
     }
 
-    @IsMemberByMeetingId(meetingIdParamIndex = 0)
+    @IsMemberByMeetingId(meetingIdParamIndex = 1)
     @GetMapping("/v1/meetings/{meetingId}/promises")
     public ResponseEntity<PromisesDto> getPromises(
             @UserId final Long userId,
@@ -53,12 +53,13 @@ public class PromiseController {
         return ResponseEntity.ok().body(promiseService.getPromises(userId, meetingId, done, isParticipant));
     }
 
-    @IsMemberByPromiseId(promiseIdParamIndex = 0)
+    @IsMemberByPromiseId(promiseIdParamIndex = 1)
     @GetMapping("/v1/promises/{promiseId}")
     public ResponseEntity<PromiseDto> getPromise(
+            @UserId final Long userId,
             @PathVariable("promiseId") final Long promiseId
     ) {
-        return ResponseEntity.ok().body(promiseService.getPromise(promiseId));
+        return ResponseEntity.ok().body(promiseService.getPromise(userId, promiseId));
     }
 
     @GetMapping("/v1/promises/today/next")

@@ -66,7 +66,7 @@ public class PromiseService {
                         .member(entityManager.getReference(Member.class, participantId))
                         .build()).toList()
         );
-        return PromiseDto.from(promise);
+        return PromiseDto.from(promise, true);
     }
 
     @Transactional
@@ -111,10 +111,15 @@ public class PromiseService {
 
     @Transactional(readOnly = true)
     public PromiseDto getPromise(
+            final Long userId,
             final Long promiseId
     ) {
         Promise promise = promiseRetriever.findById(promiseId);
-        return PromiseDto.from(promise);
+        Promise userPromise = promiseRetriever.findByUserIdAndPromiseId(userId, promiseId);
+
+        boolean isParticipant = userPromise != null;
+
+        return PromiseDto.from(promise, isParticipant);
     }
 
     @Transactional(readOnly = true)

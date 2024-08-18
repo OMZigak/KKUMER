@@ -6,6 +6,7 @@ import org.kkumulkkum.server.domain.Promise;
 import java.time.LocalDateTime;
 
 public record PromiseDto(
+        boolean isParticipant,
         Long promiseId,
         String promiseName,
         String placeName,
@@ -16,8 +17,9 @@ public record PromiseDto(
         String dressUpLevel,
         String penalty
 ) {
-    public static PromiseDto from(Promise promise) {
+    public static PromiseDto from(Promise promise, boolean isParticipant) {
         return new PromiseDto(
+                isParticipant,
                 promise.getId(),
                 promise.getName(),
                 promise.getPlaceName(),
