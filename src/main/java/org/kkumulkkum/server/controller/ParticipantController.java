@@ -2,6 +2,7 @@ package org.kkumulkkum.server.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.kkumulkkum.server.annotation.IsMemberByPromiseId;
+import org.kkumulkkum.server.annotation.IsParticipant;
 import org.kkumulkkum.server.annotation.UserId;
 import org.kkumulkkum.server.dto.participant.request.PreparationInfoDto;
 import org.kkumulkkum.server.dto.participant.response.LateComersDto;
@@ -76,5 +77,15 @@ public class ParticipantController {
             @PathVariable("promiseId") final Long promiseId
     ) {
         return ResponseEntity.ok().body(participantService.getLateComers(promiseId));
+    }
+
+    @IsParticipant(promiseIdParamIndex = 1)
+    @DeleteMapping("/v1/promises/{promiseId}/leave")
+    public ResponseEntity<Void> leavePromise(
+            @UserId final Long userId,
+            @PathVariable("promiseId") final Long promiseId
+    ) {
+        participantService.leavePromise(userId, promiseId);
+        return ResponseEntity.ok().build();
     }
 }

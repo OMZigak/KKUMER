@@ -30,6 +30,7 @@ public class ParticipantService {
     private final ParticipantRetriever participantRetriever;
     private final ParticipantEditor participantEditor;
     private final PromiseRetriever promiseRetriever;
+    private final ParticipantRemover participantRemover;
     private final FcmService fcmService;
 
     @Transactional
@@ -136,6 +137,15 @@ public class ParticipantService {
                         )
                         .collect(Collectors.toList())
         );
+    }
+
+    @Transactional
+    public void leavePromise(
+            final Long userId,
+            final Long promiseId
+    ) {
+        Participant participant = participantRetriever.findByPromiseIdAndUserId(promiseId, userId);
+        participantRemover.deleteById(participant.getId());
     }
 
     private boolean validateState(

@@ -13,4 +13,8 @@ public class ParticipantRemover {
     public void deleteByMemberId(final Long memberId) {
         participantRepository.deleteByMemberId(memberId);
     }
+
+    public void deleteById(final Long id) {
+        participantRepository.deleteById(id);
+    }
 }
