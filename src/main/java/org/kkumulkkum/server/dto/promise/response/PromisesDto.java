@@ -23,20 +23,16 @@ public record PromisesDto(
             Long promiseId,
             String name,
             int dDay,
-            @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy.MM.dd")
-            LocalDateTime date,
-            @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "a h:mm", locale = "en")
+            @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
             LocalDateTime time,
             String placeName
     ) {
         public static PromiseDto from(Promise promise) {
-            int dday = (int) ChronoUnit.DAYS.between(LocalDateTime.now().toLocalDate(), promise.getTime().toLocalDate());
-            if (dday < 0) dday = 0;
+            int dday = (int) ChronoUnit.DAYS.between(promise.getTime().toLocalDate(), LocalDateTime.now().toLocalDate());
             return new PromiseDto(
                     promise.getId(),
                     promise.getName(),
                     dday,
-                    promise.getTime(),
                     promise.getTime(),
                     promise.getPlaceName()
             );

@@ -4,10 +4,7 @@ import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.kkumulkkum.server.domain.*;
 import org.kkumulkkum.server.dto.promise.PromiseCreateDto;
-import org.kkumulkkum.server.dto.promise.response.MainPromiseDto;
-import org.kkumulkkum.server.dto.promise.response.MainPromisesDto;
-import org.kkumulkkum.server.dto.promise.response.PromiseDto;
-import org.kkumulkkum.server.dto.promise.response.PromisesDto;
+import org.kkumulkkum.server.dto.promise.response.*;
 import org.kkumulkkum.server.exception.PromiseException;
 import org.kkumulkkum.server.exception.code.PromiseErrorCode;
 import org.kkumulkkum.server.service.member.MemberRetreiver;
@@ -21,6 +18,7 @@ import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -36,7 +34,7 @@ public class PromiseService {
     private final MemberRetreiver memberRetreiver;
 
     @Transactional
-    public PromiseDto createPromise(
+    public PromiseAddDto createPromise(
             final Long userId,
             final Long meetingId,
             final PromiseCreateDto createPromiseDto
@@ -65,7 +63,7 @@ public class PromiseService {
                         .member(entityManager.getReference(Member.class, participantId))
                         .build()).toList()
         );
-        return PromiseDto.from(promise);
+        return PromiseAddDto.from(promise);
     }
 
     @Transactional
@@ -86,19 +84,39 @@ public class PromiseService {
 
     @Transactional(readOnly = true)
     public PromisesDto getPromises(
+            final Long userId,
             final Long meetingId,
-            final Boolean done
+            final Boolean done,
+            final Boolean isParticipant
     ) {
-        List<Promise> promises = promiseRetriever.findAllByMeetingId(meetingId);
+        List<Promise> allPromises = promiseRetriever.findAllByMeetingId(meetingId);
+        List<Promise> userPromises = promiseRetriever.findPromiseByUserIdAndMeetingId(userId, meetingId);
+        List<Promise> promises;
+
+        if (Boolean.TRUE.equals(isParticipant)) {
+            promises = userPromises;
+        } else if (Boolean.FALSE.equals(isParticipant)) {
+            promises = allPromises.stream()
+                    .filter(promise -> !userPromises.contains(promise))
+                    .collect(Collectors.toList());
+        } else {
+            promises = allPromises;
+        }
+
         return PromisesDto.of(promises, done);
     }
 
     @Transactional(readOnly = true)
-    public PromiseDto getPromise(
+    public PromiseDetailDto getPromise(
+            final Long userId,
             final Long promiseId
     ) {
         Promise promise = promiseRetriever.findById(promiseId);
-        return PromiseDto.from(promise);
+        Promise userPromise = promiseRetriever.findByUserIdAndPromiseId(userId, promiseId);
+
+        boolean isParticipant = userPromise != null;
+
+        return PromiseDetailDto.from(promise, isParticipant);
     }
 
     @Transactional(readOnly = true)
