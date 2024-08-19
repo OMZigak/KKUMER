@@ -7,10 +7,7 @@ import org.kkumulkkum.server.annotation.IsMemberByPromiseId;
 import org.kkumulkkum.server.annotation.IsParticipant;
 import org.kkumulkkum.server.annotation.UserId;
 import org.kkumulkkum.server.dto.promise.PromiseCreateDto;
-import org.kkumulkkum.server.dto.promise.response.MainPromiseDto;
-import org.kkumulkkum.server.dto.promise.response.MainPromisesDto;
-import org.kkumulkkum.server.dto.promise.response.PromiseDto;
-import org.kkumulkkum.server.dto.promise.response.PromisesDto;
+import org.kkumulkkum.server.dto.promise.response.*;
 import org.kkumulkkum.server.service.promise.PromiseService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +21,7 @@ public class PromiseController {
 
     @IsMemberByMeetingId(meetingIdParamIndex = 1)
     @PostMapping("/v1/meetings/{meetingId}/promises")
-    public ResponseEntity<PromiseDto> createPromise(
+    public ResponseEntity<PromiseAddDto> createPromise(
             @UserId final Long userId,
             @PathVariable final Long meetingId,
             @Valid @RequestBody final PromiseCreateDto createPromiseDto
@@ -55,7 +52,7 @@ public class PromiseController {
 
     @IsMemberByPromiseId(promiseIdParamIndex = 1)
     @GetMapping("/v1/promises/{promiseId}")
-    public ResponseEntity<PromiseDto> getPromise(
+    public ResponseEntity<PromiseDetailDto> getPromise(
             @UserId final Long userId,
             @PathVariable("promiseId") final Long promiseId
     ) {

@@ -4,10 +4,7 @@ import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 import org.kkumulkkum.server.domain.*;
 import org.kkumulkkum.server.dto.promise.PromiseCreateDto;
-import org.kkumulkkum.server.dto.promise.response.MainPromiseDto;
-import org.kkumulkkum.server.dto.promise.response.MainPromisesDto;
-import org.kkumulkkum.server.dto.promise.response.PromiseDto;
-import org.kkumulkkum.server.dto.promise.response.PromisesDto;
+import org.kkumulkkum.server.dto.promise.response.*;
 import org.kkumulkkum.server.exception.PromiseException;
 import org.kkumulkkum.server.exception.code.PromiseErrorCode;
 import org.kkumulkkum.server.service.member.MemberRetreiver;
@@ -37,7 +34,7 @@ public class PromiseService {
     private final MemberRetreiver memberRetreiver;
 
     @Transactional
-    public PromiseDto createPromise(
+    public PromiseAddDto createPromise(
             final Long userId,
             final Long meetingId,
             final PromiseCreateDto createPromiseDto
@@ -66,7 +63,7 @@ public class PromiseService {
                         .member(entityManager.getReference(Member.class, participantId))
                         .build()).toList()
         );
-        return PromiseDto.from(promise, true);
+        return PromiseAddDto.from(promise);
     }
 
     @Transactional
@@ -110,7 +107,7 @@ public class PromiseService {
     }
 
     @Transactional(readOnly = true)
-    public PromiseDto getPromise(
+    public PromiseDetailDto getPromise(
             final Long userId,
             final Long promiseId
     ) {
@@ -119,7 +116,7 @@ public class PromiseService {
 
         boolean isParticipant = userPromise != null;
 
-        return PromiseDto.from(promise, isParticipant);
+        return PromiseDetailDto.from(promise, isParticipant);
     }
 
     @Transactional(readOnly = true)
