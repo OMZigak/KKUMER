@@ -8,6 +8,7 @@ import org.kkumulkkum.server.dto.promise.response.*;
 import org.kkumulkkum.server.exception.PromiseException;
 import org.kkumulkkum.server.exception.code.PromiseErrorCode;
 import org.kkumulkkum.server.service.member.MemberRetreiver;
+import org.kkumulkkum.server.service.participant.ParticipantRemover;
 import org.kkumulkkum.server.service.participant.ParticipantRetriever;
 import org.kkumulkkum.server.service.participant.ParticipantSaver;
 import org.kkumulkkum.server.service.userInfo.UserInfoRetriever;
@@ -32,6 +33,8 @@ public class PromiseService {
     private final UserInfoRetriever userInfoRetriever;
     private final EntityManager entityManager;
     private final MemberRetreiver memberRetreiver;
+    private final PromiseRemover promiseRemover;
+    private final ParticipantRemover participantRemover;
 
     @Transactional
     public PromiseAddDto createPromise(
@@ -142,6 +145,18 @@ public class PromiseService {
             );
         }
         return MainPromisesDto.from(promiseRetriever.findUpcomingPromises(userId, 4));
+    }
+
+    @Transactional
+    public void deletePromise(final Long promiseId) {
+        Promise promise = promiseRetriever.findById(promiseId);
+
+        List<Participant> participants = participantRetriever.findAllByPromiseId(promise.getId());
+        // 약속에 속한 모든 참가자 삭제
+        participantRemover.deleteAll(participants);
+
+        // 약속 삭제
+        promiseRemover.deleteById(promise.getId());
     }
 
     private void updateUserInfo(
