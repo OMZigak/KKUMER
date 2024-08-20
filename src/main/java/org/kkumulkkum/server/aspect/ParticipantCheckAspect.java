@@ -5,8 +5,8 @@ import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.kkumulkkum.server.annotation.IsParticipant;
-import org.kkumulkkum.server.exception.MemberException;
-import org.kkumulkkum.server.exception.code.MemberErrorCode;
+import org.kkumulkkum.server.exception.ParticipantException;
+import org.kkumulkkum.server.exception.code.ParticipantErrorCode;
 import org.kkumulkkum.server.service.participant.ParticipantRetriever;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
@@ -25,7 +25,7 @@ public class ParticipantCheckAspect {
         Long userId = (Long) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 
         if (!participantRetriever.existsByPromiseIdAndUserId(promiseId, userId)) {
-            throw new MemberException(MemberErrorCode.NOT_JOINED_MEMBER);
+            throw new ParticipantException(ParticipantErrorCode.NOT_JOINED_PROMISE);
         }
     }
 }
