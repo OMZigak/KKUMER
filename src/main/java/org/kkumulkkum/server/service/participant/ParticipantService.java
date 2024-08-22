@@ -122,11 +122,10 @@ public class ParticipantService {
         Member authenticatedMember = memberRetreiver.findByUserIdAndPromiseId(userId, promiseId);
         members.removeIf(member -> member.memberId().equals(authenticatedMember.getId()));
 
+        //약속에 참여 중인 멤버 id들 가져오기
         List<Long> participantIds = participantRetriever.findAllByPromiseId(promiseId).stream()
                                                                 .map(participant -> participant.getMember().getId())
                                                                 .toList();
-
-        System.out.println("participantIds = " + participantIds);
 
         return AvailableParticipantsDto.of(members, participantIds);
     }

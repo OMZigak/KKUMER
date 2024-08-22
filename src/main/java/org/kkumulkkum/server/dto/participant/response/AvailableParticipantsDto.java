@@ -12,6 +12,7 @@ public record AvailableParticipantsDto(
                         member.memberId(),
                         member.name(),
                         member.profileImg(),
+                        //모임 내 멤버가 약속 참여중인 멤버 리스트 안에 있으면 true, 아니면 false
                         participantIds.contains(member.memberId())
                 )).toList();
         return new AvailableParticipantsDto(participantDtos);
