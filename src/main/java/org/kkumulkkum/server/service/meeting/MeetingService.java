@@ -33,6 +33,7 @@ public class MeetingService {
     private final UserRetriever userRetriever;
     private final MemberSaver memberSaver;
     private final MemberRetreiver memberRetreiver;
+    private final MeetingEditor meetingEditor;
 
     @Transactional
     public CreatedMeetingDto createMeeting(
@@ -93,6 +94,15 @@ public class MeetingService {
             members.removeIf(member -> member.memberId().equals(authenticatedMember.getId()));
         }
         return MembersDto.from(members);
+    }
+
+    @Transactional
+    public void updateMeeting(
+            final Long meetingId,
+            final MeetingCreateDto meetingCreateDto
+    ) {
+        Meeting meeting = meetingRetriever.findById(meetingId);
+        meetingEditor.updateMeetingName(meeting, meetingCreateDto);
     }
 
     private String generateInvitationCode() {

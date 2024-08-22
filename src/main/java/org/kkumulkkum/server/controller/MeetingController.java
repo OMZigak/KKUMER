@@ -70,4 +70,14 @@ public class MeetingController {
         return ResponseEntity.ok(meetingService.getMembers(meetingId, exclude, userId));
     }
 
+    @IsMemberByMeetingId(meetingIdParamIndex = 0)
+    @PatchMapping("/v1/meetings/{meetingId}")
+    public ResponseEntity<Void> updateMeeting(
+            @PathVariable final Long meetingId,
+            @Valid @RequestBody final MeetingCreateDto meetingCreateDto
+    ) {
+        meetingService.updateMeeting(meetingId, meetingCreateDto);
+        return ResponseEntity.ok().build();
+    }
+
 }
