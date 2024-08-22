@@ -36,4 +36,12 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     Member findByMeetingIdAndUserId(Long meetingId, Long userId);
 
     List<Member> findByUserId(Long userId);
+
+    @Query("""
+            SELECT m FROM Member m
+            JOIN m.meeting mt
+            JOIN m.user u
+            JOIN Promise p ON p.meeting.id = mt.id
+            WHERE p.id = :promiseId AND u.id = :userId""")
+    Member findByUserIdAndPromiseId(Long userId, Long promiseId);
 }
