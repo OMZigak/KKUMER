@@ -73,6 +73,16 @@ public class PromiseController {
         return ResponseEntity.ok().body(promiseService.getUpcomingPromises(userId));
     }
 
+    @IsParticipant(promiseIdParamIndex = 1)
+    @PutMapping("/v1/promises/{promiseId}")
+    public ResponseEntity<PromiseAddDto> updatePromise(
+            @UserId final Long userId,
+            @PathVariable final Long promiseId,
+            @Valid @RequestBody final PromiseCreateDto updatePromiseDto
+    ) {
+        return ResponseEntity.ok(promiseService.updatePromise(userId, promiseId, updatePromiseDto));
+    }
+
     @IsParticipant(promiseIdParamIndex = 0)
     @DeleteMapping("/v1/promises/{promiseId}")
     public ResponseEntity<Void> deletePromise(
