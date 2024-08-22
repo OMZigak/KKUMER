@@ -16,4 +16,8 @@ public class MemberRemover {
     public void deleteAll(final List<Member> members) {
         memberRepository.deleteAll(members);
     }
+
+    public void deleteById(final Long memberId) {
+        memberRepository.deleteById(memberId);
+    }
 }

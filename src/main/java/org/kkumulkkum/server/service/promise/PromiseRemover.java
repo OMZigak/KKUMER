@@ -13,4 +13,8 @@ public class PromiseRemover {
     public void deleteById(final Long promiseId) {
         promiseRepository.deleteById(promiseId);
     }
+
+    public void deleteByMeetingId(final Long meetingId) {
+        promiseRepository.deleteByMeetingId(meetingId);
+    }
 }

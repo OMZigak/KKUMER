@@ -80,4 +80,14 @@ public class MeetingController {
         return ResponseEntity.ok().build();
     }
 
+    @IsMemberByMeetingId(meetingIdParamIndex = 1)
+    @DeleteMapping("/v1/meetings/{meetingId}")
+    public ResponseEntity<Void> leaveMeeting(
+            @UserId final Long userId,
+            @PathVariable final Long meetingId
+    ) {
+        meetingService.leaveMeeting(userId, meetingId);
+        return ResponseEntity.ok().build();
+    }
+
 }

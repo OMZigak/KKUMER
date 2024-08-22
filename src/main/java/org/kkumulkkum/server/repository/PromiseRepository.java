@@ -68,4 +68,6 @@ public interface PromiseRepository extends JpaRepository<Promise, Long> {
             WHERE pt.promise.id = :promiseId
             AND m.user.id = :userId""")
     Promise findByUserIdAndPromiseId(Long userId, Long promiseId);
+
+    void deleteByMeetingId(Long meetingId);
 }

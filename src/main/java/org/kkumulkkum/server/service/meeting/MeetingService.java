@@ -14,8 +14,11 @@ import org.kkumulkkum.server.dto.member.response.MemberDto;
 import org.kkumulkkum.server.dto.member.response.MembersDto;
 import org.kkumulkkum.server.exception.MeetingException;
 import org.kkumulkkum.server.exception.code.MeetingErrorCode;
+import org.kkumulkkum.server.service.member.MemberRemover;
 import org.kkumulkkum.server.service.member.MemberRetreiver;
 import org.kkumulkkum.server.service.member.MemberSaver;
+import org.kkumulkkum.server.service.participant.ParticipantRemover;
+import org.kkumulkkum.server.service.promise.PromiseRemover;
 import org.kkumulkkum.server.service.user.UserRetriever;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -34,6 +37,10 @@ public class MeetingService {
     private final MemberSaver memberSaver;
     private final MemberRetreiver memberRetreiver;
     private final MeetingEditor meetingEditor;
+    private final ParticipantRemover participantRemover;
+    private final MemberRemover memberRemover;
+    private final PromiseRemover promiseRemover;
+    private final MeetingRemover meetingRemover;
 
     @Transactional
     public CreatedMeetingDto createMeeting(
@@ -103,6 +110,23 @@ public class MeetingService {
     ) {
         Meeting meeting = meetingRetriever.findById(meetingId);
         meetingEditor.updateMeetingName(meeting, meetingCreateDto);
+    }
+
+    @Transactional
+    public void leaveMeeting(
+            final Long userId,
+            final Long meetingId) {
+        //모임 나가면 참여한 약속도 다 나가기
+        Member member = memberRetreiver.findByMeetingIdAndUserId(meetingId, userId);
+        participantRemover.deleteByMemberId(member.getId());
+        memberRemover.deleteById(member.getId());
+
+        // 모임 내 참여 인원이 전부 탈퇴 or 나가기로 없을 경우(모임 사라지면) 약속도 다 삭제하기
+        List<MemberDto> remainingMembers = memberRetreiver.findAllByMeetingId(meetingId);
+        if(remainingMembers.isEmpty()) {
+            promiseRemover.deleteByMeetingId(meetingId);
+            meetingRemover.deleteById(meetingId);
+        }
     }
 
     private String generateInvitationCode() {
