@@ -31,4 +31,8 @@ public class Meeting extends BaseTimeEntity {
         this.name = name;
         this.invitationCode = invitationCode;
     }
+
+    public void updateMeetingName(String name) {
+        this.name = name;
+    }
 }
