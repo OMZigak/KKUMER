@@ -73,4 +73,6 @@ public interface ParticipantRepository extends JpaRepository<Participant, Long> 
     List<String> findFcmTokenByPromiseId(Long promiseId, Long userId);
 
     void deleteByMemberId(Long memberId);
+
+    Participant findByMemberIdAndPromiseId(Long memberId, Long promiseId);
 }

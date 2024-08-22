@@ -148,6 +148,31 @@ public class PromiseService {
     }
 
     @Transactional
+    public PromiseAddDto updatePromise(
+            final Long userId,
+            final Long promiseId,
+            final PromiseCreateDto updatePromiseDto
+    ) {
+        // 약속 정보 수정
+        Promise promise = promiseRetriever.findById(promiseId);
+        promiseEditor.updatePromise(promise, updatePromiseDto);
+
+        // 참여자 목록 수정
+        Member member = memberRetreiver.findByUserIdAndPromiseId(userId, promiseId);
+        updatePromiseDto.participants().add(member.getId());
+
+        List<Long> currentMembers = participantRetriever.findAllByPromiseId(promiseId).stream()
+                                            .map(participant -> participant.getMember().getId())
+                                            .toList();
+        List<Long> newMembers = updatePromiseDto.participants();
+
+        saveNewParticipants(promise, newMembers, currentMembers);
+        removeOldParticipants(promiseId, newMembers, currentMembers);
+
+        return PromiseAddDto.from(promise);
+    }
+
+    @Transactional
     public void deletePromise(final Long promiseId) {
         Promise promise = promiseRetriever.findById(promiseId);
 
@@ -171,6 +196,39 @@ public class PromiseService {
         } else {
             userInfo.levelUp();
         }
+    }
+
+    private void saveNewParticipants(
+            final Promise promise,
+            final List<Long> newMembers,
+            final List<Long> currentMembers
+    ) {
+        participantSaver.saveAll(
+                newMembers.stream()
+                        .filter(memberId -> !currentMembers.contains(memberId))
+                        .map(memberId -> {
+                            Member member = memberRetreiver.findById(memberId);
+                            return Participant.builder()
+                                    .promise(promise)
+                                    .member(member)
+                                    .build();
+                        }).toList()
+        );
+    }
+
+    private void removeOldParticipants(
+            final Long promiseId,
+            final List<Long> newMembers,
+            final List<Long> currentMembers
+    ) {
+        participantRemover.deleteAll(
+                currentMembers.stream()
+                        .filter(memberId -> !newMembers.contains(memberId))
+                        .map(memberId -> {
+                            memberRetreiver.findById(memberId);
+                            return participantRetriever.findByMemberIdAndPromiseId(memberId, promiseId);
+                        }).toList()
+        );
     }
 
 }

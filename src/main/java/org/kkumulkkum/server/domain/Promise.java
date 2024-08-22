@@ -73,4 +73,22 @@ public class Promise extends BaseTimeEntity {
         this.isCompleted = true;
     }
 
+    public void updatePromise(
+            String name,
+            String placeName,
+            Double x,
+            Double y,
+            String address,
+            String roadAddress,
+            DressUpLevel dressUpLevel,
+            String penalty) {
+        this.name = name;
+        this.placeName = placeName;
+        this.x = x;
+        this.y = y;
+        this.address = address;
+        this.roadAddress = roadAddress;
+        this.dressUpLevel = dressUpLevel;
+        this.penalty = penalty;
+    }
 }

@@ -60,4 +60,7 @@ public class ParticipantRetriever {
         return participantRepository.findFcmTokenByPromiseId(promiseId, userId);
     }
 
+    public Participant findByMemberIdAndPromiseId(final Long memberId, final Long promiseId) {
+        return participantRepository.findByMemberIdAndPromiseId(memberId, promiseId);
+    }
 }
