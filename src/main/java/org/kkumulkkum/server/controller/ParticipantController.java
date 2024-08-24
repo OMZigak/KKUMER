@@ -5,6 +5,7 @@ import org.kkumulkkum.server.annotation.IsMemberByPromiseId;
 import org.kkumulkkum.server.annotation.IsParticipant;
 import org.kkumulkkum.server.annotation.UserId;
 import org.kkumulkkum.server.dto.participant.request.PreparationInfoDto;
+import org.kkumulkkum.server.dto.participant.response.AvailableParticipantsDto;
 import org.kkumulkkum.server.dto.participant.response.LateComersDto;
 import org.kkumulkkum.server.dto.participant.response.ParticipantsDto;
 import org.kkumulkkum.server.dto.participant.response.PreparationStatusDto;
@@ -59,6 +60,15 @@ public class ParticipantController {
             @PathVariable("promiseId") final Long promiseId
     ) {
         return ResponseEntity.ok().body(participantService.getParticipants(promiseId));
+    }
+
+    @IsParticipant(promiseIdParamIndex = 1)
+    @GetMapping("/v1/promises/{promiseId}/members")
+    public ResponseEntity<AvailableParticipantsDto> getAvailableParticipants(
+            @UserId final Long userId,
+            @PathVariable("promiseId") final Long promiseId
+    ) {
+        return ResponseEntity.ok().body(participantService.getAvailableParticipants(userId, promiseId));
     }
 
     @PatchMapping("/v1/promises/{promiseId}/times")

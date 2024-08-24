@@ -53,4 +53,8 @@ public class MemberRetreiver {
     ) {
         return memberRepository.findByUserIdAndPromiseId(userId, promiseId);
     }
+
+    public List<MemberDto> findAllByPromiseId(final Long promiseId) {
+        return memberRepository.findAllByPromiseId(promiseId);
+    }
 }

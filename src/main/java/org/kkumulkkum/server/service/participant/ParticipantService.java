@@ -2,8 +2,10 @@ package org.kkumulkkum.server.service.participant;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.kkumulkkum.server.domain.Member;
 import org.kkumulkkum.server.domain.Participant;
 import org.kkumulkkum.server.domain.Promise;
+import org.kkumulkkum.server.dto.member.response.MemberDto;
 import org.kkumulkkum.server.dto.participant.ParticipantStatusUserInfoDto;
 import org.kkumulkkum.server.dto.participant.request.PreparationInfoDto;
 import org.kkumulkkum.server.dto.participant.response.*;
@@ -12,6 +14,7 @@ import org.kkumulkkum.server.exception.code.ParticipantErrorCode;
 import org.kkumulkkum.server.external.FcmService;
 import org.kkumulkkum.server.external.dto.FcmMessageDto;
 import org.kkumulkkum.server.external.enums.FcmContent;
+import org.kkumulkkum.server.service.member.MemberRetreiver;
 import org.kkumulkkum.server.service.promise.PromiseRetriever;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,6 +33,7 @@ public class ParticipantService {
     private final ParticipantRetriever participantRetriever;
     private final ParticipantEditor participantEditor;
     private final PromiseRetriever promiseRetriever;
+    private final MemberRetreiver memberRetreiver;
     private final ParticipantRemover participantRemover;
     private final FcmService fcmService;
 
@@ -105,6 +109,25 @@ public class ParticipantService {
                 .collect(Collectors.toList());
 
         return ParticipantsDto.from(sortedParticipants);
+    }
+
+    @Transactional(readOnly = true)
+    public AvailableParticipantsDto getAvailableParticipants(
+            final Long userId,
+            final Long promiseId
+    ) {
+        //모임 내 멤버 목록
+        List<MemberDto> members = memberRetreiver.findAllByPromiseId(promiseId);
+        //나 제외
+        Member authenticatedMember = memberRetreiver.findByUserIdAndPromiseId(userId, promiseId);
+        members.removeIf(member -> member.memberId().equals(authenticatedMember.getId()));
+
+        //약속에 참여 중인 멤버 id들 가져오기
+        List<Long> participantIds = participantRetriever.findAllByPromiseId(promiseId).stream()
+                                                                .map(participant -> participant.getMember().getId())
+                                                                .toList();
+
+        return AvailableParticipantsDto.of(members, participantIds);
     }
 
     @Transactional

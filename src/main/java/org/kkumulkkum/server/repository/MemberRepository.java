@@ -44,4 +44,14 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
             JOIN Promise p ON p.meeting.id = mt.id
             WHERE p.id = :promiseId AND u.id = :userId""")
     Member findByUserIdAndPromiseId(Long userId, Long promiseId);
+
+    @Query("""
+            SELECT new org.kkumulkkum.server.dto.member.response.MemberDto
+            (m.id, ui.name, ui.profileImg)
+            FROM Member m
+            JOIN m.meeting mt
+            JOIN FETCH UserInfo ui ON m.user.id = ui.user.id
+            JOIN Promise p ON p.meeting.id = mt.id
+            WHERE p.id = :promiseId""")
+    List<MemberDto> findAllByPromiseId(Long promiseId);
 }
