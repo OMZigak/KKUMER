@@ -80,6 +80,7 @@ public class Promise extends BaseTimeEntity {
             Double y,
             String address,
             String roadAddress,
+            LocalDateTime time,
             DressUpLevel dressUpLevel,
             String penalty) {
         this.name = name;
@@ -88,6 +89,7 @@ public class Promise extends BaseTimeEntity {
         this.y = y;
         this.address = address;
         this.roadAddress = roadAddress;
+        this.time = time;
         this.dressUpLevel = dressUpLevel;
         this.penalty = penalty;
     }

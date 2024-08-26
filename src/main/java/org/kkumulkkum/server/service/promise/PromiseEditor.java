@@ -22,6 +22,7 @@ public class PromiseEditor {
                 updatePromiseDto.y(),
                 updatePromiseDto.address(),
                 updatePromiseDto.roadAddress(),
+                updatePromiseDto.time(),
                 updatePromiseDto.dressUpLevel(),
                 updatePromiseDto.penalty()
         );
