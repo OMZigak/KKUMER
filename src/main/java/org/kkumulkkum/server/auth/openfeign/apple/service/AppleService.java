@@ -11,9 +11,12 @@ import org.kkumulkkum.server.auth.openfeign.apple.verify.AppleJwtParser;
 import org.kkumulkkum.server.auth.openfeign.apple.verify.PublicKeyGenerator;
 import org.kkumulkkum.server.auth.openfeign.kakao.dto.SocialUserDto;
 import org.kkumulkkum.server.exception.AuthException;
+import org.kkumulkkum.server.exception.BusinessException;
 import org.kkumulkkum.server.exception.code.AuthErrorCode;
+import org.kkumulkkum.server.exception.code.BusinessErrorCode;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.MissingRequestHeaderException;
 
 import java.security.PublicKey;
 import java.util.Map;
@@ -44,6 +47,9 @@ public class AppleService {
     }
 
     public void revoke(final String authCode) {
+        if (authCode == null || authCode.isEmpty()) {
+            throw new BusinessException(BusinessErrorCode.MISSING_REQUIRED_HEADER);
+        }
         try {
             String clientSecret = appleClientSecretGenerator.createClientSecret();
             String refreshToken = getRefreshToken(authCode, clientSecret);
@@ -54,7 +60,7 @@ public class AppleService {
                     "refresh_token"
             );
         } catch (Exception e){
-            log.error("apple revoke failed : {}", e.getMessage());
+            log.error("apple revoke failed : {}", e.getMessage(), e);
             throw new AuthException(AuthErrorCode.APPLE_REVOKE_FAILED);
         }
     }
@@ -69,7 +75,7 @@ public class AppleService {
             );
             return appleTokenDto.refreshToken();
         } catch (Exception e){
-            log.error("apple token request failed : {}", e.getMessage());
+            log.error("apple token request failed : {}", e.getMessage(), e);
             throw new AuthException(AuthErrorCode.APPLE_TOKEN_REQUEST_FAILED);
         }
     }
