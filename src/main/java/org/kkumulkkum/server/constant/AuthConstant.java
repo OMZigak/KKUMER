@@ -12,7 +12,7 @@ public class AuthConstant {
     public static final String CHARACTER_ENCODING_UTF8 = "utf-8";
 
     //kakao
-    public static final String GRANT_TYPE = "kakaoAK ";
+    public static final String GRANT_TYPE = "KakaoAK ";
     public static final String TARGET_ID_TYPE = "user_id";
 
     //apple
