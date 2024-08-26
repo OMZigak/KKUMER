@@ -44,6 +44,9 @@ public class AppleService {
     }
 
     public void revoke(final String authCode) {
+        if (authCode == null || authCode.isEmpty()) {
+            throw new AuthException(AuthErrorCode.INVALID_AUTH_CODE);
+        }
         try {
             String clientSecret = appleClientSecretGenerator.createClientSecret();
             String refreshToken = getRefreshToken(authCode, clientSecret);
