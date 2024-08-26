@@ -10,6 +10,8 @@ public record PromiseDetailDto(
         Long promiseId,
         String promiseName,
         String placeName,
+        Double x,
+        Double y,
         String address,
         String roadAddress,
         @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -23,6 +25,8 @@ public record PromiseDetailDto(
                 promise.getId(),
                 promise.getName(),
                 promise.getPlaceName(),
+                promise.getX(),
+                promise.getY(),
                 promise.getAddress(),
                 promise.getRoadAddress(),
                 promise.getTime(),
