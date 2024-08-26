@@ -11,9 +11,12 @@ import org.kkumulkkum.server.auth.openfeign.apple.verify.AppleJwtParser;
 import org.kkumulkkum.server.auth.openfeign.apple.verify.PublicKeyGenerator;
 import org.kkumulkkum.server.auth.openfeign.kakao.dto.SocialUserDto;
 import org.kkumulkkum.server.exception.AuthException;
+import org.kkumulkkum.server.exception.BusinessException;
 import org.kkumulkkum.server.exception.code.AuthErrorCode;
+import org.kkumulkkum.server.exception.code.BusinessErrorCode;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.MissingRequestHeaderException;
 
 import java.security.PublicKey;
 import java.util.Map;
@@ -45,7 +48,7 @@ public class AppleService {
 
     public void revoke(final String authCode) {
         if (authCode == null || authCode.isEmpty()) {
-            throw new AuthException(AuthErrorCode.INVALID_AUTH_CODE);
+            throw new BusinessException(BusinessErrorCode.MISSING_REQUIRED_HEADER);
         }
         try {
             String clientSecret = appleClientSecretGenerator.createClientSecret();

@@ -15,7 +15,6 @@ public enum AuthErrorCode implements DefaultErrorCode {
     EXPIRED_APPLE_IDENTITY_TOKEN(HttpStatus.BAD_REQUEST, 40014, "Apple Identity Token 유효기간이 만료됐습니다."),
     APPLE_REVOKE_FAILED(HttpStatus.BAD_REQUEST, 40015,"Apple 회원 탈퇴에 실패했습니다."),
     APPLE_TOKEN_REQUEST_FAILED(HttpStatus.BAD_REQUEST, 40016, "Apple 토큰 요청에 실패했습니다."),
-    INVALID_AUTH_CODE(HttpStatus.BAD_REQUEST, 40017, "Apple authCode값이 비어있습니다."),
     // 401 UNAUTHORIZED
     UNAUTHORIZED(HttpStatus.UNAUTHORIZED, 40110, "인증되지 않은 사용자입니다."),
     INVALID_TOKEN(HttpStatus.UNAUTHORIZED, 40111, "올바르지 않은 토큰입니다."),
