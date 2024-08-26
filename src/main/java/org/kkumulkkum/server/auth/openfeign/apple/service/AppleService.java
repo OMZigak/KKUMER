@@ -57,7 +57,7 @@ public class AppleService {
                     "refresh_token"
             );
         } catch (Exception e){
-            log.error("apple revoke failed : {}", e.getMessage());
+            log.error("apple revoke failed : {}", e.getMessage(), e);
             throw new AuthException(AuthErrorCode.APPLE_REVOKE_FAILED);
         }
     }
@@ -72,7 +72,7 @@ public class AppleService {
             );
             return appleTokenDto.refreshToken();
         } catch (Exception e){
-            log.error("apple token request failed : {}", e.getMessage());
+            log.error("apple token request failed : {}", e.getMessage(), e);
             throw new AuthException(AuthErrorCode.APPLE_TOKEN_REQUEST_FAILED);
         }
     }
