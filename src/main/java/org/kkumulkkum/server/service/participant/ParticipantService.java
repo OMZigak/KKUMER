@@ -15,6 +15,7 @@ import org.kkumulkkum.server.external.FcmService;
 import org.kkumulkkum.server.external.dto.FcmMessageDto;
 import org.kkumulkkum.server.external.enums.FcmContent;
 import org.kkumulkkum.server.service.member.MemberRetreiver;
+import org.kkumulkkum.server.service.promise.PromiseRemover;
 import org.kkumulkkum.server.service.promise.PromiseRetriever;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,6 +36,7 @@ public class ParticipantService {
     private final PromiseRetriever promiseRetriever;
     private final MemberRetreiver memberRetreiver;
     private final ParticipantRemover participantRemover;
+    private final PromiseRemover promiseRemover;
     private final FcmService fcmService;
 
     @Transactional
@@ -169,6 +171,11 @@ public class ParticipantService {
     ) {
         Participant participant = participantRetriever.findByPromiseIdAndUserId(promiseId, userId);
         participantRemover.deleteById(participant.getId());
+
+        List<Participant> remainingParticipants = participantRetriever.findAllByPromiseId(promiseId);
+        if(remainingParticipants.isEmpty()) {
+            promiseRemover.deleteById(promiseId);
+        }
     }
 
     private boolean validateState(
