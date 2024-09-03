@@ -2,9 +2,12 @@ name: develop-CD
 on:
   push:
     branches: [ "develop" ]
+  pull_request_target:
+    types: [ labeled, closed ]
 
 jobs:
   ci:
+    if: !contains(github.event.pull_request.labels.*.name, 'deploy')
     runs-on: ubuntu-22.04
     env:
       working-directory: .
