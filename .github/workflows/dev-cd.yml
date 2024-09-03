@@ -7,7 +7,7 @@ on:
 
 jobs:
   ci:
-    if: !contains(github.event.pull_request.labels.*.name, 'deploy')
+    if: contains(github.event.pull_request.labels.*.name, 'dev')
     runs-on: ubuntu-22.04
     env:
       working-directory: .
