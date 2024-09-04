@@ -34,7 +34,6 @@ public class DiscordAppender extends UnsynchronizedAppenderBase<ILoggingEvent> {
         } else if (level.equals("ERROR")) {
             return Color.red;
         }
-
         return Color.blue;
     }
 
