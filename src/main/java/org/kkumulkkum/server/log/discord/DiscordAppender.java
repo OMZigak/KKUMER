@@ -50,7 +50,7 @@ public class DiscordAppender extends UnsynchronizedAppenderBase<ILoggingEvent> {
         IThrowableProxy throwable = eventObject.getThrowableProxy();
 
         if (throwable != null) {
-            exceptionBrief = throwable.getClassName() + ": " + throwable.getMessage();
+            exceptionBrief = throwable.getClassName() + ": " + throwable.getMessage().replaceAll("\"", "'");
         }
 
         if (exceptionBrief.equals("")) {
