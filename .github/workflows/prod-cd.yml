@@ -75,7 +75,9 @@ jobs:
           if [ -z "$VERSION" ]; then
             echo "No version found in the commit message."
             exit 1
-          fi         
+          fi 
+
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
 
       - name: Create GitHub Release
         run: |
