@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.kkumulkkum.server.domain.Meeting;
 import org.kkumulkkum.server.domain.Member;
+import org.kkumulkkum.server.domain.Promise;
 import org.kkumulkkum.server.dto.meeting.MeetingMetCountDto;
 import org.kkumulkkum.server.dto.meeting.request.MeetingCreateDto;
 import org.kkumulkkum.server.dto.meeting.request.MeetingRegisterDto;
@@ -18,7 +19,9 @@ import org.kkumulkkum.server.service.member.MemberRemover;
 import org.kkumulkkum.server.service.member.MemberRetreiver;
 import org.kkumulkkum.server.service.member.MemberSaver;
 import org.kkumulkkum.server.service.participant.ParticipantRemover;
+import org.kkumulkkum.server.service.participant.ParticipantRetriever;
 import org.kkumulkkum.server.service.promise.PromiseRemover;
+import org.kkumulkkum.server.service.promise.PromiseRetriever;
 import org.kkumulkkum.server.service.user.UserRetriever;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -41,6 +44,8 @@ public class MeetingService {
     private final MemberRemover memberRemover;
     private final PromiseRemover promiseRemover;
     private final MeetingRemover meetingRemover;
+    private final PromiseRetriever promiseRetriever;
+    private final ParticipantRetriever participantRetriever;
 
     @Transactional
     public CreatedMeetingDto createMeeting(
@@ -127,6 +132,9 @@ public class MeetingService {
             promiseRemover.deleteByMeetingId(meetingId);
             meetingRemover.deleteById(meetingId);
         }
+
+        //모임 내의 약속들 모두 돌려서, 거기서 참여자가 없는 약속이 있다면 지우기
+        removeEmptyPromises(meetingId);
     }
 
     private String generateInvitationCode() {
@@ -150,6 +158,12 @@ public class MeetingService {
         }
 
         return codeBuilder.toString();
+    }
+
+    private void removeEmptyPromises(final Long meetingId) {
+        promiseRetriever.findAllByMeetingId(meetingId).stream()
+                .filter(promise -> participantRetriever.findAllByPromiseId(promise.getId()).isEmpty())
+                .forEach(promise -> promiseRemover.deleteById(promise.getId()));
     }
 
 }
