@@ -18,11 +18,6 @@ public class TestController {
 
     private final JwtTokenProvider jwtTokenProvider;
 
-    @GetMapping("/v1/test/void")
-    public ResponseEntity<Void> testVoid() {
-        return ResponseEntity.ok().build();
-    }
-
     @GetMapping("/v1/test/dto")
     public ResponseEntity<TestDto> testDto() {
         return ResponseEntity.ok(new TestDto("test"));
