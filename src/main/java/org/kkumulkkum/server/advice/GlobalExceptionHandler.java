@@ -4,6 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.kkumulkkum.server.exception.*;
 import org.kkumulkkum.server.exception.code.*;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingRequestHeaderException;
@@ -109,7 +110,11 @@ public class GlobalExceptionHandler {
                 .body(BusinessErrorCode.METHOD_NOT_ALLOWED);
     }
 
-    @ExceptionHandler(value = {HandlerMethodValidationException.class, MethodArgumentNotValidException.class})
+    @ExceptionHandler(value = {
+            HandlerMethodValidationException.class,
+            MethodArgumentNotValidException.class,
+            HttpMessageNotReadableException.class
+    })
     public ResponseEntity<BusinessErrorCode> handleValidationException(Exception e) {
         log.warn("GlobalExceptionHandler catch MethodArgumentNotValidException : {}", e.getMessage());
         return ResponseEntity
