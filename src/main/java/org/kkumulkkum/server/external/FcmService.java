@@ -26,7 +26,7 @@ public class FcmService {
     ){
         MulticastMessage message = createBulkMessage(fcmTokens, fcmMessageDto);
         try {
-            FirebaseMessaging.getInstance().sendMulticast(message);
+            FirebaseMessaging.getInstance().sendEachForMulticast(message);
         } catch (FirebaseMessagingException e){
             throw new FirebaseException(FirebaseErrorCode.FCM_ERROR);
         }

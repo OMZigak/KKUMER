@@ -69,7 +69,7 @@ dependencies {
 	implementation("software.amazon.awssdk:s3:2.21.0")
 
 	// Firebase
-	implementation 'com.google.firebase:firebase-admin:9.2.0'
+	implementation 'com.google.firebase:firebase-admin:9.3.0'
 
 	// Logback Discord Appender
 	implementation('com.github.napstr:logback-discord-appender:1.0.0')
