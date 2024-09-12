@@ -19,6 +19,9 @@ import org.kkumulkkum.server.exception.code.AuthErrorCode;
 import org.kkumulkkum.server.service.member.MemberRemover;
 import org.kkumulkkum.server.service.member.MemberRetreiver;
 import org.kkumulkkum.server.service.participant.ParticipantRemover;
+import org.kkumulkkum.server.service.participant.ParticipantRetriever;
+import org.kkumulkkum.server.service.promise.PromiseRemover;
+import org.kkumulkkum.server.service.promise.PromiseRetriever;
 import org.kkumulkkum.server.service.user.UserRemover;
 import org.kkumulkkum.server.service.user.UserRetriever;
 import org.kkumulkkum.server.service.user.UserSaver;
@@ -45,6 +48,9 @@ public class AuthService {
     private final TokenRemover tokenRemover;
     private final UserInfoRetriever userInfoRetriever;
     private final MemberRetreiver memberRetreiver;
+    private final PromiseRetriever promiseRetriever;
+    private final ParticipantRetriever participantRetriever;
+    private final PromiseRemover promiseRemover;
     private final ParticipantRemover participantRemover;
     private final MemberRemover memberRemover;
     private final UserInfoRemover userInfoRemover;
@@ -148,6 +154,7 @@ public class AuthService {
         // 각 Member에 대한 Participant 삭제
         for(Member member : members) {
            participantRemover.deleteByMemberId(member.getId());
+           removeEmptyPromises(member.getMeeting().getId());
         }
 
         // Member 데이터 삭제
@@ -157,5 +164,11 @@ public class AuthService {
         userInfoRemover.deleteByUserId(user.getId());
         // User 삭제
         userRemover.delete(user);
+    }
+
+    private void removeEmptyPromises(final Long meetingId) {
+        promiseRetriever.findAllByMeetingId(meetingId).stream()
+                .filter(promise -> participantRetriever.findAllByPromiseId(promise.getId()).isEmpty())
+                .forEach(promise -> promiseRemover.deleteById(promise.getId()));
     }
 }
