@@ -35,6 +35,11 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
 
     Member findByMeetingIdAndUserId(Long meetingId, Long userId);
 
+    @Query("""
+            SELECT m from Member m
+            JOIN FETCH m.meeting
+            WHERE m.user.id = :userId
+            """)
     List<Member> findByUserId(Long userId);
 
     @Query("""
