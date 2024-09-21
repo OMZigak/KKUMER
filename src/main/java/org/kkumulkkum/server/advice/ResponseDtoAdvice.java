@@ -1,6 +1,6 @@
 package org.kkumulkkum.server.advice;
 
-import org.kkumulkkum.server.dto.common.ResponseDto;
+import org.kkumulkkum.server.api.common.dto.ResponseDto;
 import org.kkumulkkum.server.exception.code.DefaultErrorCode;
 import org.springframework.core.MethodParameter;
 import org.springframework.http.MediaType;

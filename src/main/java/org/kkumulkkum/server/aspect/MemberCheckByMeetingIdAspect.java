@@ -7,7 +7,7 @@ import org.aspectj.lang.annotation.Before;
 import org.kkumulkkum.server.annotation.IsMemberByMeetingId;
 import org.kkumulkkum.server.exception.MemberException;
 import org.kkumulkkum.server.exception.code.MemberErrorCode;
-import org.kkumulkkum.server.service.member.MemberRetreiver;
+import org.kkumulkkum.server.domain.member.manager.MemberRetreiver;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 

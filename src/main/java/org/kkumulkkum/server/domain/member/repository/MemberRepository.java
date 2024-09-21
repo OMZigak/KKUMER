@@ -1,7 +1,7 @@
 package org.kkumulkkum.server.domain.member.repository;
 
 import org.kkumulkkum.server.domain.member.Member;
-import org.kkumulkkum.server.dto.member.response.MemberDto;
+import org.kkumulkkum.server.api.meeting.dto.response.MemberDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -15,7 +15,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     boolean existsByMeetingIdAndUserId(Long meetingId, Long userId);
 
     @Query("""
-            SELECT new org.kkumulkkum.server.dto.member.response.MemberDto
+            SELECT new org.kkumulkkum.server.api.meeting.dto.response.MemberDto
             (m.id, ui.name, ui.profileImg)
             FROM Member m
             JOIN FETCH UserInfo ui ON m.user.id = ui.user.id
@@ -51,7 +51,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     Member findByUserIdAndPromiseId(Long userId, Long promiseId);
 
     @Query("""
-            SELECT new org.kkumulkkum.server.dto.member.response.MemberDto
+            SELECT new org.kkumulkkum.server.api.meeting.dto.response.MemberDto
             (m.id, ui.name, ui.profileImg)
             FROM Member m
             JOIN m.meeting mt

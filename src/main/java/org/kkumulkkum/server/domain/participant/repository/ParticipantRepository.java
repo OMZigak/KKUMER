@@ -1,8 +1,8 @@
 package org.kkumulkkum.server.domain.participant.repository;
 
 import org.kkumulkkum.server.domain.participant.Participant;
-import org.kkumulkkum.server.dto.participant.ParticipantStatusUserInfoDto;
-import org.kkumulkkum.server.dto.participant.response.LateComerDto;
+import org.kkumulkkum.server.api.participant.dto.ParticipantStatusUserInfoDto;
+import org.kkumulkkum.server.api.participant.dto.response.LateComerDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -18,7 +18,7 @@ public interface ParticipantRepository extends JpaRepository<Participant, Long> 
     Optional<Participant> findByPromiseIdAndUserId(Long promiseId, Long userId);
 
     @Query("""
-            SELECT new org.kkumulkkum.server.dto.participant.ParticipantStatusUserInfoDto
+            SELECT new org.kkumulkkum.server.api.participant.dto.ParticipantStatusUserInfoDto
             (p.id, p.member.id, ui.name, ui.profileImg, p.preparationStartAt, p.departureAt, p.arrivalAt)
             FROM Participant p
             JOIN Member m ON p.member.id = m.id
@@ -27,7 +27,7 @@ public interface ParticipantRepository extends JpaRepository<Participant, Long> 
     List<ParticipantStatusUserInfoDto> findAllByPromiseIdWithUserInfo(Long promiseId);
 
     @Query("""
-            SELECT new org.kkumulkkum.server.dto.participant.response.LateComerDto
+            SELECT new org.kkumulkkum.server.api.participant.dto.response.LateComerDto
             (p.id, ui.name, ui.profileImg)
             FROM Participant p 
             JOIN Member m ON p.member.id = m.id 

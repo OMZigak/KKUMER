@@ -5,7 +5,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.kkumulkkum.server.constant.AuthConstant;
-import org.kkumulkkum.server.dto.common.ResponseDto;
+import org.kkumulkkum.server.api.common.dto.ResponseDto;
 import org.kkumulkkum.server.exception.code.AuthErrorCode;
 import org.kkumulkkum.server.exception.code.DefaultErrorCode;
 import org.springframework.http.HttpStatus;

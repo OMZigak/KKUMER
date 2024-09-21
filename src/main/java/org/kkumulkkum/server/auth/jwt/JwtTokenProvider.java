@@ -5,7 +5,7 @@ import io.jsonwebtoken.Header;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 import org.kkumulkkum.server.constant.AuthConstant;
-import org.kkumulkkum.server.dto.auth.response.JwtTokenDto;
+import org.kkumulkkum.server.api.auth.dto.response.JwtTokenDto;
 import org.kkumulkkum.server.exception.AuthException;
 import org.kkumulkkum.server.exception.code.AuthErrorCode;
 import org.springframework.beans.factory.InitializingBean;

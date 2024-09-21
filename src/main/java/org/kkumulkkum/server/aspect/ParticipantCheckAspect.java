@@ -7,7 +7,7 @@ import org.aspectj.lang.annotation.Before;
 import org.kkumulkkum.server.annotation.IsParticipant;
 import org.kkumulkkum.server.exception.ParticipantException;
 import org.kkumulkkum.server.exception.code.ParticipantErrorCode;
-import org.kkumulkkum.server.service.participant.ParticipantRetriever;
+import org.kkumulkkum.server.domain.participant.manager.ParticipantRetriever;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
