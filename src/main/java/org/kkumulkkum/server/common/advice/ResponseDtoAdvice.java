@@ -11,6 +11,7 @@ import org.springframework.http.server.ServerHttpResponse;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
+// TODO: 구현을 숨기고 이해를 어렵게한다는 이유로 곧 disable될 예정
 @RestControllerAdvice(basePackages = "org.kkumulkkum.server")
 public class ResponseDtoAdvice implements ResponseBodyAdvice<Object> {
 
