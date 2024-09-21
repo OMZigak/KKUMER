@@ -1,6 +1,6 @@
 package org.kkumulkkum.server.dto.promise.response;
 
-import org.kkumulkkum.server.domain.Promise;
+import org.kkumulkkum.server.domain.promise.Promise;
 
 import java.util.List;
 

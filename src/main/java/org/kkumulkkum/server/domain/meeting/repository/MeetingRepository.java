@@ -1,6 +1,6 @@
-package org.kkumulkkum.server.repository;
+package org.kkumulkkum.server.domain.meeting.repository;
 
-import org.kkumulkkum.server.domain.Meeting;
+import org.kkumulkkum.server.domain.meeting.Meeting;
 import org.kkumulkkum.server.dto.meeting.MeetingMetCountDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

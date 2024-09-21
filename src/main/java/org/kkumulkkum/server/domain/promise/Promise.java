@@ -1,11 +1,12 @@
-package org.kkumulkkum.server.domain;
+package org.kkumulkkum.server.domain.promise;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.kkumulkkum.server.domain.enums.DressUpLevel;
+import org.kkumulkkum.server.domain.base.BaseTimeEntity;
+import org.kkumulkkum.server.domain.meeting.Meeting;
 
 import java.time.LocalDateTime;
 

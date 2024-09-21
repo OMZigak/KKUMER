@@ -1,6 +1,6 @@
-package org.kkumulkkum.server.repository;
+package org.kkumulkkum.server.domain.promise.repository;
 
-import org.kkumulkkum.server.domain.Promise;
+import org.kkumulkkum.server.domain.promise.Promise;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

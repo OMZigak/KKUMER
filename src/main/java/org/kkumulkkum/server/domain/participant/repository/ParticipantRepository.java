@@ -1,6 +1,6 @@
-package org.kkumulkkum.server.repository;
+package org.kkumulkkum.server.domain.participant.repository;
 
-import org.kkumulkkum.server.domain.Participant;
+import org.kkumulkkum.server.domain.participant.Participant;
 import org.kkumulkkum.server.dto.participant.ParticipantStatusUserInfoDto;
 import org.kkumulkkum.server.dto.participant.response.LateComerDto;
 import org.springframework.data.jpa.repository.JpaRepository;

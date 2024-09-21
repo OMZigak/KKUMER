@@ -1,6 +1,6 @@
-package org.kkumulkkum.server.repository;
+package org.kkumulkkum.server.domain.member.repository;
 
-import org.kkumulkkum.server.domain.Member;
+import org.kkumulkkum.server.domain.member.Member;
 import org.kkumulkkum.server.dto.member.response.MemberDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

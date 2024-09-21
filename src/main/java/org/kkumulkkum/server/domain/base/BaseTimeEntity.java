@@ -1,4 +1,4 @@
-package org.kkumulkkum.server.domain;
+package org.kkumulkkum.server.domain.base;
 
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;

@@ -1,8 +1,8 @@
 package org.kkumulkkum.server.service.promise;
 
 import lombok.RequiredArgsConstructor;
-import org.kkumulkkum.server.domain.Promise;
-import org.kkumulkkum.server.repository.PromiseRepository;
+import org.kkumulkkum.server.domain.promise.Promise;
+import org.kkumulkkum.server.domain.promise.repository.PromiseRepository;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -1,4 +1,4 @@
-package org.kkumulkkum.server.domain.enums;
+package org.kkumulkkum.server.domain.promise;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

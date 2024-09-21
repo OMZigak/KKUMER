@@ -1,10 +1,10 @@
 package org.kkumulkkum.server.service.userInfo;
 
 import lombok.RequiredArgsConstructor;
-import org.kkumulkkum.server.domain.UserInfo;
+import org.kkumulkkum.server.domain.userinfo.UserInfo;
 import org.kkumulkkum.server.exception.UserException;
 import org.kkumulkkum.server.exception.code.UserErrorCode;
-import org.kkumulkkum.server.repository.UserInfoRepository;
+import org.kkumulkkum.server.domain.userinfo.repository.UserInfoRepository;
 import org.springframework.stereotype.Component;
 
 @Component

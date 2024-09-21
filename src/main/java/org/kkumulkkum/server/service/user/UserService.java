@@ -2,7 +2,7 @@ package org.kkumulkkum.server.service.user;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.kkumulkkum.server.domain.UserInfo;
+import org.kkumulkkum.server.domain.userinfo.UserInfo;
 import org.kkumulkkum.server.dto.user.request.ImageUpdateDto;
 import org.kkumulkkum.server.dto.user.request.NameUpdateDto;
 import org.kkumulkkum.server.dto.user.response.UserDto;

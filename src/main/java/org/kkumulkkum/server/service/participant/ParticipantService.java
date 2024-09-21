@@ -2,9 +2,9 @@ package org.kkumulkkum.server.service.participant;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.kkumulkkum.server.domain.Member;
-import org.kkumulkkum.server.domain.Participant;
-import org.kkumulkkum.server.domain.Promise;
+import org.kkumulkkum.server.domain.member.Member;
+import org.kkumulkkum.server.domain.participant.Participant;
+import org.kkumulkkum.server.domain.promise.Promise;
 import org.kkumulkkum.server.dto.member.response.MemberDto;
 import org.kkumulkkum.server.dto.participant.ParticipantStatusUserInfoDto;
 import org.kkumulkkum.server.dto.participant.request.PreparationInfoDto;

@@ -1,6 +1,6 @@
-package org.kkumulkkum.server.repository;
+package org.kkumulkkum.server.domain.user.repository;
 
-import org.kkumulkkum.server.domain.Token;
+import org.kkumulkkum.server.domain.user.Token;
 import org.springframework.data.repository.CrudRepository;
 
 import java.util.Optional;

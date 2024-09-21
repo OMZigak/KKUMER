@@ -2,9 +2,8 @@ package org.kkumulkkum.server.service.meeting;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.kkumulkkum.server.domain.Meeting;
-import org.kkumulkkum.server.domain.Member;
-import org.kkumulkkum.server.domain.Promise;
+import org.kkumulkkum.server.domain.meeting.Meeting;
+import org.kkumulkkum.server.domain.member.Member;
 import org.kkumulkkum.server.dto.meeting.MeetingMetCountDto;
 import org.kkumulkkum.server.dto.meeting.request.MeetingCreateDto;
 import org.kkumulkkum.server.dto.meeting.request.MeetingRegisterDto;

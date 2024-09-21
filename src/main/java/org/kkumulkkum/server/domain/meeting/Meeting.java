@@ -1,4 +1,4 @@
-package org.kkumulkkum.server.domain;
+package org.kkumulkkum.server.domain.meeting;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.BatchSize;
+import org.kkumulkkum.server.domain.member.Member;
+import org.kkumulkkum.server.domain.base.BaseTimeEntity;
 
 import java.util.List;
 

@@ -1,12 +1,11 @@
-package org.kkumulkkum.server.domain;
+package org.kkumulkkum.server.domain.user;
 
 import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.kkumulkkum.server.domain.enums.Provider;
-import org.kkumulkkum.server.domain.enums.Role;
+import org.kkumulkkum.server.domain.base.BaseTimeEntity;
 
 @Entity
 @Getter

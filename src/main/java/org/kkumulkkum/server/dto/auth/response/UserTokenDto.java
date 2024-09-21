@@ -1,6 +1,6 @@
 package org.kkumulkkum.server.dto.auth.response;
 
-import org.kkumulkkum.server.domain.UserInfo;
+import org.kkumulkkum.server.domain.userinfo.UserInfo;
 
 public record UserTokenDto(
         String name,

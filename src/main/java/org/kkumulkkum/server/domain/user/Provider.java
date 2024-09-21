@@ -1,4 +1,4 @@
-package org.kkumulkkum.server.domain.enums;
+package org.kkumulkkum.server.domain.user;
 
 public enum Provider {
     KAKAO,

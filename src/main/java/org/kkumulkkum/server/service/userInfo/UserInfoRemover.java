@@ -1,7 +1,7 @@
 package org.kkumulkkum.server.service.userInfo;
 
 import lombok.RequiredArgsConstructor;
-import org.kkumulkkum.server.repository.UserInfoRepository;
+import org.kkumulkkum.server.domain.userinfo.repository.UserInfoRepository;
 import org.springframework.stereotype.Component;
 
 @Component

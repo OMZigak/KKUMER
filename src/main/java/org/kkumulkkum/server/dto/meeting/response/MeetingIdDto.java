@@ -1,6 +1,6 @@
 package org.kkumulkkum.server.dto.meeting.response;
 
-import org.kkumulkkum.server.domain.Meeting;
+import org.kkumulkkum.server.domain.meeting.Meeting;
 
 public record MeetingIdDto(
         Long meetingId

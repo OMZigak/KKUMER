@@ -2,7 +2,11 @@ package org.kkumulkkum.server.service.promise;
 
 import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
-import org.kkumulkkum.server.domain.*;
+import org.kkumulkkum.server.domain.meeting.Meeting;
+import org.kkumulkkum.server.domain.member.Member;
+import org.kkumulkkum.server.domain.participant.Participant;
+import org.kkumulkkum.server.domain.promise.Promise;
+import org.kkumulkkum.server.domain.userinfo.UserInfo;
 import org.kkumulkkum.server.dto.promise.PromiseCreateDto;
 import org.kkumulkkum.server.dto.promise.response.*;
 import org.kkumulkkum.server.exception.PromiseException;

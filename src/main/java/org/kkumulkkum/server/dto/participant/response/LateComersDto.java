@@ -1,6 +1,6 @@
 package org.kkumulkkum.server.dto.participant.response;
 
-import org.kkumulkkum.server.domain.Promise;
+import org.kkumulkkum.server.domain.promise.Promise;
 
 import java.time.LocalDateTime;
 import java.util.List;

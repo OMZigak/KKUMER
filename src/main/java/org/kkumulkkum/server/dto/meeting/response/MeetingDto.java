@@ -1,7 +1,7 @@
 package org.kkumulkkum.server.dto.meeting.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import org.kkumulkkum.server.domain.Meeting;
+import org.kkumulkkum.server.domain.meeting.Meeting;
 
 import java.time.LocalDateTime;
 

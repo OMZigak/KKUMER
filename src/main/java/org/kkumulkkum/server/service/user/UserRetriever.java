@@ -1,11 +1,11 @@
 package org.kkumulkkum.server.service.user;
 
 import lombok.RequiredArgsConstructor;
-import org.kkumulkkum.server.domain.User;
-import org.kkumulkkum.server.domain.enums.Provider;
+import org.kkumulkkum.server.domain.user.User;
+import org.kkumulkkum.server.domain.user.Provider;
 import org.kkumulkkum.server.exception.UserException;
 import org.kkumulkkum.server.exception.code.UserErrorCode;
-import org.kkumulkkum.server.repository.UserRepository;
+import org.kkumulkkum.server.domain.user.repository.UserRepository;
 import org.springframework.stereotype.Component;
 
 @Component

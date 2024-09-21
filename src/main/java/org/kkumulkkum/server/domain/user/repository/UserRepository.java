@@ -1,7 +1,7 @@
-package org.kkumulkkum.server.repository;
+package org.kkumulkkum.server.domain.user.repository;
 
-import org.kkumulkkum.server.domain.User;
-import org.kkumulkkum.server.domain.enums.Provider;
+import org.kkumulkkum.server.domain.user.User;
+import org.kkumulkkum.server.domain.user.Provider;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

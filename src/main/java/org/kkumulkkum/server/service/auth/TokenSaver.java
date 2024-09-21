@@ -1,8 +1,8 @@
 package org.kkumulkkum.server.service.auth;
 
 import lombok.RequiredArgsConstructor;
-import org.kkumulkkum.server.domain.Token;
-import org.kkumulkkum.server.repository.TokenRepository;
+import org.kkumulkkum.server.domain.user.Token;
+import org.kkumulkkum.server.domain.user.repository.TokenRepository;
 import org.springframework.stereotype.Component;
 
 @Component

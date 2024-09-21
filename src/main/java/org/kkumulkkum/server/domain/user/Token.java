@@ -1,4 +1,4 @@
-package org.kkumulkkum.server.domain;
+package org.kkumulkkum.server.domain.user;
 
 import lombok.AccessLevel;
 import lombok.Builder;

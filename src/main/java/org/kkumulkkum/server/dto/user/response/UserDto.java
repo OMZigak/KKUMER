@@ -1,6 +1,6 @@
 package org.kkumulkkum.server.dto.user.response;
 
-import org.kkumulkkum.server.domain.UserInfo;
+import org.kkumulkkum.server.domain.userinfo.UserInfo;
 
 public record UserDto(
         Long userId,
