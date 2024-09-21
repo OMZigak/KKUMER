@@ -10,7 +10,7 @@ import org.kkumulkkum.server.api.user.dto.response.UserDto;
 import org.kkumulkkum.server.api.user.dto.response.UserNameDto;
 import org.kkumulkkum.server.exception.AwsException;
 import org.kkumulkkum.server.exception.code.AwsErrorCode;
-import org.kkumulkkum.server.external.S3Service;
+import org.kkumulkkum.server.external.service.s3.S3Service;
 import org.kkumulkkum.server.domain.userinfo.manager.UserInfoRetriever;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
