@@ -4,8 +4,8 @@ import lombok.RequiredArgsConstructor;
 import org.kkumulkkum.server.domain.participant.Participant;
 import org.kkumulkkum.server.api.participant.dto.ParticipantStatusUserInfoDto;
 import org.kkumulkkum.server.api.participant.dto.response.LateComerDto;
-import org.kkumulkkum.server.exception.ParticipantException;
-import org.kkumulkkum.server.exception.code.ParticipantErrorCode;
+import org.kkumulkkum.server.common.exception.ParticipantException;
+import org.kkumulkkum.server.common.exception.code.ParticipantErrorCode;
 import org.kkumulkkum.server.domain.participant.repository.ParticipantRepository;
 import org.springframework.stereotype.Component;
 

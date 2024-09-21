@@ -3,8 +3,8 @@ package org.kkumulkkum.server.domain.user.manager;
 import lombok.RequiredArgsConstructor;
 import org.kkumulkkum.server.domain.user.User;
 import org.kkumulkkum.server.domain.user.Provider;
-import org.kkumulkkum.server.exception.UserException;
-import org.kkumulkkum.server.exception.code.UserErrorCode;
+import org.kkumulkkum.server.common.exception.UserException;
+import org.kkumulkkum.server.common.exception.code.UserErrorCode;
 import org.kkumulkkum.server.domain.user.repository.UserRepository;
 import org.springframework.stereotype.Component;
 

@@ -3,9 +3,8 @@ package org.kkumulkkum.server.api.auth.service.verify;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.jsonwebtoken.*;
-import lombok.extern.slf4j.Slf4j;
-import org.kkumulkkum.server.exception.AuthException;
-import org.kkumulkkum.server.exception.code.AuthErrorCode;
+import org.kkumulkkum.server.common.exception.AuthException;
+import org.kkumulkkum.server.common.exception.code.AuthErrorCode;
 import org.springframework.stereotype.Component;
 
 import java.security.PublicKey;

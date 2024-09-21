@@ -1,5 +1,5 @@
 <included>
-    <appender name="DISCORD" class="org.kkumulkkum.server.log.discord.DiscordAppender">
+    <appender name="DISCORD" class="org.kkumulkkum.server.common.log.discord.DiscordAppender">
         <discordWebhookUrl>${DISCORD_WEBHOOK_URI}</discordWebhookUrl>
         <username>개 큰 에러 나는 꾸물꿈</username>
         <avatarUrl>https://github.com/user-attachments/assets/452211e9-0c88-41e9-a49c-42c3b099a197</avatarUrl>

@@ -1,10 +1,10 @@
 package org.kkumulkkum.server.api.common;
 
 import lombok.RequiredArgsConstructor;
-import org.kkumulkkum.server.auth.jwt.JwtTokenProvider;
+import org.kkumulkkum.server.common.auth.jwt.JwtTokenProvider;
 import org.kkumulkkum.server.api.auth.dto.response.JwtTokenDto;
-import org.kkumulkkum.server.exception.BusinessException;
-import org.kkumulkkum.server.exception.code.BusinessErrorCode;
+import org.kkumulkkum.server.common.exception.BusinessException;
+import org.kkumulkkum.server.common.exception.code.BusinessErrorCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;

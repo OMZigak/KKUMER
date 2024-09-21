@@ -2,8 +2,8 @@ package org.kkumulkkum.server.domain.user.manager;
 
 import lombok.RequiredArgsConstructor;
 import org.kkumulkkum.server.domain.user.Token;
-import org.kkumulkkum.server.exception.AuthException;
-import org.kkumulkkum.server.exception.code.AuthErrorCode;
+import org.kkumulkkum.server.common.exception.AuthException;
+import org.kkumulkkum.server.common.exception.code.AuthErrorCode;
 import org.kkumulkkum.server.domain.user.repository.TokenRepository;
 import org.springframework.stereotype.Component;
 

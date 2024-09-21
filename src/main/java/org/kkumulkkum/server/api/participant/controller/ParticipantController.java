@@ -1,9 +1,9 @@
 package org.kkumulkkum.server.api.participant.controller;
 
 import lombok.RequiredArgsConstructor;
-import org.kkumulkkum.server.annotation.IsMemberByPromiseId;
-import org.kkumulkkum.server.annotation.IsParticipant;
-import org.kkumulkkum.server.annotation.UserId;
+import org.kkumulkkum.server.common.auth.annotation.IsMemberByPromiseId;
+import org.kkumulkkum.server.common.auth.annotation.IsParticipant;
+import org.kkumulkkum.server.common.auth.annotation.UserId;
 import org.kkumulkkum.server.api.participant.dto.request.PreparationInfoDto;
 import org.kkumulkkum.server.api.participant.dto.response.AvailableParticipantsDto;
 import org.kkumulkkum.server.api.participant.dto.response.LateComersDto;

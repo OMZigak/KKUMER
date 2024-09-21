@@ -2,8 +2,8 @@ package org.kkumulkkum.server.api.auth.service.verify;
 
 import org.kkumulkkum.server.api.auth.dto.verify.ApplePublicKey;
 import org.kkumulkkum.server.api.auth.dto.verify.ApplePublicKeys;
-import org.kkumulkkum.server.exception.AuthException;
-import org.kkumulkkum.server.exception.code.AuthErrorCode;
+import org.kkumulkkum.server.common.exception.AuthException;
+import org.kkumulkkum.server.common.exception.code.AuthErrorCode;
 import org.springframework.stereotype.Component;
 
 import java.math.BigInteger;

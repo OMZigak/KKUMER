@@ -1,7 +1,7 @@
 package org.kkumulkkum.server.external.service.naver;
 
-import org.kkumulkkum.server.exception.OpenApiException;
-import org.kkumulkkum.server.exception.code.OpenApiErrorCode;
+import org.kkumulkkum.server.common.exception.OpenApiException;
+import org.kkumulkkum.server.common.exception.code.OpenApiErrorCode;
 import org.kkumulkkum.server.external.controller.naver.dto.LocationDto;
 import org.kkumulkkum.server.external.controller.naver.dto.LocationsDto;
 import org.kkumulkkum.server.external.service.naver.dto.NaverLocationResponse;

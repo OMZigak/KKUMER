@@ -3,8 +3,8 @@ package org.kkumulkkum.server.domain.meeting.manager;
 import lombok.RequiredArgsConstructor;
 import org.kkumulkkum.server.domain.meeting.Meeting;
 import org.kkumulkkum.server.api.meeting.dto.MeetingMetCountDto;
-import org.kkumulkkum.server.exception.MeetingException;
-import org.kkumulkkum.server.exception.code.MeetingErrorCode;
+import org.kkumulkkum.server.common.exception.MeetingException;
+import org.kkumulkkum.server.common.exception.code.MeetingErrorCode;
 import org.kkumulkkum.server.domain.meeting.repository.MeetingRepository;
 import org.springframework.stereotype.Component;
 

@@ -1,7 +1,7 @@
 package org.kkumulkkum.server.api.auth.dto.verify;
 
-import org.kkumulkkum.server.exception.AuthException;
-import org.kkumulkkum.server.exception.code.AuthErrorCode;
+import org.kkumulkkum.server.common.exception.AuthException;
+import org.kkumulkkum.server.common.exception.code.AuthErrorCode;
 
 import java.util.List;
 

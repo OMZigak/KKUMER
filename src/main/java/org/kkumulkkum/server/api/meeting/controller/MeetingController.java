@@ -2,8 +2,8 @@ package org.kkumulkkum.server.api.meeting.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.kkumulkkum.server.annotation.IsMemberByMeetingId;
-import org.kkumulkkum.server.annotation.UserId;
+import org.kkumulkkum.server.common.auth.annotation.IsMemberByMeetingId;
+import org.kkumulkkum.server.common.auth.annotation.UserId;
 import org.kkumulkkum.server.api.meeting.dto.request.MeetingCreateDto;
 import org.kkumulkkum.server.api.meeting.dto.request.MeetingRegisterDto;
 import org.kkumulkkum.server.api.meeting.dto.response.CreatedMeetingDto;

@@ -3,8 +3,8 @@ package org.kkumulkkum.server.domain.member.manager;
 import lombok.RequiredArgsConstructor;
 import org.kkumulkkum.server.domain.member.Member;
 import org.kkumulkkum.server.api.meeting.dto.response.MemberDto;
-import org.kkumulkkum.server.exception.MemberException;
-import org.kkumulkkum.server.exception.code.MemberErrorCode;
+import org.kkumulkkum.server.common.exception.MemberException;
+import org.kkumulkkum.server.common.exception.code.MemberErrorCode;
 import org.kkumulkkum.server.domain.member.repository.MemberRepository;
 import org.springframework.stereotype.Component;
 

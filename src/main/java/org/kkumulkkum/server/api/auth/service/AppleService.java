@@ -10,10 +10,10 @@ import org.kkumulkkum.server.api.auth.service.verify.AppleClientSecretGenerator;
 import org.kkumulkkum.server.api.auth.service.verify.AppleJwtParser;
 import org.kkumulkkum.server.api.auth.service.verify.PublicKeyGenerator;
 import org.kkumulkkum.server.api.auth.dto.SocialUserDto;
-import org.kkumulkkum.server.exception.AuthException;
-import org.kkumulkkum.server.exception.BusinessException;
-import org.kkumulkkum.server.exception.code.AuthErrorCode;
-import org.kkumulkkum.server.exception.code.BusinessErrorCode;
+import org.kkumulkkum.server.common.exception.AuthException;
+import org.kkumulkkum.server.common.exception.BusinessException;
+import org.kkumulkkum.server.common.exception.code.AuthErrorCode;
+import org.kkumulkkum.server.common.exception.code.BusinessErrorCode;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 

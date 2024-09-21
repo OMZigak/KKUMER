@@ -1,6 +1,6 @@
 package org.kkumulkkum.server.api.common.dto;
 
-import org.kkumulkkum.server.exception.code.DefaultErrorCode;
+import org.kkumulkkum.server.common.exception.code.DefaultErrorCode;
 
 public record ResponseDto<T> (
         boolean success,

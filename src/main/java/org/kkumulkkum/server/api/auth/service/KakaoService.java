@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.kkumulkkum.server.external.service.kakao.KakaoFeignClient;
 import org.kkumulkkum.server.external.service.kakao.dto.KakaoUserDto;
 import org.kkumulkkum.server.api.auth.dto.SocialUserDto;
-import org.kkumulkkum.server.constant.AuthConstant;
+import org.kkumulkkum.server.common.auth.constant.AuthConstant;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 

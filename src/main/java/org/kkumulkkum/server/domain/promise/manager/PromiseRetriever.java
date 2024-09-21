@@ -2,8 +2,8 @@ package org.kkumulkkum.server.domain.promise.manager;
 
 import lombok.RequiredArgsConstructor;
 import org.kkumulkkum.server.domain.promise.Promise;
-import org.kkumulkkum.server.exception.PromiseException;
-import org.kkumulkkum.server.exception.code.PromiseErrorCode;
+import org.kkumulkkum.server.common.exception.PromiseException;
+import org.kkumulkkum.server.common.exception.code.PromiseErrorCode;
 import org.kkumulkkum.server.domain.promise.repository.PromiseRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

@@ -2,10 +2,10 @@ package org.kkumulkkum.server.api.promise.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.kkumulkkum.server.annotation.IsMemberByMeetingId;
-import org.kkumulkkum.server.annotation.IsMemberByPromiseId;
-import org.kkumulkkum.server.annotation.IsParticipant;
-import org.kkumulkkum.server.annotation.UserId;
+import org.kkumulkkum.server.common.auth.annotation.IsMemberByMeetingId;
+import org.kkumulkkum.server.common.auth.annotation.IsMemberByPromiseId;
+import org.kkumulkkum.server.common.auth.annotation.IsParticipant;
+import org.kkumulkkum.server.common.auth.annotation.UserId;
 import org.kkumulkkum.server.api.promise.dto.request.PromiseCreateDto;
 import org.kkumulkkum.server.api.promise.dto.response.*;
 import org.kkumulkkum.server.api.promise.service.PromiseService;

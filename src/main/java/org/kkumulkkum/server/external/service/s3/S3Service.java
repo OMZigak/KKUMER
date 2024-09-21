@@ -1,8 +1,8 @@
 package org.kkumulkkum.server.external.service.s3;
 
 import org.kkumulkkum.server.external.config.AwsConfig;
-import org.kkumulkkum.server.exception.AwsException;
-import org.kkumulkkum.server.exception.code.AwsErrorCode;
+import org.kkumulkkum.server.common.exception.AwsException;
+import org.kkumulkkum.server.common.exception.code.AwsErrorCode;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;

@@ -2,7 +2,7 @@ package org.kkumulkkum.server.api.user.controller;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.kkumulkkum.server.annotation.UserId;
+import org.kkumulkkum.server.common.auth.annotation.UserId;
 import org.kkumulkkum.server.api.user.dto.request.ImageUpdateDto;
 import org.kkumulkkum.server.api.user.dto.request.NameUpdateDto;
 import org.kkumulkkum.server.api.user.dto.response.UserDto;

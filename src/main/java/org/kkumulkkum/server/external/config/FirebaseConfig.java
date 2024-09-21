@@ -5,8 +5,8 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
-import org.kkumulkkum.server.exception.FirebaseException;
-import org.kkumulkkum.server.exception.code.FirebaseErrorCode;
+import org.kkumulkkum.server.common.exception.FirebaseException;
+import org.kkumulkkum.server.common.exception.code.FirebaseErrorCode;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 
