@@ -1,4 +1,4 @@
-package org.kkumulkkum.server.service.userInfo;
+package org.kkumulkkum.server.domain.userinfo.manager;
 
 import org.kkumulkkum.server.domain.userinfo.UserInfo;
 import org.springframework.stereotype.Component;

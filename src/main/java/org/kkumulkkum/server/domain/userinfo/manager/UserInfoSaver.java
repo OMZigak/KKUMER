@@ -1,16 +1,18 @@
-package org.kkumulkkum.server.service.userInfo;
+package org.kkumulkkum.server.domain.userinfo.manager;
 
 import lombok.RequiredArgsConstructor;
+import org.kkumulkkum.server.domain.userinfo.UserInfo;
 import org.kkumulkkum.server.domain.userinfo.repository.UserInfoRepository;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class UserInfoRemover {
+public class UserInfoSaver {
 
     private final UserInfoRepository userInfoRepository;
 
-    public void deleteByUserId(final Long userId) {
-        userInfoRepository.deleteByUserId(userId);
+    public void save(final UserInfo user){
+        userInfoRepository.save(user);
     }
+
 }

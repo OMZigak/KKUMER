@@ -1,8 +1,8 @@
-package org.kkumulkkum.server.service.meeting;
+package org.kkumulkkum.server.domain.meeting.manager;
 
 import lombok.RequiredArgsConstructor;
 import org.kkumulkkum.server.domain.meeting.Meeting;
-import org.kkumulkkum.server.dto.meeting.MeetingMetCountDto;
+import org.kkumulkkum.server.api.meeting.dto.MeetingMetCountDto;
 import org.kkumulkkum.server.exception.MeetingException;
 import org.kkumulkkum.server.exception.code.MeetingErrorCode;
 import org.kkumulkkum.server.domain.meeting.repository.MeetingRepository;

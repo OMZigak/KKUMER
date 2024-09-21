@@ -1,4 +1,4 @@
-package org.kkumulkkum.server.service.participant;
+package org.kkumulkkum.server.domain.participant.manager;
 
 import lombok.RequiredArgsConstructor;
 import org.kkumulkkum.server.domain.participant.Participant;

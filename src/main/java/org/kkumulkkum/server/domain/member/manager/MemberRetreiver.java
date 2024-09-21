@@ -1,8 +1,8 @@
-package org.kkumulkkum.server.service.member;
+package org.kkumulkkum.server.domain.member.manager;
 
 import lombok.RequiredArgsConstructor;
 import org.kkumulkkum.server.domain.member.Member;
-import org.kkumulkkum.server.dto.member.response.MemberDto;
+import org.kkumulkkum.server.api.meeting.dto.response.MemberDto;
 import org.kkumulkkum.server.exception.MemberException;
 import org.kkumulkkum.server.exception.code.MemberErrorCode;
 import org.kkumulkkum.server.domain.member.repository.MemberRepository;

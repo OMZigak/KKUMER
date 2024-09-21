@@ -1,7 +1,7 @@
-package org.kkumulkkum.server.service.promise;
+package org.kkumulkkum.server.domain.promise.manager;
 
 import org.kkumulkkum.server.domain.promise.Promise;
-import org.kkumulkkum.server.dto.promise.PromiseCreateDto;
+import org.kkumulkkum.server.api.promise.dto.request.PromiseCreateDto;
 import org.springframework.stereotype.Component;
 
 @Component

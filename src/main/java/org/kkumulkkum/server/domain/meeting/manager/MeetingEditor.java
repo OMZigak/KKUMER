@@ -1,8 +1,8 @@
-package org.kkumulkkum.server.service.meeting;
+package org.kkumulkkum.server.domain.meeting.manager;
 
 import lombok.RequiredArgsConstructor;
 import org.kkumulkkum.server.domain.meeting.Meeting;
-import org.kkumulkkum.server.dto.meeting.request.MeetingCreateDto;
+import org.kkumulkkum.server.api.meeting.dto.request.MeetingCreateDto;
 import org.springframework.stereotype.Component;
 
 @Component

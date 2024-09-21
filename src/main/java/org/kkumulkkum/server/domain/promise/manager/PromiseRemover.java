@@ -1,4 +1,4 @@
-package org.kkumulkkum.server.service.promise;
+package org.kkumulkkum.server.domain.promise.manager;
 
 import lombok.RequiredArgsConstructor;
 import org.kkumulkkum.server.domain.promise.repository.PromiseRepository;

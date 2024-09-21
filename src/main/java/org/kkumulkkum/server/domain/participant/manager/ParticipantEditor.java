@@ -1,8 +1,8 @@
-package org.kkumulkkum.server.service.participant;
+package org.kkumulkkum.server.domain.participant.manager;
 
 import lombok.RequiredArgsConstructor;
 import org.kkumulkkum.server.domain.participant.Participant;
-import org.kkumulkkum.server.dto.participant.request.PreparationInfoDto;
+import org.kkumulkkum.server.api.participant.dto.request.PreparationInfoDto;
 import org.springframework.stereotype.Component;
 
 @Component

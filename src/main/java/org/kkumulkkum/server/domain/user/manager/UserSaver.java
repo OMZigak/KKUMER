@@ -1,4 +1,4 @@
-package org.kkumulkkum.server.service.user;
+package org.kkumulkkum.server.domain.user.manager;
 
 import lombok.RequiredArgsConstructor;
 import org.kkumulkkum.server.domain.user.User;
@@ -7,11 +7,12 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class UserRemover {
+public class UserSaver {
 
     private final UserRepository userRepository;
 
-    public void delete(User user) {
-        userRepository.delete(user);
+    public void save(final User user){
+        userRepository.save(user);
     }
+
 }

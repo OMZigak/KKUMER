@@ -1,4 +1,4 @@
-package org.kkumulkkum.server.service.meeting;
+package org.kkumulkkum.server.domain.meeting.manager;
 
 import lombok.RequiredArgsConstructor;
 import org.kkumulkkum.server.domain.meeting.Meeting;
